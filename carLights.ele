@@ -2,7 +2,7 @@ abstract sig Lights {
 	var state: State
 }
 
-sig TurnSignal extends Lights{}
+abstract sig TurnSignal extends Lights{}
 
 abstract sig State{}
 
@@ -12,16 +12,23 @@ one sig Off extends State{}
 
 sig EmergencyBreakLight extends Lights {}
 
-sig AdaptiveHighBeam extends Lights{}
+sig AdaptiveHighBeam extends Lights {}
 
-sig LowBeamHeadlights extends Lights{}
+sig LowBeamHeadlights extends Lights {}
 
-sig CorneringLights extends Lights{}
+sig CorneringLights extends Lights {}
+
+--Test
+sig LeftTurnSignal extends TurnSignal {}
+
+sig RightTurnSignal extends TurnSignal {}
+
+-- ---
 
 
 sig Car {
-	 leftTurnSignal: one TurnSignal,
-	 rightTurnSignal: one TurnSignal
+	 leftTurnSignal: LeftTurnSignal,
+	 rightTurnSignal: RightTurnSignal
 }
 
 run {} for 3 but  1 Car
