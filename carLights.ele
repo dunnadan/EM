@@ -1,34 +1,32 @@
+-- Light's state
+abstract sig State {}
+one sig On extends State {}
+one sig Off extends State {}
+
 abstract sig Lights {
 	var state: State
 }
+-- distinguish between left/right
+abstract sig TurnSignal extends Lights {}
 
-abstract sig TurnSignal extends Lights{}
-
-abstract sig State{}
-
-one sig On extends State{}
-
-one sig Off extends State{}
-
-sig EmergencyBreakLight extends Lights {}
-
-sig AdaptiveHighBeam extends Lights {}
-
-sig LowBeamHeadlights extends Lights {}
-
-sig CorneringLights extends Lights {}
-
---Test
-sig LeftTurnSignal extends TurnSignal {}
-
-sig RightTurnSignal extends TurnSignal {}
-
--- ---
+-- Types of Lights
+one sig LeftTurnSignal extends TurnSignal {}
+one sig RightTurnSignal extends TurnSignal {}
+one sig EmergencyBreakLight extends Lights {}
+one sig AdaptiveHighBeam extends Lights {}
+one sig LowBeamHeadlights extends Lights {}
+one sig CorneringLights extends Lights {}
 
 
+
+-- one is redundant here, just being explicit
 sig Car {
-	 leftTurnSignal: LeftTurnSignal,
-	 rightTurnSignal: RightTurnSignal
+	leftTSig: one LeftTurnSignal,
+	rightTSig: one RightTurnSignal,
+	lowBeam: one LowBeamHeadlights,
+     cornering: one CorneringLights,
+	adpativeHigh: one AdaptiveHighBeam,
+	emergency: one EmergencyBreakLight
 }
 
-run {} for 3 but  1 Car
+run { } for 7 but exactly 1 Car
