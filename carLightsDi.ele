@@ -59,6 +59,11 @@ pred unturn_right[] {
  unturn[RightTurnSignalOn, RightTurnSignalOff]
 }
 
+pred piscas_piscas[] {
+ turn_left or unturn_left or
+ turn_right or unturn_right
+}
+
 
 fact init {
   no RightTurnSignalOn
@@ -75,7 +80,7 @@ pred do_nothing[] {
 
 fact transitions {
   always (
-    turn_left or turn_right or unturn_left or unturn_right
+   piscas_piscas or do_nothing
   )
 }
 
