@@ -86,4 +86,4 @@ fact transitions {
 
 
 
-run { } for 100
+run { } for 50
