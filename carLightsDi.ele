@@ -60,13 +60,6 @@ fact init {
   no EmergencyBreakLightOn
   no AdaptiveHighBeamOn
   no CorneringLightsOn
-
-  one RightTurnSignalOff
-  one LeftTurnSignalOff
-  one LowBeamHeadlightsOff
-  one EmergencyBreakLightOff
-  one AdaptiveHighBeamOff
-  one CorneringLightsOff
 }
 
 pred do_nothing[] {
