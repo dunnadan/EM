@@ -25,33 +25,40 @@ var one abstract sig CorneringLights extends Lights {}
 var lone sig CorneringLightsOn extends CorneringLights {}
 var lone sig CorneringLightsOff extends CorneringLights {}
 
+
+pred unturn[on, off : TurnSignal] {
+  no off
+  one on
+
+  one off'
+  no on'
+
+  (Lights - (on+off))' = (Lights - (on+off))
+}
+
+pred turn[on, off : TurnSignal] {
+  no on
+  one off
+
+  one on'
+  no off'
+
+  (Lights - (on+off))' = (Lights - (on+off))
+}
+
 pred turn_left[] {
-  no LeftTurnSignalOn
-  one LeftTurnSignalOff
-
-  one LeftTurnSignalOn'
-  no LeftTurnSignalOff'
-
-  RightTurnSignal' = RightTurnSignal
-  LowBeamHeadlights' = LowBeamHeadlights
-  EmergencyBreakLight' = EmergencyBreakLight
-  AdaptiveHighBeam' = AdaptiveHighBeam
-  CorneringLights' = CorneringLights
+ turn[LeftTurnSignalOn, LeftTurnSignalOff]
 }
-
+pred unturn_left[] {
+ unturn[LeftTurnSignalOn, LeftTurnSignalOff]
+}
 pred turn_right[] {
-  no RightTurnSignalOn
-  one RightTurnSignalOff
-
-  one RightTurnSignalOn'
-  no RightTurnSignalOff'
-
-  LeftTurnSignal' = LeftTurnSignal
-  LowBeamHeadlights' = LowBeamHeadlights
-  EmergencyBreakLight' = EmergencyBreakLight
-  AdaptiveHighBeam' = AdaptiveHighBeam
-  CorneringLights' = CorneringLights
+ turn[RightTurnSignalOn, RightTurnSignalOff]
 }
+pred unturn_right[] {
+ unturn[RightTurnSignalOn, RightTurnSignalOff]
+}
+
 
 fact init {
   no RightTurnSignalOn
@@ -68,10 +75,10 @@ pred do_nothing[] {
 
 fact transitions {
   always (
-    turn_left or turn_right or do_nothing
+    turn_left or turn_right or unturn_left or unturn_right
   )
 }
 
 
 
-run { } for 20
+run { } for 100
