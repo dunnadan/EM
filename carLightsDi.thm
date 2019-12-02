@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<alloy>
+
+<view>
+
+<defaultnode/>
+
+<defaultedge/>
+
+<node>
+   <type name="AdaptiveHighBeamOff"/>
+   <type name="CorneringLightsOff"/>
+   <type name="EmergencyBreakLightOff"/>
+   <type name="Int"/>
+   <type name="LeftTurnSignal"/>
+   <type name="LeftTurnSignalOff"/>
+   <type name="Lights"/>
+   <type name="LowBeamHeadlightsOff"/>
+   <type name="RightTurnSignal"/>
+   <type name="RightTurnSignalOff"/>
+   <type name="String"/>
+   <type name="univ"/>
+   <type name="seq/Int"/>
+</node>
+
+<node color="Blue">
+   <type name="LowBeamHeadlights"/>
+</node>
+
+<node color="Gray">
+   <type name="TurnSignal"/>
+</node>
+
+<node color="Green">
+   <type name="CorneringLights"/>
+</node>
+
+<node color="Red">
+   <type name="EmergencyBreakLight"/>
+</node>
+
+<node color="Yellow">
+   <type name="AdaptiveHighBeam"/>
+</node>
+
+<node shape="Ellipse">
+   <type name="AdaptiveHighBeamOn"/>
+   <type name="CorneringLightsOn"/>
+   <type name="EmergencyBreakLightOn"/>
+   <type name="LeftTurnSignalOn"/>
+   <type name="LowBeamHeadlightsOn"/>
+   <type name="RightTurnSignalOn"/>
+</node>
+
+</view>
+
+</alloy>

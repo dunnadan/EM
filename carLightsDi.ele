@@ -1,0 +1,84 @@
+var abstract sig Lights {}
+
+-- distinguish between left/right
+var abstract sig TurnSignal extends Lights {}
+var one abstract sig LeftTurnSignal extends TurnSignal {}
+var one abstract sig RightTurnSignal extends TurnSignal {}
+var lone sig LeftTurnSignalOn extends LeftTurnSignal {}
+var lone sig RightTurnSignalOn extends RightTurnSignal {}
+var lone sig LeftTurnSignalOff extends LeftTurnSignal {}
+var lone sig RightTurnSignalOff extends RightTurnSignal {}
+
+var one abstract sig EmergencyBreakLight extends Lights {}
+var lone sig EmergencyBreakLightOn extends EmergencyBreakLight {}
+var lone sig EmergencyBreakLightOff extends EmergencyBreakLight {}
+
+var one abstract sig AdaptiveHighBeam extends Lights {}
+var lone sig AdaptiveHighBeamOn extends AdaptiveHighBeam {}
+var lone sig AdaptiveHighBeamOff extends AdaptiveHighBeam {}
+
+var one abstract sig LowBeamHeadlights extends Lights {}
+var lone sig LowBeamHeadlightsOn extends LowBeamHeadlights {}
+var lone sig LowBeamHeadlightsOff extends LowBeamHeadlights {}
+
+var one abstract sig CorneringLights extends Lights {}
+var lone sig CorneringLightsOn extends CorneringLights {}
+var lone sig CorneringLightsOff extends CorneringLights {}
+
+pred turn_left[] {
+  no LeftTurnSignalOn
+  one LeftTurnSignalOff
+
+  one LeftTurnSignalOn'
+  no LeftTurnSignalOff'
+
+  RightTurnSignal' = RightTurnSignal
+  LowBeamHeadlights' = LowBeamHeadlights
+  EmergencyBreakLight' = EmergencyBreakLight
+  AdaptiveHighBeam' = AdaptiveHighBeam
+  CorneringLights' = CorneringLights
+}
+
+pred turn_right[] {
+  no RightTurnSignalOn
+  one RightTurnSignalOff
+
+  one RightTurnSignalOn'
+  no RightTurnSignalOff'
+
+  LeftTurnSignal' = LeftTurnSignal
+  LowBeamHeadlights' = LowBeamHeadlights
+  EmergencyBreakLight' = EmergencyBreakLight
+  AdaptiveHighBeam' = AdaptiveHighBeam
+  CorneringLights' = CorneringLights
+}
+
+fact init {
+  no RightTurnSignalOn
+  no LeftTurnSignalOn
+  no LowBeamHeadlightsOn
+  no EmergencyBreakLightOn
+  no AdaptiveHighBeamOn
+  no CorneringLightsOn
+
+  one RightTurnSignalOff
+  one LeftTurnSignalOff
+  one LowBeamHeadlightsOff
+  one EmergencyBreakLightOff
+  one AdaptiveHighBeamOff
+  one CorneringLightsOff
+}
+
+pred do_nothing[] {
+	Lights' = Lights
+}
+
+fact transitions {
+  always (
+    turn_left or turn_right or do_nothing
+  )
+}
+
+
+
+run { } for 20
