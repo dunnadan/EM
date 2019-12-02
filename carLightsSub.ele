@@ -2,21 +2,21 @@ var abstract sig Lights {}
 
 -- distinguish between left/right
 var abstract sig TurnSignal extends Lights {}
-var lone sig LeftTurnSignal extends TurnSignal {}
-var lone sig RightTurnSignal extends TurnSignal {}
+var one sig LeftTurnSignal extends TurnSignal {}
+var one sig RightTurnSignal extends TurnSignal {}
 var lone sig LeftTurnSignalOn in LeftTurnSignal {}
 var lone sig RightTurnSignalOn in RightTurnSignal {}
 
-var lone sig EmergencyBreakLight extends Lights {}
+var one sig EmergencyBreakLight extends Lights {}
 var lone sig EmergencyBreakLightOn in EmergencyBreakLight {}
 
-var lone sig AdaptiveHighBeam extends Lights {}
+var one sig AdaptiveHighBeam extends Lights {}
 var lone sig AdaptiveHighBeamOn in AdaptiveHighBeam {}
 
-var lone sig LowBeamHeadlights extends Lights {}
+var one sig LowBeamHeadlights extends Lights {}
 var lone sig LowBeamHeadlightsOn in LowBeamHeadlights {}
 
-var lone sig CorneringLights extends Lights {}
+var one sig CorneringLights extends Lights {}
 var lone sig CorneringLightsOn in CorneringLights {}
 
 
@@ -30,5 +30,7 @@ sig Car {
 	var adpativeHigh: one AdaptiveHighBeam,
 	var emergency: one EmergencyBreakLight
 }
+
+
 
 run { } for 20 but exactly 1 Car
