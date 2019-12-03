@@ -11,7 +11,6 @@
    <type name="Int"/>
    <type name="LeftTurnSignal"/>
    <type name="Lights"/>
-   <type name="Off"/>
    <type name="RightTurnSignal"/>
    <type name="String"/>
    <type name="univ"/>
@@ -19,37 +18,33 @@
 </node>
 
 <node color="Blue">
-   <type name="TurnSignal"/>
+   <type name="LowBeamHeadlights"/>
 </node>
 
 <node color="Gray">
-   <type name="AdaptiveHighBeam"/>
+   <type name="TurnSignal"/>
 </node>
 
 <node color="Green">
-   <type name="LowBeamHeadlights"/>
+   <type name="CorneringLights"/>
 </node>
 
 <node color="Red">
    <type name="EmergencyBreakLight"/>
 </node>
 
-<node color="White">
-   <type name="CorneringLights"/>
+<node color="Yellow">
+   <type name="AdaptiveHighBeam"/>
 </node>
 
-<node shape="Diamond">
-   <type name="On"/>
+<node shape="Ellipse">
+   <set name="this/AdaptiveHighBeamOn" type="AdaptiveHighBeam"/>
+   <set name="this/CorneringLightsOn" type="CorneringLights"/>
+   <set name="this/EmergencyBreakLightOn" type="EmergencyBreakLight"/>
+   <set name="this/LeftTurnSignalOn" type="LeftTurnSignal"/>
+   <set name="this/LowBeamHeadlightsOn" type="LowBeamHeadlights"/>
+   <set name="this/RightTurnSignalOn" type="RightTurnSignal"/>
 </node>
-
-<node visible="no">
-   <type name="Car"/>
-   <type name="State"/>
-</node>
-
-<edge color="Red" attribute="yes">
-   <relation name="state"> <type name="Lights"/> <type name="State"/> </relation>
-</edge>
 
 </view>
 

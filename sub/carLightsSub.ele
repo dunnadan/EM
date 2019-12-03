@@ -29,7 +29,7 @@ pred unturn[on, all_l : TurnSignal] {
   no on'
   }
 
-  all s : sig$ | (on != s and all_l !=s) implies s' = s
+   all s : sig$ | s.value != on and s.value != all_l implies (s.value)' = s.value
 }
 
 pred turn[on, all_l : TurnSignal] {
@@ -41,9 +41,8 @@ pred turn[on, all_l : TurnSignal] {
   no off'
   }
 
-  all s : sig$ | (on != s and all_l !=s) implies s' = s
+   all s : sig$ | s.value != on and s.value != all_l implies (s.value)' = s.value
 }
-
 pred turn_left[] {
  turn[LeftTurnSignalOn, LeftTurnSignal]
 }
@@ -73,12 +72,12 @@ fact init {
 }
 
 pred do_nothing[] {
-	Lights' = Lights
+	all s : sig$ | (s.value)' = s.value
 }
 
 fact transitions {
   always (
-   piscas_piscas or do_nothing
+   piscas_piscas 
   )
 }
 
