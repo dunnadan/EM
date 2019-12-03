@@ -1,32 +1,87 @@
--- Light's state
-abstract sig State {}
-one sig On extends State {}
-one sig Off extends State {}
+var abstract sig Lights {}
 
-abstract sig Lights {
-	var state: State
-}
 -- distinguish between left/right
-abstract sig TurnSignal extends Lights {}
+var abstract sig TurnSignal extends Lights {}
+var one sig LeftTurnSignal extends TurnSignal {}
+var lone sig LeftTurnSignalOn in LeftTurnSignal {}
+var one sig RightTurnSignal extends TurnSignal {}
+var lone sig RightTurnSignalOn in RightTurnSignal {}
 
--- Types of Lights
-one sig LeftTurnSignal extends TurnSignal {}
-one sig RightTurnSignal extends TurnSignal {}
-one sig EmergencyBreakLight extends Lights {}
-one sig AdaptiveHighBeam extends Lights {}
-one sig LowBeamHeadlights extends Lights {}
-one sig CorneringLights extends Lights {}
+var one sig EmergencyBreakLight extends Lights {}
+var lone sig EmergencyBreakLightOn in EmergencyBreakLight {}
+
+var one sig AdaptiveHighBeam extends Lights {}
+var lone sig AdaptiveHighBeamOn in AdaptiveHighBeam {}
+
+var one sig LowBeamHeadlights extends Lights {}
+var lone sig LowBeamHeadlightsOn in LowBeamHeadlights {}
+
+var one sig CorneringLights extends Lights {}
+var lone sig CorneringLightsOn in CorneringLights {}
 
 
+pred unturn[on, all_l : TurnSignal] {
+  let off = (all_l - on) {
+  no off
+  one on
 
--- one is redundant here, just being explicit
-sig Car {
-	leftTSig: one LeftTurnSignal,
-	rightTSig: one RightTurnSignal,
-	lowBeam: one LowBeamHeadlights,
-     cornering: one CorneringLights,
-	adpativeHigh: one AdaptiveHighBeam,
-	emergency: one EmergencyBreakLight
+  one off'
+  no on'
+  }
+
+  all s : sig$ | (on != s and all_l !=s) implies s' = s
 }
 
-run { } for 7 but exactly 1 Car
+pred turn[on, all_l : TurnSignal] {
+  let off = (all_l - on) {
+  no on
+  one off
+
+  one on'
+  no off'
+  }
+
+  all s : sig$ | (on != s and all_l !=s) implies s' = s
+}
+
+pred turn_left[] {
+ turn[LeftTurnSignalOn, LeftTurnSignal]
+}
+pred unturn_left[] {
+ unturn[LeftTurnSignalOn, LeftTurnSignal]
+}
+pred turn_right[] {
+ turn[RightTurnSignalOn, RightTurnSignal]
+}
+pred unturn_right[] {
+ unturn[RightTurnSignalOn, RightTurnSignal]
+}
+
+pred piscas_piscas[] {
+ turn_left or unturn_left or
+ turn_right or unturn_right
+}
+
+
+fact init {
+  no RightTurnSignalOn
+  no LeftTurnSignalOn
+  no LowBeamHeadlightsOn
+  no EmergencyBreakLightOn
+  no AdaptiveHighBeamOn
+  no CorneringLightsOn
+}
+
+pred do_nothing[] {
+	Lights' = Lights
+}
+
+fact transitions {
+  always (
+   piscas_piscas or do_nothing
+  )
+}
+
+
+
+run { } for 50
