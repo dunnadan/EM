@@ -1,0 +1,103 @@
+abstract sig Lights{}
+
+var sig On in Lights{} 
+var sig Off in Lights{}
+var sig Auto in Lights{} 
+
+
+abstract sig TurnSignal extends Lights {}
+one sig LeftTurnSignal extends TurnSignal {}
+one sig RightTurnSignal extends TurnSignal {}
+
+one sig EmergencyBreakLight extends Lights {}
+one sig AdaptiveHighBeam extends Lights {}
+one sig LowBeamHeadlights extends Lights {}
+
+abstract sig CorneringLights extends Lights {}
+one sig LeftCorneringLight extends CorneringLights {}
+one sig RightCorneringLight extends CorneringLights {}
+
+
+fact init {
+	Lights in Off
+}
+
+fact cona { 
+ 	Lights = On + Off + Auto
+	no On & Off
+	no Off & Auto
+	no On & Auto
+}
+
+fact onlyOne {
+	always (LeftTurnSignal in On implies RightTurnSignal not in On
+	         and RightTurnSignal in On implies LeftTurnSignal not in On)
+	always (LeftCorneringLight in On implies RightCorneringLight not in On
+	         and RightCorneringLight in On implies LeftCorneringLight not in On)
+}
+
+fact turnNotInAuto {
+	always (LeftTurnSignal not in Auto and RightTurnSignal not in Auto)
+}
+
+-- cornering sempre em auto, verificar isto
+/*
+pred do_nothing {
+	On' = On
+	Off' = Off
+	Auto' = Auto
+}*/
+
+
+pred on[l : Lights] {
+	l in Off
+
+	Off' = Off - l
+	On' = On + l
+
+	Auto' = Auto
+}
+
+pred off[l : Lights] {
+	l in On
+
+	On' = On - l
+	Off' = Off + l
+
+	Auto' = Auto
+}
+
+pred turn_left[] {
+ on[LeftTurnSignal]
+}
+pred unturn_left[] {
+ off[LeftTurnSignal]
+}
+pred turn_right[] {
+ on[RightTurnSignal]
+}
+pred unturn_right[] {
+ off[RightTurnSignal]
+}
+
+pred piscas_piscas[] {
+ turn_left or unturn_left or
+ turn_right or unturn_right
+}
+
+
+
+pred do_nothing[] {
+	Lights' = Lights
+}
+
+fact transitions {
+  always (
+   piscas_piscas or do_nothing
+  )
+}
+
+
+
+
+run{} for 50
