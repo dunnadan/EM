@@ -8,19 +8,22 @@
 <defaultedge/>
 
 <node>
-   <type name="FlashingMode"/>
    <type name="Int"/>
    <type name="LeftCorneringLight"/>
    <type name="LeftTurnSignal"/>
    <type name="Lights"/>
+   <type name="LightSwitchAuto"/>
+   <type name="LightSwitchOff"/>
+   <type name="LightSwitchOn"/>
    <type name="NormalFlashing"/>
+   <type name="PitmanArmNeutral"/>
+   <type name="PitmanArmUp"/>
    <type name="QuickFlashing"/>
    <type name="RightCorneringLight"/>
    <type name="RightTurnSignal"/>
    <type name="String"/>
    <type name="univ"/>
    <type name="seq/Int"/>
-   <set name="this/Off" type="Lights"/>
 </node>
 
 <node color="Blue">
@@ -47,11 +50,27 @@
    <set name="this/Flashing" type="Lights"/>
 </node>
 
-<node shape="Ellipse">
+<node shape="Lined Circle" color="White">
+   <type name="Input"/>
+</node>
+
+<node style="Solid" shape="Ellipse">
    <set name="this/On" type="Lights"/>
 </node>
 
+<node visible="no">
+   <type name="FlashingMode"/>
+   <type name="PitmanArm"/>
+   <set name="this/Off" type="Lights"/>
+</node>
+
+<node visible="no" color="White">
+   <type name="LightRotarySwitch"/>
+</node>
+
 <edge visible="no" attribute="yes">
+   <relation name="lightRotarySwitch"> <type name="Input"/> <type name="LightRotarySwitch"/> </relation>
+   <relation name="pitmanArm"> <type name="Input"/> <type name="PitmanArm"/> </relation>
    <relation name="state"> <type name="Lights"/> <type name="FlashingMode"/> </relation>
 </edge>
 

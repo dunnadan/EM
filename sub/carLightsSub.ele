@@ -23,6 +23,20 @@ abstract sig CorneringLights extends Lights {}
 one sig LeftCorneringLight extends CorneringLights {}
 one sig RightCorneringLight extends CorneringLights {}
 
+one sig Input {
+	var pitmanArm: one PitmanArm,
+     var lightRotarySwitch: one LightRotarySwitch
+}
+
+abstract sig PitmanArm {}
+one sig PitmanArmNeutral extends PitmanArm {}
+one sig PitmanArmUp extends PitmanArm {}
+
+abstract sig LightRotarySwitch {}
+one sig LightSwitchOff extends LightRotarySwitch {}
+one sig LightSwitchOn extends LightRotarySwitch {} 
+one sig LightSwitchAuto extends LightRotarySwitch {} 
+
 -- On/Off/FlashingAdaptiveHighBeam can't be "extended" since they are supposed
 -- to be disjoint between themselves but not between "light types"
 -- On/Off/Flashing could be inside "Light" (Light { state: State }) but
@@ -107,6 +121,8 @@ pred do_nothing[] {
 
 fact init {
 	Lights in Off
+	Input.pitmanArm in PitmanArmNeutral
+     Input.lightRotarySwitch in LightSwitchOff
 }
 
 fact transitions {
