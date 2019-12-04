@@ -8,10 +8,13 @@
 <defaultedge/>
 
 <node>
+   <type name="FlashingMode"/>
    <type name="Int"/>
    <type name="LeftCorneringLight"/>
    <type name="LeftTurnSignal"/>
    <type name="Lights"/>
+   <type name="NormalFlashing"/>
+   <type name="QuickFlashing"/>
    <type name="RightCorneringLight"/>
    <type name="RightTurnSignal"/>
    <type name="String"/>
@@ -47,6 +50,10 @@
 <node shape="Ellipse">
    <set name="this/On" type="Lights"/>
 </node>
+
+<edge visible="no" attribute="yes">
+   <relation name="state"> <type name="Lights"/> <type name="FlashingMode"/> </relation>
+</edge>
 
 </view>
 

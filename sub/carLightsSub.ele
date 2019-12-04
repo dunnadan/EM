@@ -2,8 +2,14 @@ abstract sig Lights{}
 
 var sig On in Lights {} 
 var sig Off in Lights {}
-var sig Flashing in Lights {} 
+var sig Flashing in Lights {
+	var state: one FlashingMode -- all flashing are flashing in the same mode 
+} 
 
+-- not sure if we need to be this specific
+abstract sig FlashingMode {}
+one sig QuickFlashing extends FlashingMode {}
+one sig NormalFlashing extends FlashingMode {}
 
 abstract sig TurnSignal extends Lights {}
 one sig LeftTurnSignal extends TurnSignal {}
@@ -17,7 +23,10 @@ abstract sig CorneringLights extends Lights {}
 one sig LeftCorneringLight extends CorneringLights {}
 one sig RightCorneringLight extends CorneringLights {}
 
-
+-- On/Off/FlashingAdaptiveHighBeam can't be "extended" since they are supposed
+-- to be disjoint between themselves but not between "light types"
+-- On/Off/Flashing could be inside "Light" (Light { state: State }) but
+-- the theme wouldn't be so explicit, hence the current model 
 fact oneMode { 
 	always (
  	Lights = On + Off + Flashing and
@@ -28,7 +37,7 @@ fact oneMode {
 }
 
 
-fact onlyOne {
+fact onlyOneTurnSignal {
 	always (LeftTurnSignal in On implies RightTurnSignal not in On
 	         and RightTurnSignal in On implies LeftTurnSignal not in On)
 	always (LeftCorneringLight in On implies RightCorneringLight not in On
@@ -106,4 +115,4 @@ fact transitions {
   )
 }
 
-run{} for 50
+run {} for 50
