@@ -9,12 +9,15 @@
 
 <node>
    <type name="Int"/>
+   <type name="LeftCorneringLight"/>
    <type name="LeftTurnSignal"/>
    <type name="Lights"/>
+   <type name="RightCorneringLight"/>
    <type name="RightTurnSignal"/>
    <type name="String"/>
    <type name="univ"/>
    <type name="seq/Int"/>
+   <set name="this/Off" type="Lights"/>
 </node>
 
 <node color="Blue">
@@ -37,13 +40,12 @@
    <type name="AdaptiveHighBeam"/>
 </node>
 
+<node shape="Diamond">
+   <set name="this/Flashing" type="Lights"/>
+</node>
+
 <node shape="Ellipse">
-   <set name="this/AdaptiveHighBeamOn" type="AdaptiveHighBeam"/>
-   <set name="this/CorneringLightsOn" type="CorneringLights"/>
-   <set name="this/EmergencyBreakLightOn" type="EmergencyBreakLight"/>
-   <set name="this/LeftTurnSignalOn" type="LeftTurnSignal"/>
-   <set name="this/LowBeamHeadlightsOn" type="LowBeamHeadlights"/>
-   <set name="this/RightTurnSignalOn" type="RightTurnSignal"/>
+   <set name="this/On" type="Lights"/>
 </node>
 
 </view>

@@ -1,86 +1,109 @@
-var abstract sig Lights {}
+abstract sig Lights{}
 
--- distinguish between left/right
-var abstract sig TurnSignal extends Lights {}
-var one sig LeftTurnSignal extends TurnSignal {}
-var lone sig LeftTurnSignalOn in LeftTurnSignal {}
-var one sig RightTurnSignal extends TurnSignal {}
-var lone sig RightTurnSignalOn in RightTurnSignal {}
-
-var one sig EmergencyBreakLight extends Lights {}
-var lone sig EmergencyBreakLightOn in EmergencyBreakLight {}
-
-var one sig AdaptiveHighBeam extends Lights {}
-var lone sig AdaptiveHighBeamOn in AdaptiveHighBeam {}
-
-var one sig LowBeamHeadlights extends Lights {}
-var lone sig LowBeamHeadlightsOn in LowBeamHeadlights {}
-
-var one sig CorneringLights extends Lights {}
-var lone sig CorneringLightsOn in CorneringLights {}
+var sig On in Lights {} 
+var sig Off in Lights {}
+var sig Flashing in Lights {} 
 
 
-pred unturn[on, all_l : TurnSignal] {
-  let off = (all_l - on) {
-  no off
-  one on
+abstract sig TurnSignal extends Lights {}
+one sig LeftTurnSignal extends TurnSignal {}
+one sig RightTurnSignal extends TurnSignal {}
 
-  one off'
-  no on'
-  }
+one sig EmergencyBreakLight extends Lights {}
+one sig AdaptiveHighBeam extends Lights {}
+one sig LowBeamHeadlights extends Lights {}
 
-   all s : sig$ | s.value != on and s.value != all_l implies (s.value)' = s.value
+abstract sig CorneringLights extends Lights {}
+one sig LeftCorneringLight extends CorneringLights {}
+one sig RightCorneringLight extends CorneringLights {}
+
+
+fact oneMode { 
+	always (
+ 	Lights = On + Off + Flashing and
+	no On & Off and
+	no Off & Flashing and
+	no On & Flashing 
+	)
 }
 
-pred turn[on, all_l : TurnSignal] {
-  let off = (all_l - on) {
-  no on
-  one off
 
-  one on'
-  no off'
-  }
-
-   all s : sig$ | s.value != on and s.value != all_l implies (s.value)' = s.value
+fact onlyOne {
+	always (LeftTurnSignal in On implies RightTurnSignal not in On
+	         and RightTurnSignal in On implies LeftTurnSignal not in On)
+	always (LeftCorneringLight in On implies RightCorneringLight not in On
+	         and RightCorneringLight in On implies LeftCorneringLight not in On)
 }
+
+pred on[l : Lights] {
+	l in Off
+
+	Off' = Off - l
+	On' = On + l
+
+	Flashing' = Flashing
+}
+
+pred off[l : Lights] {
+	l in On
+
+	On' = On - l
+	Off' = Off + l
+
+	Flashing' = Flashing
+}
+
+pred turn[l : Lights] {
+	l in Off
+
+	Off' = Off - l
+	Flashing' = Flashing + l
+
+	On' = On
+}
+
+pred unturn[l : Lights] {
+	l in Flashing
+
+	Flashing' = Flashing - l
+	Off' = Off + l
+
+	On' = On
+}
+
 pred turn_left[] {
- turn[LeftTurnSignalOn, LeftTurnSignal]
+ turn[LeftTurnSignal]
 }
 pred unturn_left[] {
- unturn[LeftTurnSignalOn, LeftTurnSignal]
+ unturn[LeftTurnSignal]
 }
 pred turn_right[] {
- turn[RightTurnSignalOn, RightTurnSignal]
+ turn[RightTurnSignal]
 }
 pred unturn_right[] {
- unturn[RightTurnSignalOn, RightTurnSignal]
+ unturn[RightTurnSignal]
 }
 
-pred piscas_piscas[] {
+pred turn_unturn[] {
  turn_left or unturn_left or
  turn_right or unturn_right
 }
 
 
-fact init {
-  no RightTurnSignalOn
-  no LeftTurnSignalOn
-  no LowBeamHeadlightsOn
-  no EmergencyBreakLightOn
-  no AdaptiveHighBeamOn
-  no CorneringLightsOn
+pred do_nothing[] {
+	On' = On
+	Off' = Off
+	Flashing' = Flashing
 }
 
-pred do_nothing[] {
-	all s : sig$ | (s.value)' = s.value
+fact init {
+	Lights in Off
 }
 
 fact transitions {
   always (
-   piscas_piscas 
+   turn_unturn or on[EmergencyBreakLight] or off[EmergencyBreakLight] or do_nothing
   )
 }
 
-
-
-run { } for 50
+run{} for 50
