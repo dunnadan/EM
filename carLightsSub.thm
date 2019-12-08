@@ -5,23 +5,30 @@
 
 <defaultnode/>
 
-<defaultedge/>
+<defaultedge attribute="yes"/>
 
 <node>
+   <type name="Blinker"/>
+   <type name="BrakeLight"/>
+   <type name="Car"/>
+   <type name="CorneringLight"/>
+   <type name="HighBeamHeadLight"/>
    <type name="Int"/>
-   <type name="LeftCorneringLight"/>
-   <type name="LeftTurnSignal"/>
-   <type name="Lights"/>
    <type name="LightSwitchAuto"/>
    <type name="LightSwitchOff"/>
    <type name="LightSwitchOn"/>
-   <type name="NormalFlashing"/>
+   <type name="LowBeamHeadLight"/>
+   <type name="PitmanArmDown5"/>
+   <type name="PitmanArmDown7"/>
+   <type name="PitmanArmLeft"/>
    <type name="PitmanArmNeutral"/>
-   <type name="PitmanArmUp"/>
-   <type name="QuickFlashing"/>
-   <type name="RightCorneringLight"/>
-   <type name="RightTurnSignal"/>
+   <type name="PitmanArmRight"/>
+   <type name="PitmanArmUp5"/>
+   <type name="PitmanArmUp7"/>
+   <type name="ReverseLight"/>
+   <type name="Signal"/>
    <type name="String"/>
+   <type name="TailLight"/>
    <type name="univ"/>
    <type name="seq/Int"/>
 </node>
@@ -46,22 +53,13 @@
    <type name="AdaptiveHighBeam"/>
 </node>
 
-<node shape="Diamond">
-   <set name="this/Flashing" type="Lights"/>
-</node>
-
 <node shape="Lined Circle" color="White">
    <type name="Input"/>
 </node>
 
-<node style="Solid" shape="Ellipse">
-   <set name="this/On" type="Lights"/>
-</node>
-
 <node visible="no">
-   <type name="FlashingMode"/>
+   <type name="Light"/>
    <type name="PitmanArm"/>
-   <set name="this/Off" type="Lights"/>
 </node>
 
 <node visible="no" color="White">
@@ -71,7 +69,6 @@
 <edge visible="no" attribute="yes">
    <relation name="lightRotarySwitch"> <type name="Input"/> <type name="LightRotarySwitch"/> </relation>
    <relation name="pitmanArm"> <type name="Input"/> <type name="PitmanArm"/> </relation>
-   <relation name="state"> <type name="Lights"/> <type name="FlashingMode"/> </relation>
 </edge>
 
 </view>

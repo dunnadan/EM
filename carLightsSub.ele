@@ -1,46 +1,114 @@
-abstract sig Lights{}
+abstract sig Signal {}
+one sig TurnSignal extends Signal {}
+one sig EmergencyBreakLight extends Signal {}
+one sig AdaptiveHighBeam extends Signal {}
+one sig LowBeamHeadlights extends Signal {}
+one sig CorneringLights extends Signal {}
 
--- the lights may be in one of the following states
-var sig On in Lights {} 
-var sig Off in Lights {}
-var sig Flashing in Lights {
-	var state: one FlashingMode
-   -- all flashing are flashing in the same mode 
-} 
+-- done this way instead of lone sing xSignal extends Signal {}
+-- to appear the same name in the mode
+-- same expressive power, better visual mode, little extra boilerplate
+var sig On in Signal {} 
+var sig Off in Signal {}
+fact oneModeSignal { 
+	always (
+ 		Signal = On + Off and
+		no On & Off
+	)
+}
 
--- not sure if needed
-abstract sig FlashingMode {}
-one sig QuickFlashing extends FlashingMode {}
-one sig NormalFlashing extends FlashingMode {}
 
-abstract sig TurnSignal extends Lights {}
-one sig LeftTurnSignal extends TurnSignal {}
-one sig RightTurnSignal extends TurnSignal {}
+abstract sig Light {}
+one sig Blinker extends Light {}
+one sig LowBeamHeadLight extends Light {}
+one sig HighBeamHeadLight extends Light {}
+one sig CorneringLight extends Light {}
+one sig BrakeLight extends Light {}
+one sig TailLight extends Light {}
+one sig ReverseLight extends Light {}
 
-one sig EmergencyBreakLight extends Lights {}
-one sig AdaptiveHighBeam extends Lights {}
-one sig LowBeamHeadlights extends Lights {}
+one sig Car {
+	var frontRight: set Light,
+	var frontLeft: set Light,
+	var middleLeft: set Blinker,
+	var middleRight: set Blinker,
+	var backRight: set Light,
+	var backLeft: set Light,
+	var top: lone BrakeLight
+}
 
-abstract sig CorneringLights extends Lights {}
-one sig LeftCorneringLight extends CorneringLights {}
-one sig RightCorneringLight extends CorneringLights {}
+fact notAllowedInFront {
+	let front = Car.frontRight + Car.frontLeft {
+		always (
+			BrakeLight not in front or
+			TailLight not in front or
+			ReverseLight not in front
+		)
+	}
+}
+
+fact notAllowedInBack {
+	let back = Car.backRight + Car.backLeft {
+		always (
+			LowBeamHeadLight not in back or
+			HighBeamHeadLight not in back or
+			CorneringLight not in back
+		)
+	}
+}
+
+
+fact alwaysBlinkAllLights {
+	always (
+		Blinker in (Car.frontRight + Car.middleRight + Car.backRight)
+				implies Blinker in Car.frontRight and
+						Blinker in Car.middleRight and
+						Blinker in Car.backRight
+	)
+	always (
+		Blinker in (Car.frontLeft + Car.middleLeft + Car.backLeft)
+				implies Blinker in Car.frontLeft and
+						Blinker in Car.middleLeft and
+						Blinker in Car.backLeft
+	)
+}
+
+fact onlyOneBlinker {
+	always (
+		Blinker in Car.middleRight implies Blinker not in Car.middleLeft
+	)
+	always (
+		Blinker in Car.middleLeft implies Blinker not in Car.middleRight
+	)
+}
+
+-- confirm this
+-- do the same for lbh and hbh
+fact alwaysBrakeAllBackLights {
+	always (
+		BrakeLight in (Car.backRight + Car.backLeft)
+				implies BrakeLight in Car.backRight and
+						BrakeLight in Car.backLeft
+	)
+}
+
 
 one sig Input {
 	var pitmanArm: one PitmanArm,
-     var lightRotarySwitch: one LightRotarySwitch
+	var lightRotarySwitch: one LightRotarySwitch
 }
 
 abstract sig PitmanArm {
- -- 5º/10º could be done with a ternary relation here
+ -- 5º/7º could be done with a ternary relation here
  -- but some since º doesn't matter for left and right
  -- that would allow to represent "impossible" states
  -- hence this solution
 }
 one sig PitmanArmNeutral extends PitmanArm {}
 one sig PitmanArmUp5 extends PitmanArm {}
-one sig PitmanArmUp10 extends PitmanArm {}
+one sig PitmanArmUp7 extends PitmanArm {}
 one sig PitmanArmDown5 extends PitmanArm {}
-one sig PitmanArmDown10 extends PitmanArm {}
+one sig PitmanArmDown7 extends PitmanArm {}
 one sig PitmanArmLeft extends PitmanArm {}
 one sig PitmanArmRight extends PitmanArm {}
 
@@ -49,99 +117,16 @@ one sig LightSwitchOff extends LightRotarySwitch {}
 one sig LightSwitchOn extends LightRotarySwitch {} 
 one sig LightSwitchAuto extends LightRotarySwitch {} 
 
--- On/Off/FlashingAdaptiveHighBeam can't be "extended" since they are supposed
--- to be disjoint between themselves but not between "light types"
--- On/Off/Flashing could be inside "Light" (Light { state: State }) but
--- the theme wouldn't be so explicit, hence the current model 
-fact oneMode { 
-	always (
- 		Lights = On + Off + Flashing and
-		no On & Off and
-		no Off & Flashing and
-		no On & Flashing 
-	)
-}
-
-
-fact onlyOneSide {
-	always (LeftTurnSignal in Flashing implies RightTurnSignal not in Flashing
-	         and RightTurnSignal in Flashing implies LeftTurnSignal not in Flashing)
-	always (LeftCorneringLight in On implies RightCorneringLight not in On
-	         and RightCorneringLight in On implies LeftCorneringLight not in On)
-}
-
-pred on[l : Lights] {
-	l in Off
-
-	Off' = Off - l
-	On' = On + l
-
-	Flashing' = Flashing
-}
-
-pred off[l : Lights] {
-	l in On
-
-	On' = On - l
-	Off' = Off + l
-
-	Flashing' = Flashing
-}
-
-pred turn[t : TurnSignal, c : CorneringLights] {
-	t in Off
-     c in Off
-
-
-	Off' = Off - (t + c)
-	Flashing' = Flashing + t
-     On' = On + c
-}
-
-pred unturn[t : TurnSignal, c : CorneringLights] {
-	t in Flashing
-     c in On
-
-	Flashing' = Flashing - t
-     On' = On - c
-	Off' = Off + (t + c)
-}
-
-pred turn_left[] {
- turn[LeftTurnSignal, LeftCorneringLight]
-}
-pred unturn_left[] {
- unturn[LeftTurnSignal, LeftCorneringLight]
-}
-pred turn_right[] {
- turn[RightTurnSignal, RightCorneringLight]
-}
-pred unturn_right[] {
- unturn[RightTurnSignal, RightCorneringLight]
-}
-
-pred turn_unturn[] {
- turn_left or unturn_left or
- turn_right or unturn_right
-}
-
-
-pred do_nothing[] {
-	On' = On
-	Off' = Off
-	Flashing' = Flashing
-}
 
 fact init {
-	Lights in Off
 	Input.pitmanArm in PitmanArmNeutral
      Input.lightRotarySwitch in LightSwitchOff
-}
+     Signal in Off
+     no ( Car.frontRight + Car.frontLeft +
+	     Car.middleRight + Car.middleLeft +
+	     Car.backRight + Car.backLeft +
+	     Car.top )
 
-fact transitions {
-  always (
-   turn_unturn or on[EmergencyBreakLight] or off[EmergencyBreakLight] or do_nothing
-  )
 }
 
 run {} for 50
