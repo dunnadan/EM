@@ -43,17 +43,17 @@ one sig LightSwitchAuto extends LightRotarySwitch {}
 -- the theme wouldn't be so explicit, hence the current model 
 fact oneMode { 
 	always (
- 	Lights = On + Off + Flashing and
-	no On & Off and
-	no Off & Flashing and
-	no On & Flashing 
+ 		Lights = On + Off + Flashing and
+		no On & Off and
+		no Off & Flashing and
+		no On & Flashing 
 	)
 }
 
 
-fact onlyOneTurnSignal {
-	always (LeftTurnSignal in On implies RightTurnSignal not in On
-	         and RightTurnSignal in On implies LeftTurnSignal not in On)
+fact onlyOneSide {
+	always (LeftTurnSignal in Flashing implies RightTurnSignal not in Flashing
+	         and RightTurnSignal in Flashing implies LeftTurnSignal not in Flashing)
 	always (LeftCorneringLight in On implies RightCorneringLight not in On
 	         and RightCorneringLight in On implies LeftCorneringLight not in On)
 }
@@ -76,35 +76,36 @@ pred off[l : Lights] {
 	Flashing' = Flashing
 }
 
-pred turn[l : Lights] {
-	l in Off
+pred turn[t : TurnSignal, c : CorneringLights] {
+	t in Off
+     c in Off
 
-	Off' = Off - l
-	Flashing' = Flashing + l
 
-	On' = On
+	Off' = Off - (t + c)
+	Flashing' = Flashing + t
+     On' = On + c
 }
 
-pred unturn[l : Lights] {
-	l in Flashing
+pred unturn[t : TurnSignal, c : CorneringLights] {
+	t in Flashing
+     c in On
 
-	Flashing' = Flashing - l
-	Off' = Off + l
-
-	On' = On
+	Flashing' = Flashing - t
+     On' = On - c
+	Off' = Off + (t + c)
 }
 
 pred turn_left[] {
- turn[LeftTurnSignal]
+ turn[LeftTurnSignal, LeftCorneringLight]
 }
 pred unturn_left[] {
- unturn[LeftTurnSignal]
+ unturn[LeftTurnSignal, LeftCorneringLight]
 }
 pred turn_right[] {
- turn[RightTurnSignal]
+ turn[RightTurnSignal, RightCorneringLight]
 }
 pred unturn_right[] {
- unturn[RightTurnSignal]
+ unturn[RightTurnSignal, RightCorneringLight]
 }
 
 pred turn_unturn[] {
