@@ -27,14 +27,25 @@ one sig BrakeLight extends Light {}
 one sig TailLight extends Light {}
 one sig ReverseLight extends Light {}
 
+var sig Blinking in Light {}
+
 one sig Car {
 	var frontRight: set Light,
 	var frontLeft: set Light,
-	var middleLeft: set Blinker,
-	var middleRight: set Blinker,
+	var middleLeft: lone Blinker,
+	var middleRight: lone Blinker,
 	var backRight: set Light,
 	var backLeft: set Light,
 	var top: lone BrakeLight
+}
+
+fact onlyBlinkInCar {
+	always (
+		Blinking in (Car.frontRight + Car.frontLeft +
+		           Car.middleRight + Car.middleLeft +
+                      Car.backRight + Car.backLeft +
+                      Car.top)
+	)
 }
 
 fact notAllowedInFront {
@@ -94,12 +105,14 @@ fact alwaysBrakeAllBackLights {
 
 
 one sig Input {
+	var key: one Key,
+	var prevPitman: one PitmanArm,
 	var pitmanArm: one PitmanArm,
 	var lightRotarySwitch: one LightRotarySwitch
 }
 
 abstract sig PitmanArm {
- -- 5º/7º could be done with a ternary relation here
+ -- 5º/7º could be done with a relation here
  -- but some since º doesn't matter for left and right
  -- that would allow to represent "impossible" states
  -- hence this solution
@@ -109,8 +122,13 @@ one sig PitmanArmUp5 extends PitmanArm {}
 one sig PitmanArmUp7 extends PitmanArm {}
 one sig PitmanArmDown5 extends PitmanArm {}
 one sig PitmanArmDown7 extends PitmanArm {}
-one sig PitmanArmLeft extends PitmanArm {}
-one sig PitmanArmRight extends PitmanArm {}
+one sig PitmanArmForward extends PitmanArm {}
+one sig PitmanArmBackward extends PitmanArm {}
+
+abstract sig Key {}
+one sig NoKeyInserted extends Key {}
+one sig KeyInserted extends Key {}
+one sig KeyInIgnitionOnPosition extends Key {}
 
 abstract sig LightRotarySwitch {}
 one sig LightSwitchOff extends LightRotarySwitch {}
@@ -119,7 +137,9 @@ one sig LightSwitchAuto extends LightRotarySwitch {}
 
 
 fact init {
+	Input.prevPitman in PitmanArmNeutral
 	Input.pitmanArm in PitmanArmNeutral
+	Input.key in NoKeyInserted
      Input.lightRotarySwitch in LightSwitchOff
      Signal in Off
      no ( Car.frontRight + Car.frontLeft +
@@ -127,6 +147,10 @@ fact init {
 	     Car.backRight + Car.backLeft +
 	     Car.top )
 
+}
+
+fact updatePitmanHistory {
+	Input.prevPitman' = Input.prevPitman
 }
 
 run {} for 50

@@ -10,60 +10,76 @@
 <node>
    <type name="Blinker"/>
    <type name="BrakeLight"/>
-   <type name="Car"/>
    <type name="CorneringLight"/>
    <type name="HighBeamHeadLight"/>
    <type name="Int"/>
+   <type name="KeyInIgnitionOnPosition"/>
+   <type name="KeyInserted"/>
    <type name="LightSwitchAuto"/>
    <type name="LightSwitchOff"/>
    <type name="LightSwitchOn"/>
    <type name="LowBeamHeadLight"/>
+   <type name="NoKeyInserted"/>
+   <type name="PitmanArmBackward"/>
    <type name="PitmanArmDown5"/>
    <type name="PitmanArmDown7"/>
-   <type name="PitmanArmLeft"/>
+   <type name="PitmanArmForward"/>
    <type name="PitmanArmNeutral"/>
-   <type name="PitmanArmRight"/>
    <type name="PitmanArmUp5"/>
    <type name="PitmanArmUp7"/>
    <type name="ReverseLight"/>
-   <type name="Signal"/>
    <type name="String"/>
    <type name="TailLight"/>
    <type name="univ"/>
    <type name="seq/Int"/>
-</node>
-
-<node color="Blue">
-   <type name="LowBeamHeadlights"/>
-</node>
-
-<node color="Gray">
-   <type name="TurnSignal"/>
-</node>
-
-<node color="Green">
-   <type name="CorneringLights"/>
-</node>
-
-<node color="Red">
-   <type name="EmergencyBreakLight"/>
-</node>
-
-<node color="Yellow">
-   <type name="AdaptiveHighBeam"/>
+   <set name="this/On" type="Signal"/>
 </node>
 
 <node shape="Lined Circle" color="White">
    <type name="Input"/>
 </node>
 
+<node shape="Trapezoid" color="White">
+   <type name="Car"/>
+</node>
+
+<node style="Dashed">
+   <type name="Signal"/>
+</node>
+
+<node style="Dashed" color="Blue">
+   <type name="LowBeamHeadlights"/>
+</node>
+
+<node style="Dashed" color="Gray">
+   <type name="TurnSignal"/>
+</node>
+
+<node style="Dashed" color="Green">
+   <type name="CorneringLights"/>
+</node>
+
+<node style="Dashed" color="Red">
+   <type name="EmergencyBreakLight"/>
+</node>
+
+<node style="Dashed" color="Yellow">
+   <type name="AdaptiveHighBeam"/>
+</node>
+
 <node visible="no">
+   <type name="Key"/>
    <type name="Light"/>
    <type name="PitmanArm"/>
+   <set name="this/Off" type="Signal"/>
 </node>
 
 <node visible="no" color="White">
    <type name="LightRotarySwitch"/>
+</node>
+
+<node visible="yes" color="White">
+   <set name="this/Blinking" type="Light"/>
 </node>
 
 <edge visible="no" attribute="yes">
