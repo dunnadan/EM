@@ -1,9 +1,10 @@
 abstract sig Signal {}
-one sig TurnSignal extends Signal {}
+--one sig TurnSignal extends Signal {}
 one sig EmergencyBreakLight extends Signal {}
 one sig AdaptiveHighBeam extends Signal {}
 one sig LowBeamHeadlights extends Signal {}
 one sig CorneringLights extends Signal {}
+--one sig AmbientLight extends Signal {}
 
 -- done this way instead of lone sing xSignal extends Signal {}
 -- to appear the same name in the mode
@@ -27,7 +28,6 @@ one sig BrakeLight extends Light {}
 one sig TailLight extends Light {}
 one sig ReverseLight extends Light {}
 
-var sig Blinking in Light {}
 
 one sig Car {
 	var frontRight: set Light,
@@ -39,14 +39,6 @@ one sig Car {
 	var top: lone BrakeLight
 }
 
-fact onlyBlinkInCar {
-	always (
-		Blinking in (Car.frontRight + Car.frontLeft +
-		           Car.middleRight + Car.middleLeft +
-                      Car.backRight + Car.backLeft +
-                      Car.top)
-	)
-}
 
 fact notAllowedInFront {
 	let front = Car.frontRight + Car.frontLeft {
@@ -149,8 +141,58 @@ fact init {
 
 }
 
+fact transitions {
+	always (
+		directionBlinking or insertKey
+	)	
+}
+
 fact updatePitmanHistory {
 	Input.prevPitman' = Input.prevPitman
 }
+
+
+pred insertKey {
+	Input.key' = KeyInIgnitionOnPosition
+
+ 	Car.frontRight' = Car.frontRight
+	Car.frontLeft' = Car.frontLeft
+	Car.middleRight' = Car.middleRight
+	Car.middleLeft' = Car.middleLeft
+	Car.backRight' = Car.backRight
+	Car.backLeft' = Car.backLeft
+	Car.top' = Car.top
+	Input.pitmanArm' = Input.pitmanArm
+     Input.prevPitman' = Input.pitmanArm
+	Input.lightRotarySwitch' = Input.lightRotarySwitch
+	On' = On
+	Off' = Off
+}
+
+pred directionBlinking {
+	Input.key = KeyInIgnitionOnPosition
+	els1
+}
+
+pred els1 {
+	Input.pitmanArm' = PitmanArmDown5
+     Input.prevPitman' = Input.pitmanArm
+	
+	Car.frontLeft' = Car.frontLeft + Blinker
+	Car.middleLeft' = Car.middleLeft + Blinker
+	Car.backLeft' = Car.backLeft + Blinker
+	
+	-- post condition
+	On' = On
+	Off' = Off
+	Car.frontRight' = Car.frontRight
+	Car.middleRight' = Car.middleRight
+	Car.backRight' = Car.backRight
+	Car.top' = Car.top
+	Input.key' = Input.key
+	Input.lightRotarySwitch' = Input.lightRotarySwitch
+     
+}
+
 
 run {} for 50
