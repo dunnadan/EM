@@ -27,6 +27,7 @@ one sig CorneringLight extends Light {}
 one sig BrakeLight extends Light {}
 one sig TailLight extends Light {}
 one sig ReverseLight extends Light {}
+one sig AmbientLight extends Light {}
 
 
 one sig Car {
@@ -37,6 +38,7 @@ one sig Car {
 	var backRight: set Light,
 	var backLeft: set Light,
 	var top: lone BrakeLight
+--	var driver: lone Driver
 }
 
 
@@ -100,7 +102,8 @@ one sig Input {
 	var key: one Key,
 	var prevPitman: one PitmanArm,
 	var pitmanArm: one PitmanArm,
-	var lightRotarySwitch: one LightRotarySwitch
+	var lightRotarySwitch: one LightRotarySwitch,
+	--var ambientLightButton: one AmbientLightButton
 }
 
 abstract sig PitmanArm {
@@ -153,6 +156,8 @@ fact updatePitmanHistory {
 
 
 pred insertKey {
+	--Input.key = NoKeyInserted
+	
 	Input.key' = KeyInIgnitionOnPosition
 
  	Car.frontRight' = Car.frontRight
@@ -163,11 +168,33 @@ pred insertKey {
 	Car.backLeft' = Car.backLeft
 	Car.top' = Car.top
 	Input.pitmanArm' = Input.pitmanArm
-     Input.prevPitman' = Input.pitmanArm
+     	Input.prevPitman' = Input.pitmanArm
 	Input.lightRotarySwitch' = Input.lightRotarySwitch
 	On' = On
 	Off' = Off
+	--Car.driver' = Car.driver
 }
+
+--pred rotateKey {
+
+--	Input.key = KeyInserted
+
+--	Input.key' = KeyInIgnitionOnPosition
+
+--	Car.frontRight' = Car.frontRight
+--	Car.frontLeft' = Car.frontLeft
+--	Car.middleRight' = Car.middleRight
+--	Car.middleLeft' = Car.middleLeft
+--	Car.backRight' = Car.backRight
+--	Car.backLeft' = Car.backLeft
+--	Car.top' = Car.top
+--	Input.pitmanArm' = Input.pitmanArm
+--   	Input.prevPitman' = Input.pitmanArm
+--	Input.lightRotarySwitch' = Input.lightRotarySwitch
+--	On' = On
+--	Off' = Off
+--	Car.driver' = Car.driver
+--}
 
 pred directionBlinking {
 	Input.key = KeyInIgnitionOnPosition
@@ -176,7 +203,7 @@ pred directionBlinking {
 
 pred els1 {
 	Input.pitmanArm' = PitmanArmDown5
-     Input.prevPitman' = Input.pitmanArm
+     	Input.prevPitman' = Input.pitmanArm
 	
 	Car.frontLeft' = Car.frontLeft + Blinker
 	Car.middleLeft' = Car.middleLeft + Blinker
@@ -191,6 +218,7 @@ pred els1 {
 	Car.top' = Car.top
 	Input.key' = Input.key
 	Input.lightRotarySwitch' = Input.lightRotarySwitch
+	--Car.driver' = Car.driver
      
 }
 
@@ -207,3 +235,37 @@ run {} for 50
 --uhfddiuehefwukjfbwejuchwi 
 
 --ygygikju
+
+abstract sig AmbientLightButton {}
+one sig AmbientLightButtonOn extends AmbientLightButton{}
+one sig AmbientLightButtonOff extends AmbientLightButton{}
+
+abstract sig Driver{}
+one sig DriverInside extends Driver {}
+one sig DriverOutside extends Driver {} 
+
+
+--pred activateAmbientLight {
+	--pre-cond
+	--Input.key = KeyInserted
+	--Input.ambientLightButton = AmbientLightButtonOn
+--	Car.driver = DriverInside
+	
+	--transitions
+	--Car.frontLeft' = Car.frontLeft + LowBeamHeadLight
+--	Car.frontRight' = Car.frontRight + LowBeamHeadLight
+	--Car.middleLeft' = Car.middleLeft + AmbientLight
+	--Car.middleRight' = Car.middleRight + AmbientLight
+	--Car.backLeft' = Car.backLeft + AmbientLight
+	--Car.backRight' = Car.backRight + AmbientLight
+
+	--post-cond
+	--On' = On
+	--Off' = Off
+	--Car.top' = Car.top
+	--Input.pitmanArm' = Input.pitmanArm
+     	--Input.prevPitman' = Input.pitmanArm
+	--Input.lightRotarySwitch' = Input.lightRotarySwitch
+
+--}
+
