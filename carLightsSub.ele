@@ -98,7 +98,6 @@ fact alwaysBrakeAllBackLights {
 
 one sig Input {
 	var key: one Key,
-	var prevPitman: one PitmanArm,
 	var pitmanArm: one PitmanArm,
 	var lightRotarySwitch: one LightRotarySwitch,
 	var ambientLightButton: one AmbientLightButton,
@@ -142,7 +141,6 @@ one sig Signals {
 }
 
 fact init {
-	Input.prevPitman in PitmanArmNeutral
 	Input.pitmanArm in PitmanArmNeutral
 	Input.key in NoKeyInserted
      Input.lightRotarySwitch in LightSwitchOff
@@ -162,9 +160,6 @@ fact transitions {
 	)	
 }
 
-fact updatePitmanHistory {
-	Input.prevPitman' = Input.prevPitman
-}
 
 
 pred insertKey {
@@ -180,7 +175,6 @@ pred insertKey {
 	Car.backLeft' = Car.backLeft
 	Car.top' = Car.top
 	Input.pitmanArm' = Input.pitmanArm
-     	Input.prevPitman' = Input.pitmanArm
 	Input.lightRotarySwitch' = Input.lightRotarySwitch
 	On' = On
 	Off' = Off
@@ -214,9 +208,10 @@ pred directionBlinking {
 	els1
 }
 
+-- compor isto
 pred els1 {
 	Input.pitmanArm' = PitmanArmDown5
-     	Input.prevPitman' = Input.pitmanArm
+
 	
 	Car.frontLeft' = Car.frontLeft + Blinker
 	Car.middleLeft' = Car.middleLeft + Blinker
@@ -258,7 +253,6 @@ pred activateAmbientLight {
 	Off' = Off
 	Car.top' = Car.top
 	Input.pitmanArm' = Input.pitmanArm
-     	Input.prevPitman' = Input.prevPitman
 	Input.lightRotarySwitch' = Input.lightRotarySwitch
 
 }
