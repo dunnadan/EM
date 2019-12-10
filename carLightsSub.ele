@@ -147,7 +147,7 @@ pred keys {
 pred insertKey {
 	Input.key = NoKeyInserted
 	
-	Input.key' = KeyInIgnitionOnPosition
+	Input.key' = KeyInserted
 
  	Car.frontRight' = Car.frontRight
 	Car.frontLeft' = Car.frontLeft
@@ -201,6 +201,24 @@ fact init {
 
 }
 
+pred do_nothing {
+	Input.pitmanArm' = Input.pitmanArm
+	Car.frontLeft' = Car.frontLeft 
+	Car.middleLeft' = Car.middleLeft 
+	Car.backLeft' = Car.backLeft 
+	On' = On
+	Off' = Off
+	Car.frontRight' = Car.frontRight
+	Car.middleRight' = Car.middleRight
+	Car.backRight' = Car.backRight
+	Car.top' = Car.top
+	Input.key' = Input.key
+	Input.lightRotarySwitch' = Input.lightRotarySwitch
+	Input.driver' = Input.driver
+	Input.ambientLightButton' = Input.ambientLightButton
+     
+}
+
 fact transitions {
 	always (
 		directionBlinking or keys
@@ -213,12 +231,57 @@ fact transitions {
 
 pred directionBlinking {
 	Input.key = KeyInIgnitionOnPosition
-	els1
+	tmpLeftBlinking or stopTmpLeftBlinkg or leftBlinking
 }
 
 -- compor isto
-pred els1 {
+pred tmpLeftBlinking {
+
 	Input.pitmanArm' = PitmanArmDown5
+	Car.frontLeft' = Car.frontLeft + Blinker
+	Car.middleLeft' = Car.middleLeft + Blinker
+	Car.backLeft' = Car.backLeft + Blinker
+
+	Blinker not in Car.frontLeft'' 
+	Blinker not in Car.middleLeft''
+	Blinker not in Car.backLeft''
+	
+	-- post condition
+	On' = On
+	Off' = Off
+	Car.frontRight' = Car.frontRight
+	Car.middleRight' = Car.middleRight
+	Car.backRight' = Car.backRight
+	Car.top' = Car.top
+	Input.key' = Input.key
+	Input.lightRotarySwitch' = Input.lightRotarySwitch
+	Input.driver' = Input.driver
+	Input.ambientLightButton' = Input.ambientLightButton
+     
+}
+
+pred stopTmpLeftBlinkg {
+	Input.pitmanArm = PitmanArmDown5
+
+	Input.pitmanArm' = PitmanArmNeutral
+	Car.frontLeft' = Car.frontLeft - Blinker
+	Car.middleLeft' = Car.middleLeft - Blinker
+	Car.backLeft' = Car.backLeft - Blinker
+
+	On' = On
+	Off' = Off
+	Car.frontRight' = Car.frontRight
+	Car.middleRight' = Car.middleRight
+	Car.backRight' = Car.backRight
+	Car.top' = Car.top
+	Input.key' = Input.key
+	Input.lightRotarySwitch' = Input.lightRotarySwitch
+	Input.driver' = Input.driver
+	Input.ambientLightButton' = Input.ambientLightButton
+}
+
+pred leftBlinking {
+	Input.pitmanArm' = PitmanArmDown7
 
 	
 	Car.frontLeft' = Car.frontLeft + Blinker
