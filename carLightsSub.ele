@@ -358,6 +358,49 @@ pred activateAmbientLight {
 
 }
 
+pred keys {
+	insertKey or rotateKey
+}
+
+pred insertKey {
+	Input.key = NoKeyInserted
+	
+	Input.key' = KeyInserted
+
+ 	Car.frontRight' = Car.frontRight
+	Car.frontLeft' = Car.frontLeft
+	Car.middleRight' = Car.middleRight
+	Car.middleLeft' = Car.middleLeft
+	Car.backRight' = Car.backRight
+	Car.backLeft' = Car.backLeft
+	Car.top' = Car.top
+	Input.pitmanArm' = Input.pitmanArm
+	Input.lightRotarySwitch' = Input.lightRotarySwitch
+	On' = On
+	Off' = Off
+	Input.driver' = Input.driver
+	Input.ambientLightButton' = Input.ambientLightButton
+}
+
+pred rotateKey {
+	Input.key = KeyInserted
+
+	Input.key' = KeyInIgnitionOnPosition
+
+	Car.frontRight' = Car.frontRight
+	Car.frontLeft' = Car.frontLeft
+	Car.middleRight' = Car.middleRight
+	Car.middleLeft' = Car.middleLeft
+	Car.backRight' = Car.backRight
+	Car.backLeft' = Car.backLeft
+	Car.top' = Car.top
+	Input.pitmanArm' = Input.pitmanArm
+	Input.lightRotarySwitch' = Input.lightRotarySwitch
+	On' = On
+	Off' = Off
+	Input.driver' = Input.driver
+	Input.ambientLightButton' = Input.ambientLightButton
+}
 ----------------------------------------------------------------------------------------------------
 fact init {
 	Input.pitmanArm in PitmanArmNeutral
