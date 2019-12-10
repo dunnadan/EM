@@ -121,16 +121,16 @@ one sig Input {
 	var driver: one Driver
 }
 pred lightOn {
-	Input.lightRotarySwitch' = LightRotarySwitchOn
+	Input.lightRotarySwitch' = LightSwitchOn
 }
 pred lightOff {
-	Input.lightRotarySwitch' = LightRotarySwitchOff
+	Input.lightRotarySwitch' = LightSwitchOff
 }
 pred lightAuto {
-	Input.lightRotarySwitch' = LightRotarySwitchAuto
+	Input.lightRotarySwitch' = LightSwitchAuto
 }
 pred ambientLightOn {
-	ambientLightButton' = ambientLight
+	Input.ambientLightButton' = AmbientLightButtonOn
 }
 
 abstract sig PitmanArm {
