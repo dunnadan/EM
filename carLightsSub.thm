@@ -9,8 +9,6 @@
 
 <node>
    <type name="AmbientLight"/>
-   <type name="AmbientLightButtonOff"/>
-   <type name="AmbientLightButtonOn"/>
    <type name="Blinker"/>
    <type name="BrakeLight"/>
    <type name="CorneringLight"/>
@@ -20,24 +18,35 @@
    <type name="Int"/>
    <type name="KeyInIgnitionOnPosition"/>
    <type name="KeyInserted"/>
-   <type name="LightSwitchAuto"/>
-   <type name="LightSwitchOff"/>
-   <type name="LightSwitchOn"/>
    <type name="LowBeamHeadLight"/>
    <type name="NoKeyInserted"/>
    <type name="PitmanArmBackward"/>
-   <type name="PitmanArmDown5"/>
-   <type name="PitmanArmDown7"/>
    <type name="PitmanArmForward"/>
-   <type name="PitmanArmNeutral"/>
-   <type name="PitmanArmUp5"/>
-   <type name="PitmanArmUp7"/>
    <type name="ReverseLight"/>
    <type name="String"/>
    <type name="TailLight"/>
+   <type name="TurnSignal"/>
    <type name="univ"/>
    <type name="seq/Int"/>
    <set name="this/On" type="Signal"/>
+</node>
+
+<node color="Gray">
+   <type name="AmbientLightButtonOff"/>
+   <type name="LightSwitchOff"/>
+</node>
+
+<node color="Green">
+   <type name="AmbientLightButtonOn"/>
+   <type name="LightSwitchOn"/>
+</node>
+
+<node color="Yellow">
+   <type name="LightSwitchAuto"/>
+</node>
+
+<node shape="Ellipse">
+   <type name="PitmanArmNeutral"/>
 </node>
 
 <node shape="Lined Circle" color="White">
@@ -46,10 +55,6 @@
 
 <node shape="Trapezoid" color="White">
    <type name="Car"/>
-</node>
-
-<node style="Dashed">
-   <type name="Signal"/>
 </node>
 
 <node style="Dashed" color="Blue">
@@ -68,23 +73,56 @@
    <type name="AdaptiveHighBeam"/>
 </node>
 
-<node visible="no">
-   <type name="AmbientLightButton"/>
-   <type name="Key"/>
-   <type name="Light"/>
-   <type name="PitmanArm"/>
-   <set name="this/Off" type="Signal"/>
+<node style="Dashed" shape="Inv Triangle">
+   <type name="PitmanArmUp5"/>
 </node>
 
-<node visible="no" color="White">
-   <type name="LightRotarySwitch"/>
+<node style="Dashed" shape="Triangle">
+   <type name="PitmanArmDown5"/>
+</node>
+
+<node style="Solid" shape="Inv Triangle">
+   <type name="PitmanArmUp7"/>
+</node>
+
+<node style="Solid" shape="Triangle">
+   <type name="PitmanArmDown7"/>
+</node>
+
+<node visible="no">
+   <type name="Key"/>
+   <type name="Light"/>
+   <set name="this/Off" type="Signal"/>
 </node>
 
 <node visible="no" hideunconnected="yes">
    <type name="Driver"/>
 </node>
 
+<node visible="no" style="Dashed">
+   <type name="Signal"/>
+</node>
+
+<node visible="yes" hideunconnected="yes">
+   <type name="AmbientLightButton"/>
+   <type name="PitmanArm"/>
+</node>
+
+<node visible="yes" hideunconnected="yes" shape="Ellipse" color="White">
+   <type name="LightRotarySwitch"/>
+</node>
+
+<edge attribute="no">
+   <relation name="prevPitman"> <type name="Input"/> <type name="PitmanArm"/> </relation>
+</edge>
+
 <edge visible="no" attribute="yes">
+   <relation name="driver"> <type name="Input"/> <type name="Driver"/> </relation>
+   <relation name="key"> <type name="Input"/> <type name="Key"/> </relation>
+</edge>
+
+<edge visible="yes" attribute="no">
+   <relation name="ambientLightButton"> <type name="Input"/> <type name="AmbientLightButton"/> </relation>
    <relation name="lightRotarySwitch"> <type name="Input"/> <type name="LightRotarySwitch"/> </relation>
    <relation name="pitmanArm"> <type name="Input"/> <type name="PitmanArm"/> </relation>
 </edge>
