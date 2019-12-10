@@ -4,6 +4,7 @@ one sig EmergencyBreakLight extends Signal {}
 one sig AdaptiveHighBeam extends Signal {}
 one sig LowBeamHeadlights extends Signal {}
 one sig CorneringLights extends Signal {}
+one sig BlinkerLights extends Signal {}
 
 -- done this way instead of lone sing xSignal extends Signal {}
 -- to appear the same name in the model
@@ -170,14 +171,15 @@ pred tmpRightBlinking {
 	Car.frontRight' = Car.frontRight + Blinker
 	Car.middleRight' = Car.middleRight + Blinker
 	Car.backRight' = Car.backRight + Blinker
+	On' = On + BlinkerLights
+	Off' = Off - BlinkerLights
 
 	Blinker not in Car.frontRight'' 
 	Blinker not in Car.middleRight''
 	Blinker not in Car.backRight''
 	
 	-- post condition
-	On' = On
-	Off' = Off
+
 	Car.frontLeft' = Car.frontLeft
 	Car.middleLeft' = Car.middleLeft
 	Car.backLeft' = Car.backLeft
@@ -196,9 +198,9 @@ pred stopTmpRightBlinking {
 	Car.frontRight' = Car.frontRight - Blinker
 	Car.middleRight' = Car.middleRight - Blinker
 	Car.backRight' = Car.backRight - Blinker
+	Off' = Off - BlinkerLights
+	On' = On + BlinkerLights
 
-	On' = On
-	Off' = Off
 	Car.frontLeft' = Car.frontLeft
 	Car.middleLeft' = Car.middleLeft
 	Car.backLeft' = Car.backLeft
@@ -216,10 +218,9 @@ pred rightBlinking {
 	Car.frontRight' = Car.frontRight + Blinker
 	Car.middleRight' = Car.middleRight + Blinker
 	Car.backRight' = Car.backRight + Blinker
-	
-	-- post condition
-	On' = On
-	Off' = Off
+	On' = On + BlinkerLights
+	Off' = Off - BlinkerLights
+
 	Car.frontLeft' = Car.frontLeft
 	Car.middleLeft' = Car.middleLeft
 	Car.backLeft' = Car.backLeft
@@ -237,14 +238,14 @@ pred tmpLeftBlinking {
 	Car.frontLeft' = Car.frontLeft + Blinker
 	Car.middleLeft' = Car.middleLeft + Blinker
 	Car.backLeft' = Car.backLeft + Blinker
+	On' = On + BlinkerLights
+	Off' = Off - BlinkerLights
 
 	Blinker not in Car.frontLeft'' 
 	Blinker not in Car.middleLeft''
 	Blinker not in Car.backLeft''
 	
-	-- post condition
-	On' = On
-	Off' = Off
+
 	Car.frontRight' = Car.frontRight
 	Car.middleRight' = Car.middleRight
 	Car.backRight' = Car.backRight
@@ -263,9 +264,9 @@ pred stopTmpLeftBlinking {
 	Car.frontLeft' = Car.frontLeft - Blinker
 	Car.middleLeft' = Car.middleLeft - Blinker
 	Car.backLeft' = Car.backLeft - Blinker
+	Off' = Off - BlinkerLights
+	On' = On + BlinkerLights
 
-	On' = On
-	Off' = Off
 	Car.frontRight' = Car.frontRight
 	Car.middleRight' = Car.middleRight
 	Car.backRight' = Car.backRight
@@ -283,10 +284,9 @@ pred leftBlinking {
 	Car.frontLeft' = Car.frontLeft + Blinker
 	Car.middleLeft' = Car.middleLeft + Blinker
 	Car.backLeft' = Car.backLeft + Blinker
-	
-	-- post condition
-	On' = On
-	Off' = Off
+	On' = On + BlinkerLights
+	Off' = Off - BlinkerLights
+
 	Car.frontRight' = Car.frontRight
 	Car.middleRight' = Car.middleRight
 	Car.backRight' = Car.backRight
@@ -507,6 +507,7 @@ pred rotateKey {
 	Input.driver' = Input.driver
 	Input.ambientLightButton' = Input.ambientLightButton
 }
+
 
 ----------------------------------------------------------------------------------------------------
 fact init {
