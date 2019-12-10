@@ -17,6 +17,10 @@ fact oneModeSignal {
 	)
 }
 
+one sig Signals {
+	var signals: set On
+}
+----------------------------------------------------------------------------------------------------
 
 abstract sig Light {}
 one sig Blinker extends Light {}
@@ -107,7 +111,7 @@ fact alwaysBrakeAllBackLights {
 						BrakeLight in Car.backLeft
 	)
 }
-
+----------------------------------------------------------------------------------------------------
 
 one sig Input {
 	var key: one Key,
@@ -147,102 +151,12 @@ one sig AmbientLightButtonOff extends AmbientLightButton{}
 
 abstract sig Driver {}
 one sig DriverInside extends Driver {}
-one sig DriverOutside extends Driver {} 
-
-one sig Signals {
-	var signals: set On
-}
-
-pred keys {
-	insertKey or rotateKey
-}
-
-pred insertKey {
-	Input.key = NoKeyInserted
-	
-	Input.key' = KeyInserted
-
- 	Car.frontRight' = Car.frontRight
-	Car.frontLeft' = Car.frontLeft
-	Car.middleRight' = Car.middleRight
-	Car.middleLeft' = Car.middleLeft
-	Car.backRight' = Car.backRight
-	Car.backLeft' = Car.backLeft
-	Car.top' = Car.top
-	Input.pitmanArm' = Input.pitmanArm
-	Input.lightRotarySwitch' = Input.lightRotarySwitch
-	On' = On
-	Off' = Off
-	Input.driver' = Input.driver
-	Input.ambientLightButton' = Input.ambientLightButton
-}
-
-pred rotateKey {
-	Input.key = KeyInserted
-
-	Input.key' = KeyInIgnitionOnPosition
-
-	Car.frontRight' = Car.frontRight
-	Car.frontLeft' = Car.frontLeft
-	Car.middleRight' = Car.middleRight
-	Car.middleLeft' = Car.middleLeft
-	Car.backRight' = Car.backRight
-	Car.backLeft' = Car.backLeft
-	Car.top' = Car.top
-	Input.pitmanArm' = Input.pitmanArm
-	Input.lightRotarySwitch' = Input.lightRotarySwitch
-	On' = On
-	Off' = Off
-	Input.driver' = Input.driver
-	Input.ambientLightButton' = Input.ambientLightButton
-}
-
-fact init {
-	Input.pitmanArm in PitmanArmNeutral
-	Input.key in NoKeyInserted
-     	Input.lightRotarySwitch in LightSwitchOff
-	Input.ambientLightButton in AmbientLightButtonOff
-	Input.driver in DriverInside
-
-	Signal in Off
-	
-	
-     no ( Car.frontRight + Car.frontLeft +
-	     Car.middleRight + Car.middleLeft +
-	     Car.backRight + Car.backLeft +
-	     Car.top )
-
-}
-
-pred do_nothing {
-	Input.pitmanArm' = Input.pitmanArm
-	Car.frontLeft' = Car.frontLeft 
-	Car.middleLeft' = Car.middleLeft 
-	Car.backLeft' = Car.backLeft 
-	On' = On
-	Off' = Off
-	Car.frontRight' = Car.frontRight
-	Car.middleRight' = Car.middleRight
-	Car.backRight' = Car.backRight
-	Car.top' = Car.top
-	Input.key' = Input.key
-	Input.lightRotarySwitch' = Input.lightRotarySwitch
-	Input.driver' = Input.driver
-	Input.ambientLightButton' = Input.ambientLightButton
-     
-}
-
-fact transitions {
-	always (
-		activateAmbientLight or keys or leaveCar or enterCar or
-		directionBlinking
-	)	
-}
+one sig DriverOutside extends Driver {}
+----------------------------------------------------------------------------------------------------
 
 
 
-
-
+----------------------------------------------------------------------------------------------------
 pred directionBlinking {
 	Input.key = KeyInIgnitionOnPosition
 	(tmpLeftBlinking or stopTmpLeftBlinking or leftBlinking or
@@ -384,9 +298,6 @@ pred leftBlinking {
      
 }
 
-
-run {} for 50
-
 pred enterCar {
 	Input.driver = DriverOutside
 	
@@ -447,3 +358,29 @@ pred activateAmbientLight {
 
 }
 
+----------------------------------------------------------------------------------------------------
+fact init {
+	Input.pitmanArm in PitmanArmNeutral
+	Input.key in NoKeyInserted
+     	Input.lightRotarySwitch in LightSwitchOff
+	Input.ambientLightButton in AmbientLightButtonOff
+	Input.driver in DriverInside
+
+	Signal in Off
+	
+	
+     no ( Car.frontRight + Car.frontLeft +
+	     Car.middleRight + Car.middleLeft +
+	     Car.backRight + Car.backLeft +
+	     Car.top )
+
+}
+
+fact transitions {
+	always (
+		activateAmbientLight or keys or leaveCar or enterCar or
+		directionBlinking
+	)	
+}
+
+run {} for 50
