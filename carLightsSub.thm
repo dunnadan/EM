@@ -78,19 +78,19 @@
 </node>
 
 <node style="Dashed" shape="Inv Triangle">
-   <type name="PitmanArmUp5"/>
-</node>
-
-<node style="Dashed" shape="Triangle">
    <type name="PitmanArmDown5"/>
 </node>
 
+<node style="Dashed" shape="Triangle">
+   <type name="PitmanArmUp5"/>
+</node>
+
 <node style="Solid" shape="Inv Triangle">
-   <type name="PitmanArmUp7"/>
+   <type name="PitmanArmDown7"/>
 </node>
 
 <node style="Solid" shape="Triangle">
-   <type name="PitmanArmDown7"/>
+   <type name="PitmanArmUp7"/>
 </node>
 
 <node visible="no">
@@ -115,10 +115,6 @@
 <node visible="yes" hideunconnected="yes" style="Dashed">
    <type name="Signal"/>
 </node>
-
-<edge attribute="no">
-   <relation name="prevPitman"> <type name="Input"/> <type name="PitmanArm"/> </relation>
-</edge>
 
 <edge visible="no" attribute="yes">
    <relation name="driver"> <type name="Input"/> <type name="Driver"/> </relation>

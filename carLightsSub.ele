@@ -32,8 +32,8 @@ one sig AmbientLight extends Light {}
 one sig Car {
 	var frontRight: set Light,
 	var frontLeft: set Light,
-	var middleLeft: lone Blinker,
-	var middleRight: lone Blinker,
+	var middleLeft: lone Light,
+	var middleRight: lone Light,
 	var backRight: set Light,
 	var backLeft: set Light,
 	var top: lone BrakeLight
@@ -43,9 +43,22 @@ one sig Car {
 fact notAllowedInFront {
 	let front = Car.frontRight + Car.frontLeft {
 		always (
-			BrakeLight not in front or
-			TailLight not in front or
+			BrakeLight not in front and
+			TailLight not in front and
 			ReverseLight not in front
+		)
+	}
+}
+
+fact notAllowedInMiddle {
+	let middle = Car.middleRight + Car.middleLeft {
+		always (
+			LowBeamHeadLight not in middle and
+			HighBeamHeadLight not in middle and
+			CorneringLight not in middle and
+			BrakeLight not in middle and
+			TailLight not in middle and
+			ReverseLight not in middle
 		)
 	}
 }
@@ -53,8 +66,8 @@ fact notAllowedInFront {
 fact notAllowedInBack {
 	let back = Car.backRight + Car.backLeft {
 		always (
-			LowBeamHeadLight not in back or
-			HighBeamHeadLight not in back or
+			LowBeamHeadLight not in back and
+			HighBeamHeadLight not in back and
 			CorneringLight not in back
 		)
 	}
@@ -221,7 +234,8 @@ pred do_nothing {
 
 fact transitions {
 	always (
-		directionBlinking or keys
+		activateAmbientLight or keys or leaveCar or enterCar or
+		directionBlinking
 	)	
 }
 
@@ -231,10 +245,78 @@ fact transitions {
 
 pred directionBlinking {
 	Input.key = KeyInIgnitionOnPosition
-	tmpLeftBlinking or stopTmpLeftBlinkg or leftBlinking
+	(tmpLeftBlinking or stopTmpLeftBlinking or leftBlinking or
+      tmpRightBlinking or stopTmpRightBlinking or rightBlinking)
 }
 
--- compor isto
+
+pred tmpRightBlinking {
+
+	Input.pitmanArm' = PitmanArmUp5
+	Car.frontRight' = Car.frontRight + Blinker
+	Car.middleRight' = Car.middleRight + Blinker
+	Car.backRight' = Car.backRight + Blinker
+
+	Blinker not in Car.frontRight'' 
+	Blinker not in Car.middleRight''
+	Blinker not in Car.backRight''
+	
+	-- post condition
+	On' = On
+	Off' = Off
+	Car.frontLeft' = Car.frontLeft
+	Car.middleLeft' = Car.middleLeft
+	Car.backLeft' = Car.backLeft
+	Car.top' = Car.top
+	Input.key' = Input.key
+	Input.lightRotarySwitch' = Input.lightRotarySwitch
+	Input.driver' = Input.driver
+	Input.ambientLightButton' = Input.ambientLightButton
+     
+}
+
+pred stopTmpRightBlinking {
+	Input.pitmanArm = PitmanArmUp5
+
+	Input.pitmanArm' = PitmanArmNeutral
+	Car.frontRight' = Car.frontRight - Blinker
+	Car.middleRight' = Car.middleRight - Blinker
+	Car.backRight' = Car.backRight - Blinker
+
+	On' = On
+	Off' = Off
+	Car.frontLeft' = Car.frontLeft
+	Car.middleLeft' = Car.middleLeft
+	Car.backLeft' = Car.backLeft
+	Car.top' = Car.top
+	Input.key' = Input.key
+	Input.lightRotarySwitch' = Input.lightRotarySwitch
+	Input.driver' = Input.driver
+	Input.ambientLightButton' = Input.ambientLightButton
+}
+
+pred rightBlinking {
+	Input.pitmanArm' = PitmanArmUp7
+
+	
+	Car.frontRight' = Car.frontRight + Blinker
+	Car.middleRight' = Car.middleRight + Blinker
+	Car.backRight' = Car.backRight + Blinker
+	
+	-- post condition
+	On' = On
+	Off' = Off
+	Car.frontLeft' = Car.frontLeft
+	Car.middleLeft' = Car.middleLeft
+	Car.backLeft' = Car.backLeft
+	Car.top' = Car.top
+	Input.key' = Input.key
+	Input.lightRotarySwitch' = Input.lightRotarySwitch
+	Input.driver' = Input.driver
+	Input.ambientLightButton' = Input.ambientLightButton
+     
+}
+
 pred tmpLeftBlinking {
 
 	Input.pitmanArm' = PitmanArmDown5
@@ -260,7 +342,7 @@ pred tmpLeftBlinking {
      
 }
 
-pred stopTmpLeftBlinkg {
+pred stopTmpLeftBlinking {
 	Input.pitmanArm = PitmanArmDown5
 
 	Input.pitmanArm' = PitmanArmNeutral
@@ -305,19 +387,53 @@ pred leftBlinking {
 
 run {} for 50
 
+pred enterCar {
+	Input.driver = DriverOutside
+	
+     Input.key' = KeyInserted
+	Input.driver' = DriverInside
+	no (Car.frontLeft' + Car.frontRight' + Car.middleLeft' +
+	    Car.middleRight' + Car.backLeft' + Car.backRight' + Car.top')
+	
+	On' = On
+	Off' = Off
+	Input.pitmanArm' = Input.pitmanArm
+	Input.lightRotarySwitch' = Input.lightRotarySwitch
+	Input.ambientLightButton' =	 Input.ambientLightButton
+}
+
+
+pred leaveCar {
+	Input.driver = DriverInside
+	
+     Input.key' = KeyInserted
+	Input.driver' = DriverOutside
+	no (Car.frontLeft' + Car.frontRight' + Car.middleLeft' +
+	    Car.middleRight' + Car.backLeft' + Car.backRight' + Car.top')
+	
+	On' = On
+	Off' = Off
+	Input.pitmanArm' = Input.pitmanArm
+	Input.lightRotarySwitch' = Input.lightRotarySwitch
+	Input.ambientLightButton' =	 Input.ambientLightButton
+
+}
+
+
 pred activateAmbientLight {
 	--pre
 	Input.key = KeyInserted
 	Input.ambientLightButton = AmbientLightButtonOn
-	Input.driver = DriverInside
+	Input.driver = DriverOutside
 	
 	--post
-	Car.frontLeft' = Car.frontLeft + LowBeamHeadLight
-	Car.frontRight' = Car.frontRight + LowBeamHeadLight
-	Car.middleLeft' = Car.middleLeft + AmbientLight
-	Car.middleRight' = Car.middleRight + AmbientLight
-	Car.backLeft' = Car.backLeft + AmbientLight
-	Car.backRight' = Car.backRight + AmbientLight
+	Car.frontLeft' in AmbientLight
+	Car.frontRight' in AmbientLight
+	Car.middleLeft' in AmbientLight
+	Car.middleRight' in AmbientLight
+	Car.backLeft' in AmbientLight
+	Car.backRight' in AmbientLight
+
 
 	--frame
 	On' = On
@@ -325,6 +441,9 @@ pred activateAmbientLight {
 	Car.top' = Car.top
 	Input.pitmanArm' = Input.pitmanArm
 	Input.lightRotarySwitch' = Input.lightRotarySwitch
+	Input.key' = Input.key
+	Input.ambientLightButton' =	 Input.ambientLightButton
+	Input.driver' = Input.driver
 
 }
 
