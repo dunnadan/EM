@@ -137,6 +137,9 @@ abstract sig Driver {}
 lone sig DriverInside extends Driver {}
 lone sig DriverOutside extends Driver {} 
 
+one sig Signals {
+	var signals: set On
+}
 
 fact init {
 	Input.prevPitman in PitmanArmNeutral

@@ -45,6 +45,10 @@
    <type name="LightSwitchAuto"/>
 </node>
 
+<node shape="Egg" color="White">
+   <type name="Signals"/>
+</node>
+
 <node shape="Ellipse">
    <type name="PitmanArmNeutral"/>
 </node>
@@ -99,10 +103,6 @@
    <type name="Driver"/>
 </node>
 
-<node visible="no" style="Dashed">
-   <type name="Signal"/>
-</node>
-
 <node visible="yes" hideunconnected="yes">
    <type name="AmbientLightButton"/>
    <type name="PitmanArm"/>
@@ -110,6 +110,10 @@
 
 <node visible="yes" hideunconnected="yes" shape="Ellipse" color="White">
    <type name="LightRotarySwitch"/>
+</node>
+
+<node visible="yes" hideunconnected="yes" style="Dashed">
+   <type name="Signal"/>
 </node>
 
 <edge attribute="no">
