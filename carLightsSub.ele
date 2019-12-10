@@ -1,13 +1,13 @@
 abstract sig Signal {}
---one sig TurnSignal extends Signal {}
+one sig TurnSignal extends Signal {}
 one sig EmergencyBreakLight extends Signal {}
 one sig AdaptiveHighBeam extends Signal {}
 one sig LowBeamHeadlights extends Signal {}
 one sig CorneringLights extends Signal {}
---one sig AmbientLight extends Signal {}
+one sig AmbientLight extends Signal {}
 
 -- done this way instead of lone sing xSignal extends Signal {}
--- to appear the same name in the mode
+-- to appear the same name in the model
 -- same expressive power, better visual mode, little extra boilerplate
 var sig On in Signal {} 
 var sig Off in Signal {}
@@ -27,7 +27,7 @@ one sig CorneringLight extends Light {}
 one sig BrakeLight extends Light {}
 one sig TailLight extends Light {}
 one sig ReverseLight extends Light {}
-one sig AmbientLight extends Light {}
+--one sig AmbientLight extends Light {}
 
 
 one sig Car {
@@ -103,7 +103,7 @@ one sig Input {
 	var pitmanArm: one PitmanArm,
 	var lightRotarySwitch: one LightRotarySwitch,
 	var ambientLightButton: one AmbientLightButton,
-	var driver: lone Driver
+	var driver: one Driver
 }
 
 abstract sig PitmanArm {
@@ -129,6 +129,14 @@ abstract sig LightRotarySwitch {}
 one sig LightSwitchOff extends LightRotarySwitch {}
 one sig LightSwitchOn extends LightRotarySwitch {} 
 one sig LightSwitchAuto extends LightRotarySwitch {} 
+
+abstract sig AmbientLightButton {}
+one sig AmbientLightButtonOn extends AmbientLightButton{}
+one sig AmbientLightButtonOff extends AmbientLightButton{}
+
+abstract sig Driver {}
+lone sig DriverInside extends Driver {}
+lone sig DriverOutside extends Driver {} 
 
 
 fact init {
@@ -158,7 +166,7 @@ fact updatePitmanHistory {
 
 
 pred insertKey {
-	--Input.key = NoKeyInserted
+	Input.key = NoKeyInserted
 	
 	Input.key' = KeyInIgnitionOnPosition
 
@@ -222,31 +230,12 @@ pred els1 {
 	Input.key' = Input.key
 	Input.lightRotarySwitch' = Input.lightRotarySwitch
 	Input.driver' = Input.driver
+	Input.ambientLightButton' = Input.ambientLightButton
      
 }
 
 
 run {} for 50
-
-
-
--- ola e adeus 
-
-
------
-
---uhfddiuehefwukjfbwejuchwi 
-
---ygygikju
-
-abstract sig AmbientLightButton {}
-one sig AmbientLightButtonOn extends AmbientLightButton{}
-one sig AmbientLightButtonOff extends AmbientLightButton{}
-
-abstract sig Driver{}
-lone sig DriverInside extends Driver {}
-lone sig DriverOutside extends Driver {} 
-
 
 pred activateAmbientLight {
 	--pre-cond
