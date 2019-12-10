@@ -120,6 +120,18 @@ one sig Input {
 	var ambientLightButton: one AmbientLightButton,
 	var driver: one Driver
 }
+pred lightOn {
+	Input.lightRotarySwitch' = LightRotarySwitchOn
+}
+pred lightOff {
+	Input.lightRotarySwitch' = LightRotarySwitchOff
+}
+pred lightAuto {
+	Input.lightRotarySwitch' = LightRotarySwitchAuto
+}
+pred ambientLightOn {
+	ambientLightButton' = ambientLight
+}
 
 abstract sig PitmanArm {
  -- 5º/7º could be done with a relation here
@@ -401,6 +413,7 @@ pred rotateKey {
 	Input.driver' = Input.driver
 	Input.ambientLightButton' = Input.ambientLightButton
 }
+
 ----------------------------------------------------------------------------------------------------
 fact init {
 	Input.pitmanArm in PitmanArmNeutral
