@@ -650,6 +650,29 @@ pred lowBeamOn_LightToAuto {
 	Input.driver' = Input.driver
 }
 
+-- we need to "unlight it"
+pred lightCorneringBySignal {
+	LowBeamHeadLights in On
+	TurnSignal in On
+	Input.wheel = SteeringWheelLeft
+
+	
+	Car.frontLeft' = Car.frontLeft + CorneringLight
+	Car.frontRight' = Car.frontRight + CorneringLight
+
+	Car.middleLeft' = Car.middleLeft
+	Car.middleRight' = Car.middleRight
+	Car.backLeft' = Car.backLeft
+	Car.backRight' = Car.backRight
+	Car.top' = Car.top
+	Input.lightRotarySwitch' = Input.lightRotarySwitch
+	Input.pitmanArm' = Input.pitmanArm
+	Input.key' = Input.key
+	Input.ambientLightButton' = Input.ambientLightButton
+	Input.driver' = Input.driver
+	Input.wheel' = Input.wheel
+}
+
 /*
 --nao consigo chegar a um estado em que teste isto
 fact els16 {
