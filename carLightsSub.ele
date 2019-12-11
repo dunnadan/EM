@@ -158,8 +158,8 @@ one sig DriverOutside extends Driver {}
 
 abstract sig SteeringWheel {}
 one sig SteeringWheelNeutral extends SteeringWheel {}
-one sig SteeringWheelLess45 extends SteeringWheel {}
-one sig SteeringWheel45OrMore extends SteeringWheel {}
+one sig SteeringWheelLeft extends SteeringWheel {}
+one sig SteeringWheelRight extends SteeringWheel {}
  
 ----------------------------------------------------------------------------------------------------
 
@@ -674,10 +674,10 @@ fact alwaysAllAmbientLights {
 }
 
 
-pred turnLess45 {
-	Input.wheel != SteeringWheelLess45
+pred turnLeft {
+	Input.wheel != SteeringWheelLeft
 	
-	Input.wheel' = SteeringWheelLess45
+	Input.wheel' = SteeringWheelLeft
 
 	Car.frontLeft' = Car.frontLeft
 	Car.frontRight' = Car.frontRight
@@ -695,10 +695,10 @@ pred turnLess45 {
 	On' = On
 }
 
-pred turn45OrMore {
-	Input.wheel != SteeringWheel45OrMore
+pred turnRight {
+	Input.wheel != SteeringWheelRight
 	
-	Input.wheel' = SteeringWheel45OrMore
+	Input.wheel' = SteeringWheelRight
 
 	Car.frontLeft' = Car.frontLeft
 	Car.frontRight' = Car.frontRight
@@ -746,7 +746,7 @@ fact transitions {
 		leaveCar or enterCar or
 		lightOn or lightOff or lightAuto or 
 		ambientLightOn or ambientLightOff or
-		turn45OrMore or turnLess45 or turnNeutral
+		turnRight or turnLeft or turnNeutral
 	)	
 }
 
