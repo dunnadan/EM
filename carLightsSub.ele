@@ -674,6 +674,69 @@ fact alwaysAllAmbientLights {
 }
 
 
+pred turnLess45 {
+	Input.wheel != SteeringWheelLess45
+	
+	Input.wheel' = SteeringWheelLess45
+
+	Car.frontLeft' = Car.frontLeft
+	Car.frontRight' = Car.frontRight
+	Car.backLeft' = Car.backLeft
+	Car.backRight' = Car.backRight
+	Car.middleRight' = Car.middleRight
+	Car.middleLeft' = Car.middleLeft
+	Car.top' = Car.top
+	Input.lightRotarySwitch' = Input.lightRotarySwitch
+	Input.pitmanArm' = Input.pitmanArm
+	Input.key' = Input.key
+	Input.ambientLightButton' = Input.ambientLightButton
+	Input.driver' = Input.driver
+	Off' = Off
+	On' = On
+}
+
+pred turn45OrMore {
+	Input.wheel != SteeringWheel45OrMore
+	
+	Input.wheel' = SteeringWheel45OrMore
+
+	Car.frontLeft' = Car.frontLeft
+	Car.frontRight' = Car.frontRight
+	Car.backLeft' = Car.backLeft
+	Car.backRight' = Car.backRight
+	Car.middleRight' = Car.middleRight
+	Car.middleLeft' = Car.middleLeft
+	Car.top' = Car.top
+	Input.lightRotarySwitch' = Input.lightRotarySwitch
+	Input.pitmanArm' = Input.pitmanArm
+	Input.key' = Input.key
+	Input.ambientLightButton' = Input.ambientLightButton
+	Input.driver' = Input.driver
+	Off' = Off
+	On' = On
+}
+
+pred turnNeutral {
+	Input.wheel != SteeringWheelNeutral
+	
+	Input.wheel' = SteeringWheelNeutral
+
+	Car.frontLeft' = Car.frontLeft
+	Car.frontRight' = Car.frontRight
+	Car.backLeft' = Car.backLeft
+	Car.backRight' = Car.backRight
+	Car.middleRight' = Car.middleRight
+	Car.middleLeft' = Car.middleLeft
+	Car.top' = Car.top
+	Input.lightRotarySwitch' = Input.lightRotarySwitch
+	Input.pitmanArm' = Input.pitmanArm
+	Input.key' = Input.key
+	Input.ambientLightButton' = Input.ambientLightButton
+	Input.driver' = Input.driver
+	Off' = Off
+	On' = On
+}
+
 fact transitions {
 	always (
 		tmpLeftBlinking or stopTmpLeftBlinking or leftBlinking or tmpRightBlinking or stopTmpRightBlinking or rightBlinking or 
@@ -682,7 +745,8 @@ fact transitions {
 		insertKey or rotateKey or 
 		leaveCar or enterCar or
 		lightOn or lightOff or lightAuto or 
-		ambientLightOn or ambientLightOff
+		ambientLightOn or ambientLightOff or
+		turn45OrMore or turnLess45 or turnNeutral
 	)	
 }
 
