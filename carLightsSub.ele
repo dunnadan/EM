@@ -1,10 +1,12 @@
 abstract sig Signal {}
 one sig TurnSignal extends Signal {}
-one sig EmergencyBreakLight extends Signal {}
+one sig EmergencyBreakLight extends Signal {}	
 one sig AdaptiveHighBeam extends Signal {}
 one sig LowBeamHeadLights extends Signal {}
 one sig CorneringLights extends Signal {}
 one sig BlinkerLights extends Signal {}
+one sig ReverseLights extends Signal {}
+one sig HighBeamHeadLights extends Signal {}
 
 -- done this way instead of lone sing xSignal extends Signal {}
 -- to appear the same name in the model
@@ -36,6 +38,7 @@ one sig AmbientLight extends Light {}
 
 abstract sig Gear{}
 one sig ReverseGear extends Gear {}
+one sig ForwardGear extends Gear {}
 
 one sig Car {
 	var frontRight: set Light,
@@ -193,6 +196,7 @@ pred tmpRightBlinking {
 	Input.driver' = Input.driver
 	Input.ambientLightButton' = Input.ambientLightButton
 	Input.wheel' = Input.wheel
+	Car.gear' = Car.gear
      
 }
 
@@ -218,6 +222,7 @@ pred stopTmpRightBlinking {
 	Input.driver' = Input.driver
 	Input.ambientLightButton' = Input.ambientLightButton
 	Input.wheel' = Input.wheel
+	Car.gear' = Car.gear
 }
 
 pred rightBlinking {
@@ -241,6 +246,7 @@ pred rightBlinking {
 	Input.driver' = Input.driver
 	Input.ambientLightButton' = Input.ambientLightButton
 	Input.wheel' = Input.wheel
+	Car.gear' = Car.gear
      
 }
 
@@ -270,6 +276,7 @@ pred tmpLeftBlinking {
 	Input.driver' = Input.driver
 	Input.ambientLightButton' = Input.ambientLightButton
      	Input.wheel' = Input.wheel
+	Car.gear' = Car.gear
 }
 
 pred stopTmpLeftBlinking {
@@ -295,6 +302,7 @@ pred stopTmpLeftBlinking {
 	Input.driver' = Input.driver
 	Input.ambientLightButton' = Input.ambientLightButton
 	Input.wheel' = Input.wheel
+	Car.gear' = Car.gear
 }
 
 pred leftBlinking {
@@ -318,6 +326,7 @@ pred leftBlinking {
 	Input.driver' = Input.driver
 	Input.ambientLightButton' = Input.ambientLightButton
 	Input.wheel' = Input.wheel
+	Car.gear' = Car.gear
      
 }
 
@@ -341,6 +350,7 @@ pred lightOn {
 	Input.driver' = Input.driver
 	Input.ambientLightButton' = Input.ambientLightButton
 	Input.wheel' = Input.wheel
+	Car.gear' = Car.gear
 }
 pred lightOff {
 	Input.driver = DriverInside
@@ -362,6 +372,7 @@ pred lightOff {
 	Input.driver' = Input.driver
 	Input.ambientLightButton' = Input.ambientLightButton
 	Input.wheel' = Input.wheel
+	Car.gear' = Car.gear
 }
 pred lightAuto {
 	Input.driver = DriverInside
@@ -383,6 +394,7 @@ pred lightAuto {
 	Input.driver' = Input.driver
 	Input.ambientLightButton' = Input.ambientLightButton
 	Input.wheel' = Input.wheel
+	Car.gear' = Car.gear
 }
 
 pred ambientLightOn {
@@ -405,6 +417,7 @@ pred ambientLightOn {
 	Input.driver' = Input.driver
 	Input.lightRotarySwitch' = Input.lightRotarySwitch
 	Input.wheel' = Input.wheel
+	Car.gear' = Car.gear
 }
 
 pred ambientLightOff {
@@ -427,6 +440,7 @@ pred ambientLightOff {
 	Input.driver' = Input.driver
 	Input.lightRotarySwitch' = Input.lightRotarySwitch
 	Input.wheel' = Input.wheel
+	Car.gear' = Car.gear
 }
 
 pred enterCar {
@@ -443,6 +457,7 @@ pred enterCar {
 	Input.lightRotarySwitch' = Input.lightRotarySwitch
 	Input.ambientLightButton' =	 Input.ambientLightButton
 	Input.wheel' = Input.wheel
+	Car.gear' = Car.gear
 }
 
 pred leaveCar {
@@ -462,6 +477,7 @@ pred leaveCar {
 	Input.lightRotarySwitch' = Input.lightRotarySwitch
 	Input.ambientLightButton' =	 Input.ambientLightButton
 	Input.wheel' = Input.wheel
+	Car.gear' = Car.gear
 }
 
 
@@ -491,6 +507,7 @@ pred activateAmbientLight {
 	Input.ambientLightButton' =	 Input.ambientLightButton
 	Input.driver' = Input.driver
 	Input.wheel' = Input.wheel
+	Car.gear' = Car.gear
 }
 
 pred insertKey {
@@ -513,6 +530,7 @@ pred insertKey {
 	Input.driver' = Input.driver
 	Input.ambientLightButton' = Input.ambientLightButton
 	Input.wheel' = Input.wheel
+	Car.gear' = Car.gear
 }
 
 pred rotateKey {
@@ -535,6 +553,7 @@ pred rotateKey {
 	Input.driver' = Input.driver
 	Input.ambientLightButton' = Input.ambientLightButton
 	Input.wheel' = Input.wheel
+	Car.gear' = Car.gear
 }
 
 
@@ -546,6 +565,7 @@ fact init {
 	Input.ambientLightButton in AmbientLightButtonOff
 	Input.driver in DriverOutside
 	Input.wheel = SteeringWheelNeutral
+	Car.gear = ForwardGear
 
 	Signal in Off
 	
@@ -584,6 +604,7 @@ pred activateHalfLowBeamHeadlights {
 	Input.key' = Input.key
 	Input.ambientLightButton' = Input.ambientLightButton
 	Input.driver' = Input.driver
+	Car.gear' = Car.gear
 }
 
 pred activateLowBeamHeadlights {
@@ -609,6 +630,7 @@ pred activateLowBeamHeadlights {
 	Input.key' = Input.key
 	Input.ambientLightButton' = Input.ambientLightButton
 	Input.driver' = Input.driver
+	Car.gear' = Car.gear
 }
 
 pred deactivateLowBeamHeadLights {
@@ -632,6 +654,7 @@ pred deactivateLowBeamHeadLights {
 	Input.key' = Input.key
 	Input.ambientLightButton' = Input.ambientLightButton
 	Input.driver' = Input.driver
+	Car.gear' = Car.gear
 }
 
 pred lowBeamOn_LightToAuto {
@@ -655,6 +678,7 @@ pred lowBeamOn_LightToAuto {
 	Input.key' = Input.key
 	Input.ambientLightButton' = Input.ambientLightButton
 	Input.driver' = Input.driver
+	Car.gear' = Car.gear
 }
 
 -- we need to "unlight it"
@@ -678,10 +702,12 @@ pred lightCorneringBySignal {
 	Input.ambientLightButton' = Input.ambientLightButton
 	Input.driver' = Input.driver
 	Input.wheel' = Input.wheel
+	Car.gear' = Car.gear
 }
 
 
 pred reverseGears {
+	Car.gear = ForwardGear
 	Input.driver = DriverInside
 	Input.key = KeyInIgnitionOnPosition
 
@@ -696,11 +722,40 @@ pred reverseGears {
 	Car.middleLeft' = Car.middleLeft
 	Car.top' = Car.top
 	Input.pitmanArm' = Input.pitmanArm
-	On' = On + ReverseLight
-	--Off' = Off - ReverseLight
+	On' = On + ReverseLights
+	Off' = Off - ReverseLights
+	Signals.signals' = On'
 	Input.driver' = Input.driver
 	Input.lightRotarySwitch' = Input.lightRotarySwitch
 	Input.ambientLightButton' = Input.ambientLightButton
+	
+}
+
+
+pred forwardGears {
+	Car.gear = ReverseGear
+	Input.driver = DriverInside
+	Input.key = KeyInIgnitionOnPosition
+
+	Car.gear' = ForwardGear
+	Car.backLeft' = Car.backLeft - ReverseLight
+	Car.backRight' = Car.backRight - ReverseLight
+
+	Input.key' = Input.key
+	Input.driver' = Input.driver
+	Input.lightRotarySwitch' = Input.lightRotarySwitch
+	Input.ambientLightButton' = Input.ambientLightButton
+	Input.pitmanArm' = Input.pitmanArm
+	Car.frontLeft' = Car.frontLeft
+	Car.frontRight' = Car.frontRight
+	Car.middleLeft' = Car.middleLeft
+	Car.middleRight' = Car.middleRight
+	Car.top' = Car.top
+	On' = On - ReverseLights
+	Off' = Off + ReverseLights
+	Signals.signals' = On'
+	
+	
 	
 }
 
@@ -748,6 +803,7 @@ pred turnLeft {
 	Input.driver' = Input.driver
 	Off' = Off
 	On' = On
+	Car.gear' = Car.gear
 }
 
 pred turnRight {
@@ -770,6 +826,7 @@ pred turnRight {
 	Input.driver' = Input.driver
 	Off' = Off
 	On' = On
+	Car.gear' = Car.gear
 }
 
 pred turnNeutral {
@@ -792,6 +849,66 @@ pred turnNeutral {
 	Input.driver' = Input.driver
 	Off' = Off
 	On' = On
+	Car.gear' = Car.gear
+}
+
+
+pred activateHighBeamHeadLights{
+
+	Input.key != NoKeyInserted
+	Input.driver = DriverInside
+
+	Input.pitmanArm' = PitmanArmForward
+	Car.frontLeft' = Car.frontLeft + HighBeamHeadLight
+	Car.frontRight' = Car.frontRight + HighBeamHeadLight
+	Car.backLeft' = Car.backLeft + TailLight
+	Car.backRight' = Car.backRight + TailLight
+	On' = On + HighBeamHeadLights
+	Off' = Off - HighBeamHeadLights
+	Signals.signals' = On'
+
+	Car.middleRight' = Car.middleRight
+	Car.middleLeft' = Car.middleLeft
+	Car.top' = Car.top
+	Input.key' = Input.key
+	Input.lightRotarySwitch' = Input.lightRotarySwitch
+	Input.driver' = Input.driver
+	Input.ambientLightButton' = Input.ambientLightButton
+	Input.wheel' = Input.wheel
+	Car.gear' = Car.gear
+
+	
+	
+}
+
+
+pred deactivateHighBeamHeadLights{
+
+	Input.key != NoKeyInserted
+	Input.driver = DriverInside
+	Input.pitmanArm = PitmanArmForward
+
+	Input.pitmanArm' = PitmanArmNeutral
+	Car.frontLeft' = Car.frontLeft - HighBeamHeadLight
+	Car.frontRight' = Car.frontRight - HighBeamHeadLight
+	Car.backLeft' = Car.backLeft - TailLight
+	Car.backRight' = Car.backRight - TailLight
+	On' = On - HighBeamHeadLights
+	Off' = Off + HighBeamHeadLights
+	Signals.signals' = On'
+
+	Car.middleRight' = Car.middleRight
+	Car.middleLeft' = Car.middleLeft
+	Car.top' = Car.top
+	Input.key' = Input.key
+	Input.lightRotarySwitch' = Input.lightRotarySwitch
+	Input.driver' = Input.driver
+	Input.ambientLightButton' = Input.ambientLightButton
+	Input.wheel' = Input.wheel
+	Car.gear' = Car.gear
+
+	
+	
 }
 
 fact transitions {
