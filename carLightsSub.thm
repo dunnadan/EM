@@ -14,6 +14,7 @@
    <type name="CorneringLight"/>
    <type name="DriverInside"/>
    <type name="DriverOutside"/>
+   <type name="HalfLowBeamHeadLight"/>
    <type name="HighBeamHeadLight"/>
    <type name="Int"/>
    <type name="KeyInIgnitionOnPosition"/>
@@ -25,10 +26,13 @@
    <type name="ReverseLight"/>
    <type name="String"/>
    <type name="TailLight"/>
-   <type name="TurnSignal"/>
    <type name="univ"/>
    <type name="seq/Int"/>
    <set name="this/On" type="Signal"/>
+</node>
+
+<node color="Blue">
+   <type name="LowBeamHeadLights"/>
 </node>
 
 <node color="Gray">
@@ -42,7 +46,9 @@
 </node>
 
 <node color="Yellow">
+   <type name="BlinkerLights"/>
    <type name="LightSwitchAuto"/>
+   <type name="TurnSignal"/>
 </node>
 
 <node shape="Egg" color="White">
@@ -61,10 +67,6 @@
    <type name="Car"/>
 </node>
 
-<node style="Dashed" color="Blue">
-   <type name="LowBeamHeadlights"/>
-</node>
-
 <node style="Dashed" color="Green">
    <type name="CorneringLights"/>
 </node>
@@ -73,7 +75,7 @@
    <type name="EmergencyBreakLight"/>
 </node>
 
-<node style="Dashed" color="Yellow">
+<node style="Dashed" color="White">
    <type name="AdaptiveHighBeam"/>
 </node>
 
