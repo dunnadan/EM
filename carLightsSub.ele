@@ -26,6 +26,7 @@ one sig Signals {
 abstract sig Light {}
 one sig Blinker extends Light {}
 one sig LowBeamHeadLight extends Light {}
+one sig HalfLowBeamHeadLight extends Light {}
 one sig HighBeamHeadLight extends Light {}
 one sig CorneringLight extends Light {}
 one sig BrakeLight extends Light {}
@@ -166,7 +167,7 @@ pred directionBlinking {
 
 
 pred tmpRightBlinking {
-
+	Input.driver = DriverInside
 	Input.pitmanArm' = PitmanArmUp5
 	Car.frontRight' = Car.frontRight + Blinker
 	Car.middleRight' = Car.middleRight + Blinker
@@ -192,14 +193,15 @@ pred tmpRightBlinking {
 }
 
 pred stopTmpRightBlinking {
+	Input.driver = DriverInside
 	Input.pitmanArm = PitmanArmUp5
 
 	Input.pitmanArm' = PitmanArmNeutral
 	Car.frontRight' = Car.frontRight - Blinker
 	Car.middleRight' = Car.middleRight - Blinker
 	Car.backRight' = Car.backRight - Blinker
-	Off' = Off - BlinkerLights
-	On' = On + BlinkerLights
+	Off' = Off + BlinkerLights
+	On' = On - BlinkerLights
 
 	Car.frontLeft' = Car.frontLeft
 	Car.middleLeft' = Car.middleLeft
@@ -212,6 +214,7 @@ pred stopTmpRightBlinking {
 }
 
 pred rightBlinking {
+	Input.driver = DriverInside
 	Input.pitmanArm' = PitmanArmUp7
 
 	
@@ -233,7 +236,7 @@ pred rightBlinking {
 }
 
 pred tmpLeftBlinking {
-
+	Input.driver = DriverInside
 	Input.pitmanArm' = PitmanArmDown5
 	Car.frontLeft' = Car.frontLeft + Blinker
 	Car.middleLeft' = Car.middleLeft + Blinker
@@ -258,14 +261,15 @@ pred tmpLeftBlinking {
 }
 
 pred stopTmpLeftBlinking {
+	Input.driver = DriverInside
 	Input.pitmanArm = PitmanArmDown5
 
 	Input.pitmanArm' = PitmanArmNeutral
 	Car.frontLeft' = Car.frontLeft - Blinker
 	Car.middleLeft' = Car.middleLeft - Blinker
 	Car.backLeft' = Car.backLeft - Blinker
-	Off' = Off - BlinkerLights
-	On' = On + BlinkerLights
+	Off' = Off + BlinkerLights
+	On' = On - BlinkerLights
 
 	Car.frontRight' = Car.frontRight
 	Car.middleRight' = Car.middleRight
@@ -278,6 +282,7 @@ pred stopTmpLeftBlinking {
 }
 
 pred leftBlinking {
+	Input.driver = DriverInside
 	Input.pitmanArm' = PitmanArmDown7
 
 	
@@ -303,6 +308,7 @@ pred lightSwitch {
 }
 
 pred lightOn {
+	Input.driver = DriverInside
 	Input.lightRotarySwitch != LightSwitchOn
 
 	Input.lightRotarySwitch' = LightSwitchOn
@@ -322,6 +328,7 @@ pred lightOn {
 	Input.ambientLightButton' = Input.ambientLightButton
 }
 pred lightOff {
+	Input.driver = DriverInside
 	Input.lightRotarySwitch != LightSwitchOff
 
 	Input.lightRotarySwitch' = LightSwitchOff
@@ -341,6 +348,7 @@ pred lightOff {
 	Input.ambientLightButton' = Input.ambientLightButton
 }
 pred lightAuto {
+	Input.driver = DriverInside
 	Input.lightRotarySwitch != LightSwitchAuto
 
 	Input.lightRotarySwitch' = LightSwitchAuto
@@ -365,6 +373,7 @@ pred ambientLight {
 }
 
 pred ambientLightOn {
+	Input.driver = DriverInside	
 	Input.ambientLightButton = AmbientLightButtonOff
 
 	Input.ambientLightButton' = AmbientLightButtonOn
@@ -385,6 +394,7 @@ pred ambientLightOn {
 }
 
 pred ambientLightOff {
+	Input.driver = DriverInside
 	Input.ambientLightButton = AmbientLightButtonOn
 
 	Input.ambientLightButton' = AmbientLightButtonOff
@@ -419,15 +429,19 @@ pred enterCar {
 	Input.ambientLightButton' =	 Input.ambientLightButton
 }
 
-
+--NOTA: POR ALGUMA RAZAO DEPOIS DAS ALTERACOES CONTINUA A ACONTECER DE A CHAVE SER INSERIDA
+--QUANDO O DRIVER SAI DO CARRO (nao deveria acontecer)
 pred leaveCar {
 	Input.driver = DriverInside
 	
-     Input.key' = KeyInserted
+     --Input.key' = KeyInserted --makes no sense inserting key to get out
 	Input.driver' = DriverOutside
-	no (Car.frontLeft' + Car.frontRight' + Car.middleLeft' +
-	    Car.middleRight' + Car.backLeft' + Car.backRight' + Car.top')
-	
+--	no (Car.frontLeft' + Car.frontRight' + Car.middleLeft' +			em caso de o que eu fiz estar errado descomenta esta
+--	    Car.middleRight' + Car.backLeft' + Car.backRight' + Car.top')		e esta e apaga as duas abaixo
+	(Input.key = KeyInserted and Input.ambientLightButton = AmbientLightButtonOn) implies	--test, verify this
+		activateAmbientLight												--test, verify this
+
+
 	On' = On
 	Off' = Off
 	Input.pitmanArm' = Input.pitmanArm
@@ -441,7 +455,7 @@ pred activateAmbientLight {
 	--pre
 	Input.key = KeyInserted
 	Input.ambientLightButton = AmbientLightButtonOn
-	Input.driver = DriverOutside
+--	Input.driver = DriverOutside   comentei esta linha para testar a alteracao que fiz na leaveCar
 	
 	--post
 	Car.frontLeft' in AmbientLight
@@ -469,6 +483,7 @@ pred keys {
 }
 
 pred insertKey {
+	Input.driver = DriverInside
 	Input.key = NoKeyInserted
 	
 	Input.key' = KeyInserted
@@ -489,6 +504,7 @@ pred insertKey {
 }
 
 pred rotateKey {
+	Input.driver = DriverInside
 	Input.key = KeyInserted
 
 	Input.key' = KeyInIgnitionOnPosition
@@ -526,10 +542,56 @@ fact init {
 	     Car.top )
 
 }
+--PLEASE VERIFY THIS AS I HAVE NO IDEA IF I CAN ACTUALLY
+--DO THOSE IMPLICATIONS (SEE ELS-15)
+pred activateLowBeamHeadlights{
+
+	Input.key !=  NoKeyInserted
+	Input.lightRotarySwitch = LightSwitchOn
+	
+	(Input.key = KeyInIgnitionOnPosition) 
+		implies (
+ 			Car.frontLeft' = Car.frontLeft + LowBeamHeadLight and
+			Car.frontRight' = Car.frontRight + LowBeamHeadLight and
+			Car.backLeft' = Car.backLeft + TailLight and
+			Car.backRight' = Car.backRight + TailLight
+		)
+	
+	(Input.key = KeyInserted) 
+		implies (
+ 			Car.frontLeft' = Car.frontLeft + HalfLowBeamHeadLight and
+			Car.frontRight' = Car.frontRight + HalfLowBeamHeadLight and
+			Car.backLeft' = Car.backLeft + TailLight and
+			Car.backRight' = Car.backRight + TailLight
+		)
+
+	Car.middleLeft' = Car.middleLeft
+	Car.middleRight' = Car.middleRight
+	Car.top' = Car.top
+	Input.lightRotarySwitch' = Input.lightRotarySwitch
+	Input.pitmanArm' = Input.pitmanArm
+	Input.key' = Input.key
+	Input.ambientLightButton' = Input.ambientLightButton
+	Input.driver' = Input.driver
+}
+
+
+fact alwaysAllAmbientLights {
+	always (
+		AmbientLight in (Car.frontRight + Car.middleRight + Car.backRight + Car.frontLeft + Car.middleLeft + Car.backLeft)
+				implies AmbientLight in Car.frontRight and
+						AmbientLight in Car.middleRight and
+						AmbientLight in Car.backRight and
+						AmbientLight in Car.frontLeft and
+						AmbientLight in Car.middleLeft and
+						AmbientLight in Car.backLeft
+	)
+}
+
 
 fact transitions {
 	always (
-		activateAmbientLight or keys or leaveCar or enterCar or
+		activateLowBeamHeadlights or activateAmbientLight or keys or leaveCar or enterCar or
 		directionBlinking or lightSwitch or ambientLight
 	)	
 }
