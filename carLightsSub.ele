@@ -164,6 +164,16 @@ pred directionBlinking {
 	Input.driver = DriverInside
 	(tmpLeftBlinking or stopTmpLeftBlinking or leftBlinking or
       tmpRightBlinking or stopTmpRightBlinking or rightBlinking)
+
+	---
+	Input.key' = Input.key
+	Car.top' = Car.top
+	Input.pitmanArm' = Input.pitmanArm
+	Input.lightRotarySwitch' = Input.lightRotarySwitch
+	On' = On
+	Off' = Off
+	Input.driver' = Input.driver
+	Input.ambientLightButton' = Input.ambientLightButton
 }
 
 
@@ -313,6 +323,20 @@ pred leftBlinking {
 pred lightSwitch {
 	Input.driver = DriverInside
 	lightOn or lightOff or lightAuto
+	---Pos condiçoes adicionadas como teste
+	Input.key' = Input.key
+ 	Car.frontRight' = Car.frontRight
+	Car.frontLeft' = Car.frontLeft
+	Car.middleRight' = Car.middleRight
+	Car.middleLeft' = Car.middleLeft
+	Car.backRight' = Car.backRight
+	Car.backLeft' = Car.backLeft
+	Car.top' = Car.top
+	Input.pitmanArm' = Input.pitmanArm
+	On' = On
+	Off' = Off
+	Input.driver' = Input.driver
+	Input.ambientLightButton' = Input.ambientLightButton
 }
 
 pred lightOn {
@@ -379,6 +403,14 @@ pred lightAuto {
 pred ambientLight {
 	Input.driver = DriverInside
 	ambientLightOn or ambientLightOff
+	---Pos condiçoes adicionadas como teste
+	Input.key' = Input.key
+	Car.top' = Car.top
+	Input.pitmanArm' = Input.pitmanArm
+	Input.lightRotarySwitch' = Input.lightRotarySwitch
+	On' = On
+	Off' = Off
+	Input.driver' = Input.driver
 }
 
 pred ambientLightOn {
@@ -488,6 +520,20 @@ pred activateAmbientLight {
 
 pred keys {
 	insertKey or rotateKey
+	---Pos condiçoes adicionadas como teste
+ 	Car.frontRight' = Car.frontRight
+	Car.frontLeft' = Car.frontLeft
+	Car.middleRight' = Car.middleRight
+	Car.middleLeft' = Car.middleLeft
+	Car.backRight' = Car.backRight
+	Car.backLeft' = Car.backLeft
+	Car.top' = Car.top
+	Input.pitmanArm' = Input.pitmanArm
+	Input.lightRotarySwitch' = Input.lightRotarySwitch
+	On' = On
+	Off' = Off
+	Input.driver' = Input.driver
+	Input.ambientLightButton' = Input.ambientLightButton
 }
 
 pred insertKey {
@@ -553,9 +599,9 @@ fact init {
 --PLEASE VERIFY THIS AS I HAVE NO IDEA IF I CAN ACTUALLY
 --DO THOSE IMPLICATIONS (SEE ELS-15)
 pred activateLowBeamHeadlights{
-
-	Input.key !=  NoKeyInserted
-	Input.lightRotarySwitch = LightSwitchOn
+	Input.driver = DriverInside
+	Input.key != NoKeyInserted
+	Input.lightRotarySwitch != LightSwitchOff
 	
 	(Input.key = KeyInIgnitionOnPosition) 
 		implies (
@@ -581,6 +627,41 @@ pred activateLowBeamHeadlights{
 	Input.key' = Input.key
 	Input.ambientLightButton' = Input.ambientLightButton
 	Input.driver' = Input.driver
+	On' = On
+	Off' = Off
+}
+
+
+pred deactivateLowBeamHeadLights {
+	Input.driver = DriverInside
+	LowBeamHeadLight in Car.frontLeft
+	LowBeamHeadLight in Car.frontRight
+	TailLight in Car.backLeft
+	TailLight in Car.backRight
+
+	no Car.frontLeft' 
+	no Car.frontRight'
+	no Car.backLeft'
+	no Car.backRight'
+
+	Car.middleLeft' = Car.middleLeft
+	Car.middleRight' = Car.middleRight
+	Car.top' = Car.top
+	Input.key' = Input.key
+	Input.lightRotarySwitch' = Input.lightRotarySwitch
+	Input.pitmanArm' = Input.pitmanArm
+	Input.ambientLightButton' = Input.ambientLightButton
+	Input.driver' = Input.driver
+	On' = On
+	Off' = Off
+}
+
+--nao consigo chegar a um estado em que teste isto
+fact els16 {
+
+	Input.key != KeyInIgnitionOnPosition and Input.lightRotarySwitch = LightSwitchAuto implies
+		deactivateLowBeamHeadLights
+		
 }
 
 
@@ -599,8 +680,14 @@ fact alwaysAllAmbientLights {
 
 fact transitions {
 	always (
-		activateLowBeamHeadlights or activateAmbientLight or keys or leaveCar or enterCar or
-		directionBlinking or lightSwitch or ambientLight
+		activateLowBeamHeadlights or 
+	--	activateAmbientLight or 
+		keys or 
+	--	leaveCar or 
+	--	enterCar or
+	--	directionBlinking or 
+		lightSwitch -- or 
+	--	ambientLight
 	)	
 }
 
