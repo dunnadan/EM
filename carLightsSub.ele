@@ -570,6 +570,7 @@ pred activateHalfLowBeamHeadlights {
 	Car.backRight' = Car.backRight + TailLight
 	On' = On + LowBeamHeadLights
 	Off' = Off - LowBeamHeadLights
+	Signals.signals' = On'
 
 
 	Car.middleLeft' = Car.middleLeft
@@ -594,6 +595,7 @@ pred activateLowBeamHeadlights {
 	Car.backRight' = Car.backRight + TailLight
 	On' = On + LowBeamHeadLights
 	Off' = Off - LowBeamHeadLights
+	Signals.signals' = On'
 	
 
 	Car.middleLeft' = Car.middleLeft
@@ -617,6 +619,7 @@ pred deactivateLowBeamHeadLights {
 	Car.backRight' = Car.backRight - TailLight
 	On' = On - LowBeamHeadLights
 	Off' = Off + LowBeamHeadLights
+	Signals.signals' = On'
 
 	Car.middleLeft' = Car.middleLeft
 	Car.middleRight' = Car.middleRight
@@ -639,6 +642,7 @@ pred lowBeamOn_LightToAuto {
 	Car.backRight' = Car.backRight - TailLight
 	On' = On - LowBeamHeadLights
 	Off' = Off + LowBeamHeadLights
+	Signals.signals' = On'
 
 	Car.middleLeft' = Car.middleLeft
 	Car.middleRight' = Car.middleRight
@@ -698,6 +702,7 @@ fact alwaysAllAmbientLights {
 
 
 pred turnLeft {
+	Input.driver = DriverInside
 	Input.wheel != SteeringWheelLeft
 	
 	Input.wheel' = SteeringWheelLeft
@@ -719,6 +724,7 @@ pred turnLeft {
 }
 
 pred turnRight {
+	Input.driver = DriverInside
 	Input.wheel != SteeringWheelRight
 	
 	Input.wheel' = SteeringWheelRight
@@ -740,6 +746,7 @@ pred turnRight {
 }
 
 pred turnNeutral {
+	Input.driver = DriverInside
 	Input.wheel != SteeringWheelNeutral
 	
 	Input.wheel' = SteeringWheelNeutral
