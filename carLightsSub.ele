@@ -120,7 +120,8 @@ one sig Input {
 	var pitmanArm: one PitmanArm,
 	var lightRotarySwitch: one LightRotarySwitch,
 	var ambientLightButton: one AmbientLightButton,
-	var driver: one Driver
+	var driver: one Driver,
+	var wheel: one SteeringWheel 
 }
 
 abstract sig PitmanArm {
@@ -154,6 +155,12 @@ one sig AmbientLightButtonOff extends AmbientLightButton{}
 abstract sig Driver {}
 one sig DriverInside extends Driver {}
 one sig DriverOutside extends Driver {}
+
+abstract sig SteeringWheel {}
+one sig SteeringWheelNeutral extends SteeringWheel {}
+one sig SteeringWheelLess45 extends SteeringWheel {}
+one sig SteeringWheel45OrMore extends SteeringWheel {}
+ 
 ----------------------------------------------------------------------------------------------------
 
 
@@ -182,6 +189,7 @@ pred tmpRightBlinking {
 	Input.lightRotarySwitch' = Input.lightRotarySwitch
 	Input.driver' = Input.driver
 	Input.ambientLightButton' = Input.ambientLightButton
+	Input.wheel' = Input.wheel
      
 }
 
@@ -206,6 +214,7 @@ pred stopTmpRightBlinking {
 	Input.lightRotarySwitch' = Input.lightRotarySwitch
 	Input.driver' = Input.driver
 	Input.ambientLightButton' = Input.ambientLightButton
+	Input.wheel' = Input.wheel
 }
 
 pred rightBlinking {
@@ -228,6 +237,7 @@ pred rightBlinking {
 	Input.lightRotarySwitch' = Input.lightRotarySwitch
 	Input.driver' = Input.driver
 	Input.ambientLightButton' = Input.ambientLightButton
+	Input.wheel' = Input.wheel
      
 }
 
@@ -256,7 +266,7 @@ pred tmpLeftBlinking {
 	Input.lightRotarySwitch' = Input.lightRotarySwitch
 	Input.driver' = Input.driver
 	Input.ambientLightButton' = Input.ambientLightButton
-     
+     	Input.wheel' = Input.wheel
 }
 
 pred stopTmpLeftBlinking {
@@ -281,6 +291,7 @@ pred stopTmpLeftBlinking {
 	Input.lightRotarySwitch' = Input.lightRotarySwitch
 	Input.driver' = Input.driver
 	Input.ambientLightButton' = Input.ambientLightButton
+	Input.wheel' = Input.wheel
 }
 
 pred leftBlinking {
@@ -303,6 +314,7 @@ pred leftBlinking {
 	Input.lightRotarySwitch' = Input.lightRotarySwitch
 	Input.driver' = Input.driver
 	Input.ambientLightButton' = Input.ambientLightButton
+	Input.wheel' = Input.wheel
      
 }
 
@@ -325,6 +337,7 @@ pred lightOn {
 	Off' = Off
 	Input.driver' = Input.driver
 	Input.ambientLightButton' = Input.ambientLightButton
+	Input.wheel' = Input.wheel
 }
 pred lightOff {
 	Input.driver = DriverInside
@@ -345,6 +358,7 @@ pred lightOff {
 	Off' = Off
 	Input.driver' = Input.driver
 	Input.ambientLightButton' = Input.ambientLightButton
+	Input.wheel' = Input.wheel
 }
 pred lightAuto {
 	Input.driver = DriverInside
@@ -365,6 +379,7 @@ pred lightAuto {
 	Off' = Off
 	Input.driver' = Input.driver
 	Input.ambientLightButton' = Input.ambientLightButton
+	Input.wheel' = Input.wheel
 }
 
 pred ambientLightOn {
@@ -386,6 +401,7 @@ pred ambientLightOn {
 	Off' = Off
 	Input.driver' = Input.driver
 	Input.lightRotarySwitch' = Input.lightRotarySwitch
+	Input.wheel' = Input.wheel
 }
 
 pred ambientLightOff {
@@ -407,6 +423,7 @@ pred ambientLightOff {
 	Off' = Off
 	Input.driver' = Input.driver
 	Input.lightRotarySwitch' = Input.lightRotarySwitch
+	Input.wheel' = Input.wheel
 }
 
 pred enterCar {
@@ -422,6 +439,7 @@ pred enterCar {
 	Input.pitmanArm' = Input.pitmanArm
 	Input.lightRotarySwitch' = Input.lightRotarySwitch
 	Input.ambientLightButton' =	 Input.ambientLightButton
+	Input.wheel' = Input.wheel
 }
 
 pred leaveCar {
@@ -440,7 +458,7 @@ pred leaveCar {
 	Input.pitmanArm' = Input.pitmanArm
 	Input.lightRotarySwitch' = Input.lightRotarySwitch
 	Input.ambientLightButton' =	 Input.ambientLightButton
-
+	Input.wheel' = Input.wheel
 }
 
 
@@ -469,7 +487,7 @@ pred activateAmbientLight {
 	Input.key' = Input.key
 	Input.ambientLightButton' =	 Input.ambientLightButton
 	Input.driver' = Input.driver
-
+	Input.wheel' = Input.wheel
 }
 
 pred insertKey {
@@ -491,6 +509,7 @@ pred insertKey {
 	Off' = Off
 	Input.driver' = Input.driver
 	Input.ambientLightButton' = Input.ambientLightButton
+	Input.wheel' = Input.wheel
 }
 
 pred rotateKey {
@@ -512,6 +531,7 @@ pred rotateKey {
 	Off' = Off
 	Input.driver' = Input.driver
 	Input.ambientLightButton' = Input.ambientLightButton
+	Input.wheel' = Input.wheel
 }
 
 
@@ -522,6 +542,7 @@ fact init {
      	Input.lightRotarySwitch in LightSwitchOff
 	Input.ambientLightButton in AmbientLightButtonOff
 	Input.driver in DriverOutside
+	Input.wheel = SteeringWheelNeutral
 
 	Signal in Off
 	

@@ -24,6 +24,8 @@
    <type name="PitmanArmBackward"/>
    <type name="PitmanArmForward"/>
    <type name="ReverseLight"/>
+   <type name="SteeringWheel45OrMore"/>
+   <type name="SteeringWheelLess45"/>
    <type name="String"/>
    <type name="TailLight"/>
    <type name="univ"/>
@@ -38,6 +40,7 @@
 <node color="Gray">
    <type name="AmbientLightButtonOff"/>
    <type name="LightSwitchOff"/>
+   <type name="SteeringWheelNeutral"/>
 </node>
 
 <node color="Green">
@@ -49,6 +52,10 @@
    <type name="BlinkerLights"/>
    <type name="LightSwitchAuto"/>
    <type name="TurnSignal"/>
+</node>
+
+<node hideunconnected="yes" shape="Ellipse">
+   <type name="SteeringWheel"/>
 </node>
 
 <node shape="Egg" color="White">
