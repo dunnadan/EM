@@ -26,7 +26,7 @@ one sig Signals {
 abstract sig Light {}
 one sig Blinker extends Light {}
 one sig LowBeamHeadLight extends Light {}
-one sig HalfLowBeamHeadLight extends LowBeamHeadLight {}
+one sig HalfLowBeamHeadLight extends Light {}
 one sig HighBeamHeadLight extends Light {}
 one sig CorneringLight extends Light {}
 one sig BrakeLight extends Light {}
@@ -538,18 +538,19 @@ fact lowBeamOnBasic {
 		implies LowBeamHeadLights in On
 }
 
-pred activateLowBeamHeadlights {
+pred activateHalfLowBeamHeadlights {
 	Input.driver = DriverInside
 	Input.key = KeyInserted
 	Input.lightRotarySwitch = LightSwitchOn
 	
- 	Car.frontLeft' = Car.frontLeft + LowBeamHeadLight 
-	Car.frontRight' = Car.frontRight + LowBeamHeadLight
+ 	Car.frontLeft' = Car.frontLeft + HalfLowBeamHeadLight 
+	Car.frontRight' = Car.frontRight + HalfLowBeamHeadLight
+	Car.backLeft' = Car.backLeft + TailLight
+	Car.backRight' = Car.backRight + TailLight
 	On' = On + LowBeamHeadLights
 	Off' = Off - LowBeamHeadLights
 
-	Car.backLeft' = Car.backLeft 
-	Car.backRight' = Car.backRight
+
 	Car.middleLeft' = Car.middleLeft
 	Car.middleRight' = Car.middleRight
 	Car.top' = Car.top
@@ -560,19 +561,64 @@ pred activateLowBeamHeadlights {
 	Input.driver' = Input.driver
 }
 
+pred activateLowBeamHeadlights {
+	Input.driver = DriverInside
+	Input.key = KeyInserted
+	Input.lightRotarySwitch = LightSwitchAuto
+	Input.ambientLightButton = AmbientLightButtonOn
+	
+ 	Car.frontLeft' = Car.frontLeft + LowBeamHeadLight
+	Car.frontRight' = Car.frontRight + LowBeamHeadLight
+	Car.backLeft' = Car.backLeft + TailLight
+	Car.backRight' = Car.backRight + TailLight
+	On' = On + LowBeamHeadLights
+	Off' = Off - LowBeamHeadLights
+	
+
+	Car.middleLeft' = Car.middleLeft
+	Car.middleRight' = Car.middleRight
+	Car.top' = Car.top
+	Input.lightRotarySwitch' = Input.lightRotarySwitch
+	Input.pitmanArm' = Input.pitmanArm
+	Input.key' = Input.key
+	Input.ambientLightButton' = Input.ambientLightButton
+	Input.driver' = Input.driver
+}
 
 pred deactivateLowBeamHeadLights {
 	Input.driver = DriverInside
 	LowBeamHeadLight in Car.frontLeft
 	LowBeamHeadLight in Car.frontRight
 
-	Car.frontLeft' = 	Car.frontLeft - LowBeamHeadLight 
-	Car.frontRight' = Car.frontRight - LowBeamHeadLight
+	Car.frontLeft' = 	Car.frontLeft - (HalfLowBeamHeadLight + LowBeamHeadLight)
+	Car.frontRight' = Car.frontRight - (HalfLowBeamHeadLight + LowBeamHeadLight)
+	Car.backLeft' = Car.backLeft - TailLight
+	Car.backRight' = Car.backRight - TailLight
 	On' = On - LowBeamHeadLights
 	Off' = Off + LowBeamHeadLights
 
-	Car.backLeft' = Car.backLeft 
-	Car.backRight' = Car.backRight
+	Car.middleLeft' = Car.middleLeft
+	Car.middleRight' = Car.middleRight
+	Car.top' = Car.top
+	Input.lightRotarySwitch' = Input.lightRotarySwitch
+	Input.pitmanArm' = Input.pitmanArm
+	Input.key' = Input.key
+	Input.ambientLightButton' = Input.ambientLightButton
+	Input.driver' = Input.driver
+}
+
+pred lowBeamOn_LightToAuto {
+	Input.driver = DriverInside
+	Input.key != KeyInIgnitionOnPosition
+	Input.lightRotarySwitch = LightSwitchAuto
+	
+ 	Car.frontLeft' = Car.frontLeft - (LowBeamHeadLight + HalfLowBeamHeadLight)
+	Car.frontRight' = Car.frontRight  - (LowBeamHeadLight + HalfLowBeamHeadLight)
+	Car.backLeft' = Car.backLeft - TailLight
+	Car.backRight' = Car.backRight - TailLight
+	On' = On - LowBeamHeadLights
+	Off' = Off + LowBeamHeadLights
+
 	Car.middleLeft' = Car.middleLeft
 	Car.middleRight' = Car.middleRight
 	Car.top' = Car.top
@@ -610,7 +656,7 @@ fact alwaysAllAmbientLights {
 fact transitions {
 	always (
 		tmpLeftBlinking or stopTmpLeftBlinking or leftBlinking or tmpRightBlinking or stopTmpRightBlinking or rightBlinking or 
-		activateLowBeamHeadlights or deactivateLowBeamHeadLights or
+		activateLowBeamHeadlights or deactivateLowBeamHeadLights or lowBeamOn_LightToAuto or activateHalfLowBeamHeadlights or
 		activateAmbientLight or 
 		insertKey or rotateKey or 
 		leaveCar or enterCar or

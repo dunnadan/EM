@@ -118,6 +118,10 @@
    <type name="Signal"/>
 </node>
 
+<edge attribute="no">
+   <relation name="signals"> <type name="Signals"/> <type name="Signal"/> </relation>
+</edge>
+
 <edge visible="no" attribute="yes">
    <relation name="driver"> <type name="Input"/> <type name="Driver"/> </relation>
    <relation name="key"> <type name="Input"/> <type name="Key"/> </relation>
