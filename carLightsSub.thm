@@ -23,9 +23,10 @@
    <type name="NoKeyInserted"/>
    <type name="PitmanArmBackward"/>
    <type name="PitmanArmForward"/>
+   <type name="ReverseGear"/>
    <type name="ReverseLight"/>
-   <type name="SteeringWheel45OrMore"/>
-   <type name="SteeringWheelLess45"/>
+   <type name="SteeringWheelLeft"/>
+   <type name="SteeringWheelRight"/>
    <type name="String"/>
    <type name="TailLight"/>
    <type name="univ"/>
@@ -103,6 +104,7 @@
 </node>
 
 <node visible="no">
+   <type name="Gear"/>
    <type name="Key"/>
    <type name="Light"/>
    <set name="this/Off" type="Signal"/>

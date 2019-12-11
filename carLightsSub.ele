@@ -34,6 +34,8 @@ one sig TailLight extends Light {}
 one sig ReverseLight extends Light {}
 one sig AmbientLight extends Light {}
 
+abstract sig Gear{}
+one sig ReverseGear extends Gear {}
 
 one sig Car {
 	var frontRight: set Light,
@@ -42,7 +44,8 @@ one sig Car {
 	var middleRight: lone Light,
 	var backRight: set Light,
 	var backLeft: set Light,
-	var top: lone BrakeLight
+	var top: lone BrakeLight,
+	var gear: lone Gear
 }
 
 
@@ -677,6 +680,30 @@ pred lightCorneringBySignal {
 	Input.wheel' = Input.wheel
 }
 
+
+pred reverseGears {
+	Input.driver = DriverInside
+	Input.key = KeyInIgnitionOnPosition
+
+	Car.gear' = ReverseGear
+	Car.backLeft' = Car.backLeft + ReverseLight
+	Car.backRight' = Car.backRight + ReverseLight
+
+	Input.key' = Input.key
+ 	Car.frontRight' = Car.frontRight
+	Car.frontLeft' = Car.frontLeft
+	Car.middleRight' = Car.middleRight
+	Car.middleLeft' = Car.middleLeft
+	Car.top' = Car.top
+	Input.pitmanArm' = Input.pitmanArm
+	On' = On + ReverseLight
+	--Off' = Off - ReverseLight
+	Input.driver' = Input.driver
+	Input.lightRotarySwitch' = Input.lightRotarySwitch
+	Input.ambientLightButton' = Input.ambientLightButton
+	
+}
+
 /*
 --nao consigo chegar a um estado em que teste isto
 fact els16 {
@@ -775,8 +802,9 @@ fact transitions {
 		insertKey or rotateKey or 
 		leaveCar or enterCar or
 		lightOn or lightOff or lightAuto or 
-		ambientLightOn or ambientLightOff or
+		ambientLightOn or ambientLightOff or reverseGears or
 		turnRight or turnLeft or turnNeutral
+		
 	)	
 }
 
