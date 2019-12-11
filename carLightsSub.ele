@@ -175,6 +175,7 @@ pred tmpRightBlinking {
 	Car.backRight' = Car.backRight + Blinker
 	On' = On + BlinkerLights
 	Off' = Off - BlinkerLights
+	Signals.signals' = On'
 
 	Blinker not in Car.frontRight'' 
 	Blinker not in Car.middleRight''
@@ -203,6 +204,7 @@ pred stopTmpRightBlinking {
 	Car.backRight' = Car.backRight - Blinker
 	Off' = Off + BlinkerLights
 	On' = On - BlinkerLights
+	Signals.signals' = On'
 
 	Car.frontLeft' = Car.frontLeft
 	Car.middleLeft' = Car.middleLeft
@@ -224,6 +226,7 @@ pred rightBlinking {
 	Car.backRight' = Car.backRight + Blinker
 	On' = On + BlinkerLights
 	Off' = Off - BlinkerLights
+	Signals.signals' = On'
 
 	Car.frontLeft' = Car.frontLeft
 	Car.middleLeft' = Car.middleLeft
@@ -244,6 +247,7 @@ pred tmpLeftBlinking {
 	Car.backLeft' = Car.backLeft + Blinker
 	On' = On + BlinkerLights
 	Off' = Off - BlinkerLights
+	Signals.signals' = On'
 
 	Blinker not in Car.frontLeft'' 
 	Blinker not in Car.middleLeft''
@@ -271,6 +275,7 @@ pred stopTmpLeftBlinking {
 	Car.backLeft' = Car.backLeft - Blinker
 	Off' = Off + BlinkerLights
 	On' = On - BlinkerLights
+	Signals.signals' = On'
 
 	Car.frontRight' = Car.frontRight
 	Car.middleRight' = Car.middleRight
@@ -292,6 +297,7 @@ pred leftBlinking {
 	Car.backLeft' = Car.backLeft + Blinker
 	On' = On + BlinkerLights
 	Off' = Off - BlinkerLights
+	Signals.signals' = On'
 
 	Car.frontRight' = Car.frontRight
 	Car.middleRight' = Car.middleRight
@@ -432,17 +438,15 @@ pred enterCar {
 	Input.ambientLightButton' =	 Input.ambientLightButton
 }
 
---NOTA: POR ALGUMA RAZAO DEPOIS DAS ALTERACOES CONTINUA A ACONTECER DE A CHAVE SER INSERIDA
---QUANDO O DRIVER SAI DO CARRO (nao deveria acontecer)
 pred leaveCar {
 	Input.driver = DriverInside
-	
-     --Input.key' = KeyInserted --makes no sense inserting key to get out
+     
+	Input.key' = KeyInserted
 	Input.driver' = DriverOutside
---	no (Car.frontLeft' + Car.frontRight' + Car.middleLeft' +			em caso de o que eu fiz estar errado descomenta esta
---	    Car.middleRight' + Car.backLeft' + Car.backRight' + Car.top')		e esta e apaga as duas abaixo
-	(Input.key = KeyInserted and Input.ambientLightButton = AmbientLightButtonOn) implies	--test, verify this
-		activateAmbientLight												--test, verify this
+	no (Car.frontLeft' + Car.frontRight' + Car.middleLeft' +
+	    Car.middleRight' + Car.backLeft' + Car.backRight' + Car.top')
+--	(Input.key = KeyInserted and Input.ambientLightButton = AmbientLightButtonOn) implies	--test, verify this
+--		activateAmbientLight												--test, verify this
 
 
 	On' = On
@@ -458,15 +462,16 @@ pred activateAmbientLight {
 	--pre
 	Input.key = KeyInserted
 	Input.ambientLightButton = AmbientLightButtonOn
---	Input.driver = DriverOutside   comentei esta linha para testar a alteracao que fiz na leaveCar
+	Input.driver = DriverOutside
+	AmbientLight not in Car.middleRight
 	
 	--post
-	Car.frontLeft' in AmbientLight
-	Car.frontRight' in AmbientLight
-	Car.middleLeft' in AmbientLight
-	Car.middleRight' in AmbientLight
-	Car.backLeft' in AmbientLight
-	Car.backRight' in AmbientLight
+	Car.frontLeft' = AmbientLight
+	Car.frontRight' = AmbientLight
+	Car.middleLeft' = AmbientLight
+	Car.middleRight' = AmbientLight
+	Car.backLeft' = AmbientLight
+	Car.backRight' = AmbientLight
 
 
 	--frame
