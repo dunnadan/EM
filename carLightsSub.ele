@@ -161,13 +161,14 @@ one sig DriverOutside extends Driver {}
 ----------------------------------------------------------------------------------------------------
 pred directionBlinking {
 	Input.key = KeyInIgnitionOnPosition
+	Input.driver = DriverInside
 	(tmpLeftBlinking or stopTmpLeftBlinking or leftBlinking or
       tmpRightBlinking or stopTmpRightBlinking or rightBlinking)
 }
 
 
 pred tmpRightBlinking {
-	Input.driver = DriverInside
+
 	Input.pitmanArm' = PitmanArmUp5
 	Car.frontRight' = Car.frontRight + Blinker
 	Car.middleRight' = Car.middleRight + Blinker
@@ -193,7 +194,7 @@ pred tmpRightBlinking {
 }
 
 pred stopTmpRightBlinking {
-	Input.driver = DriverInside
+
 	Input.pitmanArm = PitmanArmUp5
 
 	Input.pitmanArm' = PitmanArmNeutral
@@ -214,7 +215,7 @@ pred stopTmpRightBlinking {
 }
 
 pred rightBlinking {
-	Input.driver = DriverInside
+
 	Input.pitmanArm' = PitmanArmUp7
 
 	
@@ -236,7 +237,7 @@ pred rightBlinking {
 }
 
 pred tmpLeftBlinking {
-	Input.driver = DriverInside
+
 	Input.pitmanArm' = PitmanArmDown5
 	Car.frontLeft' = Car.frontLeft + Blinker
 	Car.middleLeft' = Car.middleLeft + Blinker
@@ -261,7 +262,7 @@ pred tmpLeftBlinking {
 }
 
 pred stopTmpLeftBlinking {
-	Input.driver = DriverInside
+
 	Input.pitmanArm = PitmanArmDown5
 
 	Input.pitmanArm' = PitmanArmNeutral
@@ -282,7 +283,7 @@ pred stopTmpLeftBlinking {
 }
 
 pred leftBlinking {
-	Input.driver = DriverInside
+
 	Input.pitmanArm' = PitmanArmDown7
 
 	
@@ -304,11 +305,12 @@ pred leftBlinking {
 }
 
 pred lightSwitch {
+	Input.driver = DriverInside
 	lightOn or lightOff or lightAuto
 }
 
 pred lightOn {
-	Input.driver = DriverInside
+
 	Input.lightRotarySwitch != LightSwitchOn
 
 	Input.lightRotarySwitch' = LightSwitchOn
@@ -328,7 +330,7 @@ pred lightOn {
 	Input.ambientLightButton' = Input.ambientLightButton
 }
 pred lightOff {
-	Input.driver = DriverInside
+
 	Input.lightRotarySwitch != LightSwitchOff
 
 	Input.lightRotarySwitch' = LightSwitchOff
@@ -348,7 +350,7 @@ pred lightOff {
 	Input.ambientLightButton' = Input.ambientLightButton
 }
 pred lightAuto {
-	Input.driver = DriverInside
+
 	Input.lightRotarySwitch != LightSwitchAuto
 
 	Input.lightRotarySwitch' = LightSwitchAuto
@@ -369,11 +371,12 @@ pred lightAuto {
 }
 
 pred ambientLight {
+	Input.driver = DriverInside
 	ambientLightOn or ambientLightOff
 }
 
 pred ambientLightOn {
-	Input.driver = DriverInside	
+
 	Input.ambientLightButton = AmbientLightButtonOff
 
 	Input.ambientLightButton' = AmbientLightButtonOn
@@ -394,7 +397,7 @@ pred ambientLightOn {
 }
 
 pred ambientLightOff {
-	Input.driver = DriverInside
+
 	Input.ambientLightButton = AmbientLightButtonOn
 
 	Input.ambientLightButton' = AmbientLightButtonOff
