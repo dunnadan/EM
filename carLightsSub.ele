@@ -914,7 +914,6 @@ fact transitions {
 	)	
 }
 
-run {} for 50
 
 
 assert tmpFlashGoesOff {
@@ -930,3 +929,5 @@ assert lowBeamOnTest {
 assert highBeamTail {
 	HighBeamHeadLights in Signals.signals implies TailLight in Car.backLeft
 }
+
+run {} for 50
