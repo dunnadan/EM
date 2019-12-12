@@ -1,3 +1,5 @@
+-- this ended up being "useful" for the model (theme) alone
+-- we didn't quite understand the "main functions" and their role
 abstract sig Signal {}
 one sig TurnSignal extends Signal {}
 one sig EmergencyBreakLight extends Signal {}	
@@ -9,7 +11,7 @@ one sig ReverseLights extends Signal {}
 one sig HighBeamHeadLights extends Signal {}
 
 -- done this way instead of lone sing xSignal extends Signal {}
--- to appear the same name in the model
+-- to appear the same name in the model (theme)
 -- same expressive power, better visual mode, little extra boilerplate
 var sig On in Signal {} 
 var sig Off in Signal {}
@@ -20,11 +22,13 @@ fact oneModeSignal {
 	)
 }
 
+-- useful for the model (theme)
 one sig Signals {
 	var signals: set On
 }
 ----------------------------------------------------------------------------------------------------
 
+-- the all types of lights
 abstract sig Light {}
 one sig Blinker extends Light {}
 one sig LowBeamHeadLight extends Light {}
@@ -36,10 +40,14 @@ one sig TailLight extends Light {}
 one sig ReverseLight extends Light {}
 one sig AmbientLight extends Light {}
 
-abstract sig Gear{}
+abstract sig Gear {}
 one sig ReverseGear extends Gear {}
 one sig ForwardGear extends Gear {}
 
+-- sine we aren't sure how much we would model
+-- and how important the zones were we have decided to take
+-- this route, all done it was a bit cubersome with the frame conditions
+-- but offered a decent level of abstraction
 one sig Car {
 	var frontRight: set Light,
 	var frontLeft: set Light,
@@ -51,7 +59,7 @@ one sig Car {
 	var gear: lone Gear
 }
 
-
+-- since we cant specify this with "types" alone
 fact notAllowedInFront {
 	let front = Car.frontRight + Car.frontLeft {
 		always (
@@ -101,6 +109,7 @@ fact alwaysBlinkAllLights {
 	)
 }
 
+-- since we have the 'alwaysBlinkAllLights' fact we can be lazy here
 fact onlyOneBlinker {
 	always (
 		Blinker in Car.middleRight implies Blinker not in Car.middleLeft
@@ -110,9 +119,8 @@ fact onlyOneBlinker {
 	)
 }
 
--- confirm this
--- do the same for lbh and hbh
-fact alwaysBrakeAllBackLights {
+
+fact alwaysBreakeAllBackLights {
 	always (
 		BrakeLight in (Car.backRight + Car.backLeft)
 				implies BrakeLight in Car.backRight and
@@ -121,6 +129,7 @@ fact alwaysBrakeAllBackLights {
 }
 ----------------------------------------------------------------------------------------------------
 
+-- this sig aggregates all input from the driver
 one sig Input {
 	var key: one Key,
 	var pitmanArm: one PitmanArm,
@@ -913,6 +922,7 @@ fact transitions {
 	)	
 }
 
+-- to prevent "funny" traces
 fact noRepeatTmpBlinkers {
 	always (
 	(Input.pitmanArm = PitmanArmUp5 implies Input.pitmanArm' != PitmanArmUp5)
@@ -921,6 +931,9 @@ fact noRepeatTmpBlinkers {
 	)
 }
 
+-- we weren't quite sure what to assert
+-- we had some difficulties choosing between what to put in facts and what to assert
+-- "should our preds enforce the facts or should we be explicity about them?"
 
 assert tmpFlashGoesOff {
 	always (
@@ -943,6 +956,6 @@ assert highBeamTail {
 }
 
 run {} for 50
-check  tmpFlashGoesOff -- fails
+check tmpFlashGoesOff
 check lowBeanOnTest -- fails
 check highBeamTail
