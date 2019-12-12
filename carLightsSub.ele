@@ -145,6 +145,8 @@ abstract sig PitmanArm {
  -- that would allow to represent "impossible" states
  -- hence this solution
 }
+
+--Definition of all possible options for the Pitman Arm position
 one sig PitmanArmNeutral extends PitmanArm {}
 one sig PitmanArmUp5 extends PitmanArm {}
 one sig PitmanArmUp7 extends PitmanArm {}
@@ -153,15 +155,19 @@ one sig PitmanArmDown7 extends PitmanArm {}
 one sig PitmanArmForward extends PitmanArm {}
 one sig PitmanArmBackward extends PitmanArm {}
 
+--Possible Key states, important to notice that here we used the position KeyInIgnitionOnPosition
+--to determine if the Car engine is On when the key is on this position
 abstract sig Key {}
 one sig NoKeyInserted extends Key {}
 one sig KeyInserted extends Key {}
 one sig KeyInIgnitionOnPosition extends Key {}
 
+
 abstract sig LightRotarySwitch {}
 one sig LightSwitchOff extends LightRotarySwitch {}
 one sig LightSwitchOn extends LightRotarySwitch {} 
 one sig LightSwitchAuto extends LightRotarySwitch {} 
+
 
 abstract sig AmbientLightButton {}
 one sig AmbientLightButtonOn extends AmbientLightButton{}
@@ -181,6 +187,7 @@ one sig SteeringWheelRight extends SteeringWheel {}
 
 
 ----------------------------------------------------------------------------------------------------
+--Activate temporary right blinking, when Pitman Arm is 5 degrees Up
 pred tmpRightBlinking {
 	Input.key = KeyInIgnitionOnPosition
 	Input.driver = DriverInside
@@ -209,7 +216,7 @@ pred tmpRightBlinking {
 	Car.gear' = Car.gear
      
 }
-
+--Stop the temporary Right blinking
 pred stopTmpRightBlinking {
 	Input.key = KeyInIgnitionOnPosition
 	Input.driver = DriverInside
@@ -234,7 +241,7 @@ pred stopTmpRightBlinking {
 	Input.wheel' = Input.wheel
 	Car.gear' = Car.gear
 }
-
+--Activate engaging right blinking
 pred rightBlinking {
 	Input.key = KeyInIgnitionOnPosition
 	Input.driver = DriverInside
@@ -259,7 +266,7 @@ pred rightBlinking {
 	Car.gear' = Car.gear
      
 }
-
+--Activate temporary left Blinking, when Pitman Arm is 5 degrees Down
 pred tmpLeftBlinking {
 	Input.pitmanArm != PitmanArmDown5
 	Input.key = KeyInIgnitionOnPosition
@@ -289,7 +296,7 @@ pred tmpLeftBlinking {
      	Input.wheel' = Input.wheel
 	Car.gear' = Car.gear
 }
-
+--Stop temporary left blinking
 pred stopTmpLeftBlinking {
 	Input.key = KeyInIgnitionOnPosition
 	Input.driver = DriverInside
@@ -314,7 +321,7 @@ pred stopTmpLeftBlinking {
 	Input.wheel' = Input.wheel
 	Car.gear' = Car.gear
 }
-
+-- Activate engaging left blinking
 pred leftBlinking {
 	Input.key = KeyInIgnitionOnPosition
 	Input.driver = DriverInside
@@ -339,7 +346,7 @@ pred leftBlinking {
 	Car.gear' = Car.gear
      
 }
-
+-- Turn the Light Rotary Switch to the ON position
 pred lightOn {
 	Input.driver = DriverInside
 	Input.lightRotarySwitch != LightSwitchOn
@@ -362,6 +369,8 @@ pred lightOn {
 	Input.wheel' = Input.wheel
 	Car.gear' = Car.gear
 }
+
+--Turn the Light Rotary Switch to the OFF position
 pred lightOff {
 	Input.driver = DriverInside
 	Input.lightRotarySwitch != LightSwitchOff
@@ -384,6 +393,8 @@ pred lightOff {
 	Input.wheel' = Input.wheel
 	Car.gear' = Car.gear
 }
+
+--Turn the Light Rotary Switch to the AUTO position
 pred lightAuto {
 	Input.driver = DriverInside
 	Input.lightRotarySwitch != LightSwitchAuto
@@ -407,6 +418,7 @@ pred lightAuto {
 	Car.gear' = Car.gear
 }
 
+--Turn the Ambient Light Button ON
 pred ambientLightOn {
 	Input.driver = DriverInside
 	Input.ambientLightButton = AmbientLightButtonOff
@@ -430,6 +442,7 @@ pred ambientLightOn {
 	Car.gear' = Car.gear
 }
 
+--Turn the Ambient Light Button OFF
 pred ambientLightOff {
 	Input.driver = DriverInside
 	Input.ambientLightButton = AmbientLightButtonOn
@@ -453,6 +466,7 @@ pred ambientLightOff {
 	Car.gear' = Car.gear
 }
 
+--This predicate simulates the driver entering the car
 pred enterCar {
 	Input.driver = DriverOutside
 	
@@ -470,6 +484,7 @@ pred enterCar {
 	Car.gear' = Car.gear
 }
 
+--This predicate simulates the driver getting out of the car
 pred leaveCar {
 	Input.driver = DriverInside
      
@@ -488,7 +503,7 @@ pred leaveCar {
 	Car.gear' = Car.gear
 }
 
-
+-- Turn on the Ambient Lights, only when the driver is out of the car and the Button is ON
 pred activateAmbientLight {
 	--pre
 	Input.key = KeyInserted
@@ -518,6 +533,7 @@ pred activateAmbientLight {
 	Car.gear' = Car.gear
 }
 
+--Key is inserted
 pred insertKey {
 	Input.driver = DriverInside
 	Input.key = NoKeyInserted
@@ -541,6 +557,7 @@ pred insertKey {
 	Car.gear' = Car.gear
 }
 
+--Rotate key, from KeyInserted to KeyInIgnitionOnPosition
 pred rotateKey {
 	Input.driver = DriverInside
 	Input.key = KeyInserted
@@ -590,6 +607,7 @@ fact lowBeamOnBasic {
 		implies LowBeamHeadLights in On
 }
 
+--Turn on the Low Beam Headlights at Half the power
 pred activateHalfLowBeamHeadlights {
 	Input.driver = DriverInside
 	Input.key = KeyInserted
@@ -615,6 +633,7 @@ pred activateHalfLowBeamHeadlights {
 	Car.gear' = Car.gear
 }
 
+--Turn ON the Low Beam Headlights at full power
 pred activateLowBeamHeadlights {
 	Input.driver = DriverInside
 	Input.key = KeyInserted
@@ -641,6 +660,7 @@ pred activateLowBeamHeadlights {
 	Car.gear' = Car.gear
 }
 
+--Turn OFF the Low Beam headlights
 pred deactivateLowBeamHeadLights {
 	Input.driver = DriverInside
 	LowBeamHeadLight in Car.frontLeft
@@ -665,6 +685,8 @@ pred deactivateLowBeamHeadLights {
 	Car.gear' = Car.gear
 }
 
+--This predicate ensures that Low Beam Headlights are turned OFF if the Light Rotary Switch is on AUTO
+--position when the key is not on KeyInIgnitionOnPosition(Car turned OFF)
 pred lowBeamOn_LightToAuto {
 	Input.driver = DriverInside
 	Input.key != KeyInIgnitionOnPosition
@@ -713,7 +735,7 @@ pred lightCorneringBySignal {
 	Car.gear' = Car.gear
 }
 
-
+-- Activate reverse gears
 pred reverseGears {
 	Car.gear = ForwardGear
 	Input.driver = DriverInside
@@ -739,7 +761,7 @@ pred reverseGears {
 	
 }
 
-
+--Activate Forward Gear
 pred forwardGears {
 	Car.gear = ReverseGear
 	Input.driver = DriverInside
@@ -779,7 +801,7 @@ fact alwaysAllAmbientLights {
 	)
 }
 
-
+--Turn the steering wheel left
 pred turnLeft {
 	Input.driver = DriverInside
 	Input.wheel != SteeringWheelLeft
@@ -803,6 +825,7 @@ pred turnLeft {
 	Car.gear' = Car.gear
 }
 
+--Turn steering wheel right
 pred turnRight {
 	Input.driver = DriverInside
 	Input.wheel != SteeringWheelRight
@@ -825,7 +848,7 @@ pred turnRight {
 	On' = On
 	Car.gear' = Car.gear
 }
-
+--Steering wheel to Neutral position
 pred turnNeutral {
 	Input.driver = DriverInside
 	Input.wheel != SteeringWheelNeutral
@@ -849,7 +872,7 @@ pred turnNeutral {
 	Car.gear' = Car.gear
 }
 
-
+--Turn on High Beam headlights
 pred activateHighBeamHeadLights{
 
 	Input.key != NoKeyInserted
@@ -878,7 +901,7 @@ pred activateHighBeamHeadLights{
 	
 }
 
-
+--Turn off High beam headlights
 pred deactivateHighBeamHeadLights{
 
 	Input.key != NoKeyInserted
