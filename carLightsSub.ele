@@ -913,6 +913,13 @@ fact transitions {
 	)	
 }
 
+fact noRepeatTmpBlinkers {
+	always (
+	(Input.pitmanArm = PitmanArmUp5 implies Input.pitmanArm' != PitmanArmUp5)
+	and
+	(Input.pitmanArm = PitmanArmDown5 implies Input.pitmanArm' != PitmanArmDown5)
+	)
+}
 
 
 assert tmpFlashGoesOff {
