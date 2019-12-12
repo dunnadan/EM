@@ -759,17 +759,6 @@ pred forwardGears {
 	
 }
 
-/*
---nao consigo chegar a um estado em que teste isto
-fact els16 {
-
-	Input.key != KeyInIgnitionOnPosition and Input.lightRotarySwitch = LightSwitchAuto implies
-		deactivateLowBeamHeadLights
-		
-}
-*/
-
-
 fact alwaysAllAmbientLights {
 	always (
 		AmbientLight in (Car.frontRight + Car.middleRight + Car.backRight + Car.frontLeft + Car.middleLeft + Car.backLeft)
@@ -926,3 +915,18 @@ fact transitions {
 }
 
 run {} for 50
+
+
+assert tmpFlashGoesOff {
+	(Input.pitmanArm = PitmanArmUp5 or Input.pitmanArm = PitmanArmDown5)
+		implies BlinkerLights not in Signals.signals''
+}
+
+assert lowBeamOnTest {
+	(Input.key = KeyInIgnitionOnPosition and Input.lightRotarySwitch = LightSwitchOn)
+		implies LowBeamHeadLights in On
+}
+
+assert highBeamTail {
+	HighBeamHeadLights in Signals.signals implies TailLight in Car.backLeft
+}
