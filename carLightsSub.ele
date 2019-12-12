@@ -175,6 +175,7 @@ one sig SteeringWheelRight extends SteeringWheel {}
 pred tmpRightBlinking {
 	Input.key = KeyInIgnitionOnPosition
 	Input.driver = DriverInside
+	Input.pitmanArm != PitmanArmUp5
 
 	Input.pitmanArm' = PitmanArmUp5
 	Car.frontRight' = Car.frontRight + Blinker
@@ -251,6 +252,7 @@ pred rightBlinking {
 }
 
 pred tmpLeftBlinking {
+	Input.pitmanArm != PitmanArmDown5
 	Input.key = KeyInIgnitionOnPosition
 	Input.driver = DriverInside
 
@@ -282,7 +284,6 @@ pred tmpLeftBlinking {
 pred stopTmpLeftBlinking {
 	Input.key = KeyInIgnitionOnPosition
 	Input.driver = DriverInside
-
 	Input.pitmanArm = PitmanArmDown5
 
 	Input.pitmanArm' = PitmanArmNeutral
@@ -467,8 +468,6 @@ pred leaveCar {
 	Input.driver' = DriverOutside
 	no (Car.frontLeft' + Car.frontRight' + Car.middleLeft' +
 	    Car.middleRight' + Car.backLeft' + Car.backRight' + Car.top')
---	(Input.key = KeyInserted and Input.ambientLightButton = AmbientLightButtonOn) implies	--test, verify this
---		activateAmbientLight												--test, verify this
 
 
 	On' = On
@@ -917,17 +916,26 @@ fact transitions {
 
 
 assert tmpFlashGoesOff {
+	always (
 	(Input.pitmanArm = PitmanArmUp5 or Input.pitmanArm = PitmanArmDown5)
-		implies BlinkerLights not in Signals.signals''
+		implies (BlinkerLights not in Signals.signals' or Input.pitmanArm' = PitmanArmUp7 or Input.pitmanArm' = PitmanArmDown7)
+	)
 }
 
-assert lowBeamOnTest {
+assert lowBeanOnTest {
+	always (
 	(Input.key = KeyInIgnitionOnPosition and Input.lightRotarySwitch = LightSwitchOn)
 		implies LowBeamHeadLights in On
+	)
 }
 
 assert highBeamTail {
+	always (
 	HighBeamHeadLights in Signals.signals implies TailLight in Car.backLeft
+	)
 }
 
 run {} for 50
+check  tmpFlashGoesOff -- fails
+check lowBeanOnTest -- fails
+check highBeamTail
