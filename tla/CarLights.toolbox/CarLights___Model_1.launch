@@ -5,7 +5,7 @@
     <stringAttribute key="distributedNetworkInterface" value="172.17.0.1"/>
     <intAttribute key="distributedNodesCount" value="1"/>
     <stringAttribute key="distributedTLC" value="off"/>
-    <intAttribute key="fpIndex" value="58"/>
+    <intAttribute key="fpIndex" value="5"/>
     <intAttribute key="maxHeapSize" value="25"/>
     <stringAttribute key="modelBehaviorInit" value=""/>
     <stringAttribute key="modelBehaviorNext" value=""/>
@@ -18,7 +18,7 @@
         <listEntry value="1TypeInvariant"/>
     </listAttribute>
     <listAttribute key="modelCorrectnessProperties">
-        <listEntry value="1TmpRightBlinkWIllStop"/>
+        <listEntry value="1TmpBlinkWillStop"/>
     </listAttribute>
     <stringAttribute key="modelExpressionEval" value=""/>
     <listAttribute key="modelParameterConstants"/>
