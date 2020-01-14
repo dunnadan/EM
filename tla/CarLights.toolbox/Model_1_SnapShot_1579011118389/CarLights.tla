@@ -157,16 +157,9 @@ ActivateAmbientLight == /\ key
   
 ActivateHalfLowBeamHeadlights == /\ driver
                                  /\ key
-                                 /\ lightRotarySwitch = TRUE
+                                 /\ lightRotarySwitch
                                  /\ lights' = [lights EXCEPT !["FrontRight"] = TRUE, !["FrontLeft"] = TRUE, !["BackLeft"] = TRUE, !["BackRight"] = TRUE]
                                  /\ UNCHANGED << ambientLight, driver, gear, pitmanArm, lightRotarySwitch, steeringWheel, key >>
-                                 
-ActivateLowBeamHeadlights == /\ driver
-                             /\ key
-                             /\ lightRotarySwitch = TRUE
-                             /\ lights' = [lights EXCEPT !["FrontRight"] = TRUE, !["FrontLeft"] = TRUE, !["BackLeft"] = TRUE, !["BackRight"] = TRUE]
-                             /\ UNCHANGED << ambientLight, driver, gear, pitmanArm, lightRotarySwitch, steeringWheel, key >>                               
-
                                                           
 SysNext == TmpBlinking \/ AlwaysBlinking \/ ActivateAmbientLight \/ ActivateHalfLowBeamHeadlights
 
@@ -189,6 +182,6 @@ Spec == Init /\ [][Next]_vars /\ []TmpBlinkWillStop
 THEOREM Spec => []TypeInvariant
 =============================================================================
 \* Modification History
-\* Last modified Tue Jan 14 14:14:23 WET 2020 by apollo
+\* Last modified Tue Jan 14 14:11:40 WET 2020 by apollo
 \* Last modified Tue Jan 14 12:00:02 WET 2020 by herulume
 \* Created Mon Jan 13 20:57:38 WET 2020 by herulume

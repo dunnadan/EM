@@ -151,24 +151,10 @@ AlwaysBlinking == RightBlinking \/ LeftBlinking
 ActivateAmbientLight == /\ key
                         /\ ambientLight
                         /\ driver = FALSE
-                        /\ lights' = [l \in Light |-> TRUE ]
+                        /\ lights' = [l \in (Light -- "Top") |-> TRUE] /\ lights'["Top"] = lights["Top"]
                         /\ UNCHANGED << ambientLight, driver, gear, pitmanArm, lightRotarySwitch, steeringWheel, key >>
-  
-  
-ActivateHalfLowBeamHeadlights == /\ driver
-                                 /\ key
-                                 /\ lightRotarySwitch = TRUE
-                                 /\ lights' = [lights EXCEPT !["FrontRight"] = TRUE, !["FrontLeft"] = TRUE, !["BackLeft"] = TRUE, !["BackRight"] = TRUE]
-                                 /\ UNCHANGED << ambientLight, driver, gear, pitmanArm, lightRotarySwitch, steeringWheel, key >>
-                                 
-ActivateLowBeamHeadlights == /\ driver
-                             /\ key
-                             /\ lightRotarySwitch = TRUE
-                             /\ lights' = [lights EXCEPT !["FrontRight"] = TRUE, !["FrontLeft"] = TRUE, !["BackLeft"] = TRUE, !["BackRight"] = TRUE]
-                             /\ UNCHANGED << ambientLight, driver, gear, pitmanArm, lightRotarySwitch, steeringWheel, key >>                               
-
-                                                          
-SysNext == TmpBlinking \/ AlwaysBlinking \/ ActivateAmbientLight \/ ActivateHalfLowBeamHeadlights
+                        
+SysNext == TmpBlinking \/ AlwaysBlinking \/ ActivateAmbientLight
 
 EnvNext ==  \/ ChangeAmbientLight
             \/ ChangeDriver
@@ -189,6 +175,6 @@ Spec == Init /\ [][Next]_vars /\ []TmpBlinkWillStop
 THEOREM Spec => []TypeInvariant
 =============================================================================
 \* Modification History
-\* Last modified Tue Jan 14 14:14:23 WET 2020 by apollo
+\* Last modified Tue Jan 14 13:54:14 WET 2020 by apollo
 \* Last modified Tue Jan 14 12:00:02 WET 2020 by herulume
 \* Created Mon Jan 13 20:57:38 WET 2020 by herulume
