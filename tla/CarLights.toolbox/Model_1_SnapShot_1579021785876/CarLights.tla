@@ -19,7 +19,7 @@ Neutral == CHOOSE Neutral : Neutral \notin BOOLEAN
 (* to know each value, they can't be passed as modal values sets (to     *)
 (* the best of our knowledge of course).                                 *)
 (*************************************************************************)
-LightState == {"Off", "Half", "Low", "Blinking", "High"}
+LightState == {"Off", "Half", "Low", "Blinking"}
 KeyState == {"KeyInserted", "KeyNotInserted", "KeyInIgnitionOnPosition"}
 LightRotarySwitch == BOOLEAN ++ Auto
 SteeringWheel == BOOLEAN ++ Neutral (* TRUE = LEFT; FALSE = RIGHT *)
@@ -210,31 +210,12 @@ ActivateCornering == \/ ActivateRightCornering
 
 ChangeCornering ==  \/ ActivateCornering  
                     \/ DeactivateCornering           
-
-
-ActivateHighBeam == /\ key # "KeyNotInserted"
-                    /\ driver
-                    /\ pitmanArm = "P_Forward"
-                    /\ lightRotarySwitch # FALSE
-                    /\ lights' = [lights EXCEPT !["FrontRight"] = "High", !["FrontLeft"] = "High", !["BackLeft"] = "High", !["BackRight"] = "High"]
-                    /\ UNCHANGED << ambientLight, driver, gear, pitmanArm, lightRotarySwitch, steeringWheel, key, cornering >>
-
-DeactivateHighBeam == /\ key # "KeyNotInserted"
-                      /\ driver
-                      /\ 
-                         \/ pitmanArm # "P_Forward"
-                         \/ lightRotarySwitch = FALSE
-                     /\ lights' = [lights EXCEPT !["FrontRight"] = "Off", !["FrontLeft"] = "Off", !["BackLeft"] = "Off", !["BackRight"] = "Off"]
-                     /\ UNCHANGED << ambientLight, driver, gear, pitmanArm, lightRotarySwitch, steeringWheel, key, cornering >>                   
-
-HighBeam == ActivateHighBeam \/ DeactivateHighBeam
                                                           
 SysNext == \/ TmpBlinking
            \/ AlwaysBlinking
            \/ ActivateAmbientLight
            \/ LowHeadLights
            \/ ChangeCornering
-           \/ HighBeam
            
 
 EnvNext ==  \/ ChangeAmbientLight
@@ -256,6 +237,6 @@ Spec == Init /\ [][Next]_vars /\ []TmpBlinkWillStop
 THEOREM Spec => []TypeInvariant
 =============================================================================
 \* Modification History
-\* Last modified Tue Jan 14 17:17:32 WET 2020 by herulume
+\* Last modified Tue Jan 14 17:09:28 WET 2020 by herulume
 \* Last modified Tue Jan 14 14:14:23 WET 2020 by apollo
 \* Created Mon Jan 13 20:57:38 WET 2020 by herulume

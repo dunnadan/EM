@@ -19,7 +19,7 @@ Neutral == CHOOSE Neutral : Neutral \notin BOOLEAN
 (* to know each value, they can't be passed as modal values sets (to     *)
 (* the best of our knowledge of course).                                 *)
 (*************************************************************************)
-LightState == {"Off", "Half", "Low", "Blinking", "High"}
+LightState == {"Off", "Half", "Low", "Blinking"}
 KeyState == {"KeyInserted", "KeyNotInserted", "KeyInIgnitionOnPosition"}
 LightRotarySwitch == BOOLEAN ++ Auto
 SteeringWheel == BOOLEAN ++ Neutral (* TRUE = LEFT; FALSE = RIGHT *)
@@ -191,50 +191,23 @@ LowHeadLights == \/ ActivateLowHeadLights
 
 ActivateLeftCornering == /\ lights["FrontLeft"] = "Blinking"
                          /\ steeringWheel = TRUE (* LEFT *)
-                         /\ cornering' = "C_Left"
+                         /\ cornering' = "C_LEFT"
                          /\ UNCHANGED << ambientLight, driver, lights, gear, pitmanArm, lightRotarySwitch, steeringWheel, key >>
 
 ActivateRightCornering == /\ lights["FrontRight"] = "Blinking"
                           /\ steeringWheel = FALSE (* RIGHT *)
-                          /\ cornering' = "C_Right"
+                          /\ cornering' = "C_RIGHT"
                           /\ UNCHANGED << ambientLight, driver, lights, gear, pitmanArm, lightRotarySwitch, steeringWheel, key >>
+ 
+ActivateCornering == ActivateRightCornering \/ ActivateLeftCornering 
 
-(* Check this *)
-DeactivateCornering == /\ cornering # "C_Neutral"
-                       /\ steeringWheel = Neutral
-                       /\ cornering' = "C_Neutral"
-                       /\ UNCHANGED << ambientLight, driver, lights, gear, pitmanArm, lightRotarySwitch, steeringWheel, key >>
-
-ActivateCornering == \/ ActivateRightCornering
-                     \/ ActivateLeftCornering
-
-ChangeCornering ==  \/ ActivateCornering  
-                    \/ DeactivateCornering           
-
-
-ActivateHighBeam == /\ key # "KeyNotInserted"
-                    /\ driver
-                    /\ pitmanArm = "P_Forward"
-                    /\ lightRotarySwitch # FALSE
-                    /\ lights' = [lights EXCEPT !["FrontRight"] = "High", !["FrontLeft"] = "High", !["BackLeft"] = "High", !["BackRight"] = "High"]
-                    /\ UNCHANGED << ambientLight, driver, gear, pitmanArm, lightRotarySwitch, steeringWheel, key, cornering >>
-
-DeactivateHighBeam == /\ key # "KeyNotInserted"
-                      /\ driver
-                      /\ 
-                         \/ pitmanArm # "P_Forward"
-                         \/ lightRotarySwitch = FALSE
-                     /\ lights' = [lights EXCEPT !["FrontRight"] = "Off", !["FrontLeft"] = "Off", !["BackLeft"] = "Off", !["BackRight"] = "Off"]
-                     /\ UNCHANGED << ambientLight, driver, gear, pitmanArm, lightRotarySwitch, steeringWheel, key, cornering >>                   
-
-HighBeam == ActivateHighBeam \/ DeactivateHighBeam
+ChangeCornering ==  ActivateCornering             
                                                           
 SysNext == \/ TmpBlinking
            \/ AlwaysBlinking
            \/ ActivateAmbientLight
            \/ LowHeadLights
            \/ ChangeCornering
-           \/ HighBeam
            
 
 EnvNext ==  \/ ChangeAmbientLight
@@ -256,6 +229,6 @@ Spec == Init /\ [][Next]_vars /\ []TmpBlinkWillStop
 THEOREM Spec => []TypeInvariant
 =============================================================================
 \* Modification History
-\* Last modified Tue Jan 14 17:17:32 WET 2020 by herulume
+\* Last modified Tue Jan 14 16:56:00 WET 2020 by herulume
 \* Last modified Tue Jan 14 14:14:23 WET 2020 by apollo
 \* Created Mon Jan 13 20:57:38 WET 2020 by herulume
