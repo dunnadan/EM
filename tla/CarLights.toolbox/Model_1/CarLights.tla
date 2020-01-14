@@ -1,11 +1,6 @@
 ----------------------------- MODULE CarLights -----------------------------
-EXTENDS FiniteSets
-
 set ++ x == set \union {x}
 set -- x == set \ {x}
-
-CONSTANT Light
-ASSUME IsFiniteSet(Light)
 
 (* Env values types *)
 Blinking == CHOOSE Blinking : Blinking \notin BOOLEAN
@@ -17,6 +12,7 @@ LightRotarySwitch == BOOLEAN ++ Auto
 SteeringWheel == BOOLEAN ++ Neutral
 Gear == {"G_Forward", "G_Reverse", "G_Neutal"}
 PitmanArm == {"P_Neutral", "P_Up5", "P_Up7", "P_Down5", "P_Down7", "P_Forward", "P_Backward"}
+Light == {"FrontLeft", "FrontRight", "MiddleLeft", "MiddleRight", "BackRight", "BackLeft", "Top"}
 
 
 VARIABLES ambientLight, driver, lights, gear, pitmanArm, lightRotarySwitch, steeringWheel, key
@@ -90,5 +86,5 @@ Spec == Init /\ [][Next]_vars
 THEOREM Spec => []TypeInvariant
 =============================================================================
 \* Modification History
-\* Last modified Tue Jan 14 01:33:02 WET 2020 by herulume
+\* Last modified Tue Jan 14 01:45:07 WET 2020 by herulume
 \* Created Mon Jan 13 20:57:38 WET 2020 by herulume
