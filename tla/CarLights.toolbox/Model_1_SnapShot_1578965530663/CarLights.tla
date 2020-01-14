@@ -42,11 +42,11 @@ Init == /\ ambientLight = FALSE
 
 
 ChangeAmbientLight == /\ driver 
-                      /\ ambientLight' \in BOOLEAN -- ambientLight
+                      /\ ambientLight' = BOOLEAN -- ambientLight
                       /\ UNCHANGED << driver, lights, gear, pitmanArm, lightRotarySwitch, steeringWheel, key >>
 
 ChangeDriver == /\ key
-                /\ driver' \in BOOLEAN -- driver
+                /\ driver' = BOOLEAN -- driver
                 /\ UNCHANGED << ambientLight, lights, gear, pitmanArm, lightRotarySwitch, steeringWheel, key >>                 
 
 ChangeGear == /\ driver
@@ -90,5 +90,5 @@ Spec == Init /\ [][Next]_vars
 THEOREM Spec => []TypeInvariant
 =============================================================================
 \* Modification History
-\* Last modified Tue Jan 14 01:33:02 WET 2020 by herulume
+\* Last modified Tue Jan 14 01:31:57 WET 2020 by herulume
 \* Created Mon Jan 13 20:57:38 WET 2020 by herulume

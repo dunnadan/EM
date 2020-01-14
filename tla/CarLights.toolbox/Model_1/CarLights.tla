@@ -16,7 +16,6 @@ LightState == BOOLEAN ++ Blinking
 LightRotarySwitch == BOOLEAN ++ Auto
 SteeringWheel == BOOLEAN ++ Neutral
 Gear == {"G_Forward", "G_Reverse", "G_Neutal"}
-Key == {"NoKey", "KeyInserted", "KeyInIgnitionOnPosition"}
 PitmanArm == {"P_Neutral", "P_Up5", "P_Up7", "P_Down5", "P_Down7", "P_Forward", "P_Backward"}
 
 
@@ -28,31 +27,68 @@ TypeInvariant == /\ ambientLight \in BOOLEAN
                  /\ lights \in [Light -> LightState] 
                  /\ gear \in Gear
                  /\ pitmanArm \in PitmanArm
-                 /\ key \in Key
+                 /\ key \in BOOLEAN (* True => KeyInserted, False => KeyInIgnitionOnPosition *)
                  /\ lightRotarySwitch \in LightRotarySwitch 
                  /\ steeringWheel \in SteeringWheel 
 
 Init == /\ ambientLight = FALSE
-        /\ driver \in BOOLEAN
+        /\ driver = FALSE
         /\ lights = [l \in Light |-> FALSE ]
         /\ gear \in Gear
         /\ pitmanArm \in PitmanArm
-        /\ key \in Key
+        /\ key = TRUE
         /\ lightRotarySwitch \in LightRotarySwitch
         /\ steeringWheel \in SteeringWheel
 
 
+ChangeAmbientLight == /\ driver 
+                      /\ ambientLight' \in BOOLEAN -- ambientLight
+                      /\ UNCHANGED << driver, lights, gear, pitmanArm, lightRotarySwitch, steeringWheel, key >>
+
+ChangeDriver == /\ key
+                /\ driver' \in BOOLEAN -- driver
+                /\ UNCHANGED << ambientLight, lights, gear, pitmanArm, lightRotarySwitch, steeringWheel, key >>                 
+
+ChangeGear == /\ driver
+              /\ key = FALSE (* KeyInIgnitionOnPosition *)
+              /\ gear' \in Gear -- gear
+              /\ UNCHANGED << ambientLight, driver, lights, pitmanArm, lightRotarySwitch, steeringWheel, key >>
+
+ChangePitmanArm == /\ driver
+                   /\ pitmanArm' \in PitmanArm -- pitmanArm
+                   /\ UNCHANGED << ambientLight, driver, lights, gear, lightRotarySwitch, steeringWheel, key >>
+
+
+ChangeLightRotarySwitch == /\ driver
+                           /\ lightRotarySwitch' \in LightRotarySwitch -- lightRotarySwitch
+                           /\ UNCHANGED << ambientLight, driver, lights, gear, pitmanArm, steeringWheel, key >>
+
+ChangeSteeringWheel == /\ driver
+                       /\ steeringWheel' \in SteeringWheel -- steeringWheel
+                       /\ UNCHANGED << ambientLight, driver, lights, gear, pitmanArm, lightRotarySwitch, key >>
+
+ChangeKey == /\ driver
+             /\ key' \in BOOLEAN -- key
+             /\ UNCHANGED << ambientLight, driver, lights, gear, pitmanArm, lightRotarySwitch, steeringWheel >>
+
 (*
 SysNext == key' = "NoKey" 
-EnvNext == gear'= "G_Reverse"
-Next == SysNext \/ EnvNext
 *)
-Next == key' \in Key /\ UNCHANGED << ambientLight, driver, lights, gear, pitmanArm, lightRotarySwitch, steeringWheel >>
-        
+
+EnvNext ==  \/ ChangeAmbientLight
+            \/ ChangeDriver
+            \/ ChangeGear
+            \/ ChangePitmanArm
+            \/ ChangeLightRotarySwitch
+            \/ ChangeSteeringWheel
+            \/ ChangeKey
+            
+Next == (* SysNext \/ *) EnvNext   
+
 Spec == Init /\ [][Next]_vars
 
 THEOREM Spec => []TypeInvariant
 =============================================================================
 \* Modification History
-\* Last modified Tue Jan 14 00:46:19 WET 2020 by herulume
+\* Last modified Tue Jan 14 01:33:02 WET 2020 by herulume
 \* Created Mon Jan 13 20:57:38 WET 2020 by herulume
