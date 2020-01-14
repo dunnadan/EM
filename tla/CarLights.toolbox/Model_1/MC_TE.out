@@ -2,7 +2,7 @@
 TLC2 Version 2.14 of 10 July 2019
 @!@!@ENDMSG 2262 @!@!@
 @!@!@STARTMSG 2187:0 @!@!@
-Running breadth-first search Model-Checking with fp 5 and seed -2490070879682351096 with 4 workers on 8 cores with 581MB heap and 1306MB offheap memory [pid: 5726] (Linux 4.19.88-1-MANJARO amd64, AdoptOpenJDK 11.0.3 x86_64, OffHeapDiskFPSet, DiskStateQueue).
+Running breadth-first search Model-Checking with fp 109 and seed 2389250318745086406 with 4 workers on 8 cores with 581MB heap and 1306MB offheap memory [pid: 8161] (Linux 4.19.88-1-MANJARO amd64, AdoptOpenJDK 11.0.3 x86_64, OffHeapDiskFPSet, DiskStateQueue).
 @!@!@ENDMSG 2187 @!@!@
 @!@!@STARTMSG 2220:0 @!@!@
 Starting SANY...
@@ -23,7 +23,7 @@ Semantic processing of module MC
 SANY finished.
 @!@!@ENDMSG 2219 @!@!@
 @!@!@STARTMSG 2185:0 @!@!@
-Starting... (2020-01-14 10:33:49)
+Starting... (2020-01-14 11:08:08)
 @!@!@ENDMSG 2185 @!@!@
 @!@!@STARTMSG 2212:0 @!@!@
 Implied-temporal checking--satisfiability problem has 2 branches.
@@ -53,13 +53,13 @@ Computed 64 initial states...
 Computed 128 initial states...
 @!@!@ENDMSG 2269 @!@!@
 @!@!@STARTMSG 2190:0 @!@!@
-Finished computing initial states: 189 distinct states generated at 2020-01-14 10:33:50.
+Finished computing initial states: 189 distinct states generated at 2020-01-14 11:08:09.
 @!@!@ENDMSG 2190 @!@!@
 @!@!@STARTMSG 2200:0 @!@!@
-Progress(10) at 2020-01-14 10:33:50: 42,957 states generated, 4,536 distinct states found, 0 states left on queue.
+Progress(10) at 2020-01-14 11:08:10: 43,389 states generated, 4,536 distinct states found, 0 states left on queue.
 @!@!@ENDMSG 2200 @!@!@
 @!@!@STARTMSG 2192:0 @!@!@
-Checking 2 branches of temporal properties for the complete state space with 9072 total distinct states at (2020-01-14 10:33:50)
+Checking 2 branches of temporal properties for the complete state space with 9072 total distinct states at (2020-01-14 11:08:10)
 @!@!@ENDMSG 2192 @!@!@
 @!@!@STARTMSG 2116:1 @!@!@
 Temporal properties were violated.
@@ -71,8 +71,8 @@ The following behavior constitutes a counter-example:
 @!@!@ENDMSG 2264 @!@!@
 @!@!@STARTMSG 2217:4 @!@!@
 1: <Initial predicate>
-/\ lightRotarySwitch = FALSE
-/\ steeringWheel = TRUE
+/\ lightRotarySwitch = TRUE
+/\ steeringWheel = Neutral
 /\ key = TRUE
 /\ ambientLight = FALSE
 /\ pitmanArm = "P_Up5"
@@ -89,8 +89,8 @@ The following behavior constitutes a counter-example:
 @!@!@ENDMSG 2217 @!@!@
 @!@!@STARTMSG 2217:4 @!@!@
 2: <ChangeDriver line 69, col 17 to line 71, col 111 of module CarLights>
-/\ lightRotarySwitch = FALSE
-/\ steeringWheel = TRUE
+/\ lightRotarySwitch = TRUE
+/\ steeringWheel = Neutral
 /\ key = TRUE
 /\ ambientLight = FALSE
 /\ pitmanArm = "P_Up5"
@@ -107,8 +107,8 @@ The following behavior constitutes a counter-example:
 @!@!@ENDMSG 2217 @!@!@
 @!@!@STARTMSG 2217:4 @!@!@
 3: <ChangeKey line 91, col 14 to line 93, col 111 of module CarLights>
-/\ lightRotarySwitch = FALSE
-/\ steeringWheel = TRUE
+/\ lightRotarySwitch = TRUE
+/\ steeringWheel = Neutral
 /\ key = FALSE
 /\ ambientLight = FALSE
 /\ pitmanArm = "P_Up5"
@@ -124,9 +124,9 @@ The following behavior constitutes a counter-example:
 
 @!@!@ENDMSG 2217 @!@!@
 @!@!@STARTMSG 2217:4 @!@!@
-4: <TmpRightBlinking line 99, col 21 to line 103, col 115 of module CarLights>
-/\ lightRotarySwitch = FALSE
-/\ steeringWheel = TRUE
+4: <TmpRightBlinking line 99, col 21 to line 109, col 121 of module CarLights>
+/\ lightRotarySwitch = TRUE
+/\ steeringWheel = Neutral
 /\ key = FALSE
 /\ ambientLight = FALSE
 /\ pitmanArm = "P_Up5"
@@ -143,8 +143,8 @@ The following behavior constitutes a counter-example:
 @!@!@ENDMSG 2217 @!@!@
 @!@!@STARTMSG 2217:4 @!@!@
 5: <ChangePitmanArm line 78, col 20 to line 80, col 111 of module CarLights>
-/\ lightRotarySwitch = FALSE
-/\ steeringWheel = TRUE
+/\ lightRotarySwitch = TRUE
+/\ steeringWheel = Neutral
 /\ key = FALSE
 /\ ambientLight = FALSE
 /\ pitmanArm = "P_Down5"
@@ -160,27 +160,27 @@ The following behavior constitutes a counter-example:
 
 @!@!@ENDMSG 2217 @!@!@
 @!@!@STARTMSG 2217:4 @!@!@
-6: <ChangeAmbientLight line 65, col 23 to line 67, col 111 of module CarLights>
-/\ lightRotarySwitch = FALSE
-/\ steeringWheel = TRUE
+6: <TmpLeftBlinking line 112, col 20 to line 122, col 120 of module CarLights>
+/\ lightRotarySwitch = TRUE
+/\ steeringWheel = Neutral
 /\ key = FALSE
-/\ ambientLight = TRUE
+/\ ambientLight = FALSE
 /\ pitmanArm = "P_Down5"
 /\ gear = "G_Forward"
 /\ driver = TRUE
-/\ lights = [ FrontLeft |-> FALSE,
+/\ lights = [ FrontLeft |-> Blinking,
   FrontRight |-> Blinking,
-  MiddleLeft |-> FALSE,
+  MiddleLeft |-> Blinking,
   MiddleRight |-> Blinking,
   BackRight |-> Blinking,
-  BackLeft |-> FALSE,
+  BackLeft |-> Blinking,
   Top |-> FALSE ]
 
 @!@!@ENDMSG 2217 @!@!@
 @!@!@STARTMSG 2217:4 @!@!@
-7: <TmpLeftBlinking line 104, col 21 to line 108, col 115 of module CarLights>
-/\ lightRotarySwitch = FALSE
-/\ steeringWheel = TRUE
+7: <ChangeAmbientLight line 65, col 23 to line 67, col 111 of module CarLights>
+/\ lightRotarySwitch = TRUE
+/\ steeringWheel = Neutral
 /\ key = FALSE
 /\ ambientLight = TRUE
 /\ pitmanArm = "P_Down5"
@@ -199,10 +199,10 @@ The following behavior constitutes a counter-example:
 8: Stuttering
 @!@!@ENDMSG 2218 @!@!@
 @!@!@STARTMSG 2267:0 @!@!@
-Finished checking temporal properties in 00s at 2020-01-14 10:33:51
+Finished checking temporal properties in 00s at 2020-01-14 11:08:10
 @!@!@ENDMSG 2267 @!@!@
 @!@!@STARTMSG 2201:0 @!@!@
-The coverage statistics at 2020-01-14 10:33:51
+The coverage statistics at 2020-01-14 11:08:10
 @!@!@ENDMSG 2201 @!@!@
 @!@!@STARTMSG 2773:0 @!@!@
 <Init line 52, col 1 to line 52, col 4 of module CarLights>: 378:378
@@ -235,7 +235,7 @@ The coverage statistics at 2020-01-14 10:33:51
   |line 59, col 30 to line 59, col 42 of module CarLights: 126
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2772:0 @!@!@
-<ChangeAmbientLight line 65, col 1 to line 65, col 18 of module CarLights>: 204:3030
+<ChangeAmbientLight line 65, col 1 to line 65, col 18 of module CarLights>: 197:3030
 @!@!@ENDMSG 2772 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
   line 65, col 26 to line 65, col 31 of module CarLights: 3030
@@ -283,7 +283,7 @@ The coverage statistics at 2020-01-14 10:33:51
   line 76, col 18 to line 76, col 111 of module CarLights: 3032
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2772:0 @!@!@
-<ChangePitmanArm line 78, col 1 to line 78, col 15 of module CarLights>: 939:18174
+<ChangePitmanArm line 78, col 1 to line 78, col 15 of module CarLights>: 929:18174
 @!@!@ENDMSG 2772 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
   line 78, col 23 to line 78, col 28 of module CarLights: 3029
@@ -328,7 +328,7 @@ The coverage statistics at 2020-01-14 10:33:51
   line 89, col 27 to line 89, col 111 of module CarLights: 6056
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2772:0 @!@!@
-<ChangeKey line 91, col 1 to line 91, col 9 of module CarLights>: 1478:3028
+<ChangeKey line 91, col 1 to line 91, col 9 of module CarLights>: 1495:3028
 @!@!@ENDMSG 2772 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
   line 91, col 17 to line 91, col 22 of module CarLights: 3028
@@ -340,7 +340,7 @@ The coverage statistics at 2020-01-14 10:33:51
   line 93, col 17 to line 93, col 111 of module CarLights: 3028
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2772:0 @!@!@
-<TmpRightBlinking line 99, col 1 to line 99, col 16 of module CarLights>: 107:219
+<TmpRightBlinking line 99, col 1 to line 99, col 16 of module CarLights>: 107:438
 @!@!@ENDMSG 2772 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
   line 99, col 24 to line 99, col 34 of module CarLights: 4764
@@ -361,37 +361,55 @@ The coverage statistics at 2020-01-14 10:33:51
   |line 101, col 24 to line 101, col 32 of module CarLights: 1519
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 102, col 24 to line 102, col 131 of module CarLights: 219
+  line 104, col 30 to line 104, col 53 of module CarLights: 219
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 103, col 24 to line 103, col 115 of module CarLights: 219
+  line 105, col 30 to line 105, col 128 of module CarLights: 219
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 106, col 30 to line 106, col 110 of module CarLights: 219
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 108, col 30 to line 108, col 137 of module CarLights: 219
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 109, col 30 to line 109, col 121 of module CarLights: 219
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2772:0 @!@!@
-<TmpLeftBlinking line 104, col 1 to line 104, col 15 of module CarLights>: 107:220
+<TmpLeftBlinking line 112, col 1 to line 112, col 15 of module CarLights>: 107:440
 @!@!@ENDMSG 2772 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 104, col 24 to line 104, col 34 of module CarLights: 4764
+  line 112, col 23 to line 112, col 33 of module CarLights: 4764
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 104, col 24 to line 104, col 26 of module CarLights: 4544
+  |line 112, col 23 to line 112, col 25 of module CarLights: 4544
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 104, col 30 to line 104, col 34 of module CarLights: 4544
+  |line 112, col 29 to line 112, col 33 of module CarLights: 4544
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 105, col 24 to line 105, col 29 of module CarLights: 220
+  line 113, col 23 to line 113, col 28 of module CarLights: 220
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 106, col 24 to line 106, col 44 of module CarLights: 1738
+  line 114, col 23 to line 114, col 43 of module CarLights: 1738
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 106, col 24 to line 106, col 32 of module CarLights: 1518
+  |line 114, col 23 to line 114, col 31 of module CarLights: 1518
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 107, col 24 to line 107, col 128 of module CarLights: 220
+  line 117, col 29 to line 117, col 52 of module CarLights: 220
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 108, col 24 to line 108, col 115 of module CarLights: 220
+  line 118, col 29 to line 118, col 124 of module CarLights: 220
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 119, col 29 to line 119, col 109 of module CarLights: 220
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 121, col 29 to line 121, col 133 of module CarLights: 220
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 122, col 29 to line 122, col 120 of module CarLights: 220
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2774:0 @!@!@
 <TypeInvariant line 39, col 1 to line 39, col 13 of module CarLights>
@@ -403,11 +421,11 @@ The coverage statistics at 2020-01-14 10:33:51
 End of statistics.
 @!@!@ENDMSG 2202 @!@!@
 @!@!@STARTMSG 2200:0 @!@!@
-Progress(10) at 2020-01-14 10:33:51: 42,957 states generated (1,028,910 s/min), 4,536 distinct states found (108,646 ds/min), 0 states left on queue.
+Progress(10) at 2020-01-14 11:08:10: 43,389 states generated (1,204,692 s/min), 4,536 distinct states found (125,941 ds/min), 0 states left on queue.
 @!@!@ENDMSG 2200 @!@!@
 @!@!@STARTMSG 2199:0 @!@!@
-42957 states generated, 4536 distinct states found, 0 states left on queue.
+43389 states generated, 4536 distinct states found, 0 states left on queue.
 @!@!@ENDMSG 2199 @!@!@
 @!@!@STARTMSG 2186:0 @!@!@
-Finished in 2518ms at (2020-01-14 10:33:51)
+Finished in 2163ms at (2020-01-14 11:08:10)
 @!@!@ENDMSG 2186 @!@!@

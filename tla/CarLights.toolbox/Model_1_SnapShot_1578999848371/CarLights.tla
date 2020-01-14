@@ -100,26 +100,18 @@ TmpRightBlinking == /\ key = FALSE (* KeyInIgnitionOnPosition *)
                     /\ driver
                     /\ pitmanArm = "P_Up5"
                     /\
-                       \/ (* Off *)
-                          /\ pitmanArm' = "P_Neutral"
-                          /\ lights' = [lights EXCEPT !["FrontRight"] = FALSE, !["MiddleRight"] = FALSE, !["BackRight"] = FALSE]
-                          /\ UNCHANGED << ambientLight, driver, gear, lightRotarySwitch, steeringWheel, key >>
-                       \/ (* On *) 
-                          /\ lights' = [lights EXCEPT !["FrontRight"] = Blinking, !["MiddleRight"] = Blinking, !["BackRight"] = Blinking]
-                          /\ UNCHANGED << ambientLight, driver, gear, pitmanArm, lightRotarySwitch, steeringWheel, key >>
+                       \/ (* Off *)  pitmanArm' = "P_Neutral" /\ lights' = [lights EXCEPT !["FrontRight"] = FALSE, !["MiddleRight"] = FALSE, !["BackRight"] = FALSE]
+                       \/ (* On *) lights' = [lights EXCEPT !["FrontRight"] = Blinking, !["MiddleRight"] = Blinking, !["BackRight"] = Blinking]
+                    /\ UNCHANGED << ambientLight, driver, gear, pitmanArm, lightRotarySwitch, steeringWheel, key >>
 
 
 TmpLeftBlinking == /\ key = FALSE (* KeyInIgnitionOnPosition *)
                    /\ driver
                    /\ pitmanArm = "P_Down5"
                    /\
-                      \/ (* Off *) 
-                         /\ pitmanArm' = "P_Neutral"
-                         /\ lights' = [lights EXCEPT !["FrontLeft"] = FALSE, !["MiddleLeft"] = FALSE, !["BackLeft"] = FALSE]
-                         /\ UNCHANGED << ambientLight, driver, gear, lightRotarySwitch, steeringWheel, key >>
-                      \/ (* On *) 
-                         /\ lights' = [lights EXCEPT !["FrontLeft"] = Blinking, !["MiddleLeft"] = Blinking, !["BackLeft"] = Blinking]
-                         /\ UNCHANGED << ambientLight, driver, gear, pitmanArm, lightRotarySwitch, steeringWheel, key >>
+                      \/ (* Off *)  pitmanArm' = "P_Neutral" /\ lights' = [lights EXCEPT !["FrontLeft"] = FALSE, !["MiddleLeft"] = FALSE, !["BackLeft"] = FALSE]
+                      \/ (* On *) lights' = [lights EXCEPT !["FrontLeft"] = Blinking, !["MiddleLeft"] = Blinking, !["BackLeft"] = Blinking]
+                   /\ UNCHANGED << ambientLight, driver, gear, pitmanArm, lightRotarySwitch, steeringWheel, key >>
 
 
 TmpBlinking == TmpRightBlinking \/ TmpLeftBlinking
@@ -147,5 +139,5 @@ Spec == Init /\ [][Next]_vars
 THEOREM Spec => []TypeInvariant
 =============================================================================
 \* Modification History
-\* Last modified Tue Jan 14 11:08:02 WET 2020 by herulume
+\* Last modified Tue Jan 14 11:03:49 WET 2020 by herulume
 \* Created Mon Jan 13 20:57:38 WET 2020 by herulume
