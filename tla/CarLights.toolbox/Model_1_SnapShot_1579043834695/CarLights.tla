@@ -178,7 +178,7 @@ ActivateHighBeam == /\ key # "KeyNotInserted"
                     /\ driver
                     /\ pitmanArm = "P_Forward"
                     /\ lightRotarySwitch # FALSE
-                    /\ lights' = [lights EXCEPT  !["FrontRight"] = "High", !["FrontLeft"] = "High"]
+                    /\ \A l \in Light : IF l \in {"FrontRight", "FrontLeft"} THEN lights[l]' = "High" ELSE lights[l]' = "Off" 
                     /\ UNCHANGED << ambientLight, driver, gear, pitmanArm, lightRotarySwitch, steeringWheel, key, cornering, brake, blinker  >>
 
 DeactivateHighBeam == /\ key # "KeyNotInserted"
@@ -270,7 +270,7 @@ Next ==  SysNext \/ EnvNext
 Spec == Init /\ [][Next]_vars  /\ WF_lights(SysNext)
 
 
-TmpBlinkWillStop == blinker # "B_Off"/\ (pitmanArm \in {"P_Up5", "P_Down5"}) ~> blinker = "B_Off" \/ pitmanArm \in {"P_Up7", "P_Down7"}
+TmpRightBlinkWillStop == blinker # "B_Off"/\ (pitmanArm \in {"P_Up5", "P_Down5"}) ~> blinker = "B_Off" \/ pitmanArm \in {"P_Up7", "P_Down7"}
 
 
 THEOREM Spec => []TypeInvariant
