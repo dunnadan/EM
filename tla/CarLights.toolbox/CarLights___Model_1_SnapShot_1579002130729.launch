@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.lamport.tla.toolbox.tool.tlc.modelCheck">
-    <stringAttribute key="configurationName" value="Model_1"/>
+    <stringAttribute key="configurationName" value="Model_1_SnapShot_1579002130729"/>
     <intAttribute key="distributedFPSetCount" value="0"/>
     <stringAttribute key="distributedNetworkInterface" value="172.17.0.1"/>
     <intAttribute key="distributedNodesCount" value="1"/>
     <stringAttribute key="distributedTLC" value="off"/>
-    <intAttribute key="fpIndex" value="13"/>
+    <intAttribute key="fpIndex" value="98"/>
     <intAttribute key="maxHeapSize" value="25"/>
     <stringAttribute key="modelBehaviorInit" value=""/>
     <stringAttribute key="modelBehaviorNext" value=""/>
-    <stringAttribute key="modelBehaviorSpec" value="Spec"/>
+    <stringAttribute key="modelBehaviorSpec" value="Spec /\ []TmpBlinkWillStop"/>
     <intAttribute key="modelBehaviorSpecType" value="1"/>
     <stringAttribute key="modelBehaviorVars" value="lightRotarySwitch, steeringWheel, key, ambientLight, pitmanArm, gear, driver, lights"/>
     <stringAttribute key="modelComments" value=""/>

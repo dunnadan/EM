@@ -144,14 +144,10 @@ EnvNext ==  \/ ChangeAmbientLight
             
 Next ==  SysNext \/  EnvNext   
 
-(*************************************************************************)
-(* Since we can't do "prime prime", we can't make TmpBlinking            *)
-(* stop in the next two state, so we enforce this temporal proprety.     *)
-(*************************************************************************)
-Spec == Init /\ [][Next]_vars /\ []TmpBlinkWillStop
+Spec == Init /\ [][Next]_vars
 
 THEOREM Spec => []TypeInvariant
 =============================================================================
 \* Modification History
-\* Last modified Tue Jan 14 11:45:51 WET 2020 by herulume
+\* Last modified Tue Jan 14 11:41:13 WET 2020 by herulume
 \* Created Mon Jan 13 20:57:38 WET 2020 by herulume

@@ -2,7 +2,7 @@
 TLC2 Version 2.14 of 10 July 2019
 @!@!@ENDMSG 2262 @!@!@
 @!@!@STARTMSG 2187:0 @!@!@
-Running breadth-first search Model-Checking with fp 13 and seed -6168722379255046870 with 4 workers on 8 cores with 581MB heap and 1306MB offheap memory [pid: 10945] (Linux 4.19.88-1-MANJARO amd64, AdoptOpenJDK 11.0.3 x86_64, OffHeapDiskFPSet, DiskStateQueue).
+Running breadth-first search Model-Checking with fp 98 and seed -3069958301855345013 with 4 workers on 8 cores with 581MB heap and 1306MB offheap memory [pid: 10623] (Linux 4.19.88-1-MANJARO amd64, AdoptOpenJDK 11.0.3 x86_64, OffHeapDiskFPSet, DiskStateQueue).
 @!@!@ENDMSG 2187 @!@!@
 @!@!@STARTMSG 2220:0 @!@!@
 Starting SANY...
@@ -23,7 +23,7 @@ Semantic processing of module MC
 SANY finished.
 @!@!@ENDMSG 2219 @!@!@
 @!@!@STARTMSG 2185:0 @!@!@
-Starting... (2020-01-14 11:46:14)
+Starting... (2020-01-14 11:42:06)
 @!@!@ENDMSG 2185 @!@!@
 @!@!@STARTMSG 2212:0 @!@!@
 Implied-temporal checking--satisfiability problem has 2 branches.
@@ -44,16 +44,16 @@ Computed 8 initial states...
 Computed 16 initial states...
 @!@!@ENDMSG 2269 @!@!@
 @!@!@STARTMSG 2190:0 @!@!@
-Finished computing initial states: 27 distinct states generated at 2020-01-14 11:46:15.
+Finished computing initial states: 27 distinct states generated at 2020-01-14 11:42:07.
 @!@!@ENDMSG 2190 @!@!@
 @!@!@STARTMSG 2200:0 @!@!@
-Progress(9) at 2020-01-14 11:46:17: 32,319 states generated, 3,402 distinct states found, 0 states left on queue.
+Progress(9) at 2020-01-14 11:42:09: 32,319 states generated, 3,402 distinct states found, 0 states left on queue.
 @!@!@ENDMSG 2200 @!@!@
 @!@!@STARTMSG 2192:0 @!@!@
-Checking 2 branches of temporal properties for the complete state space with 6804 total distinct states at (2020-01-14 11:46:17)
+Checking 2 branches of temporal properties for the complete state space with 6804 total distinct states at (2020-01-14 11:42:09)
 @!@!@ENDMSG 2192 @!@!@
 @!@!@STARTMSG 2267:0 @!@!@
-Finished checking temporal properties in 00s at 2020-01-14 11:46:18
+Finished checking temporal properties in 00s at 2020-01-14 11:42:10
 @!@!@ENDMSG 2267 @!@!@
 @!@!@STARTMSG 2193:0 @!@!@
 Model checking completed. No error has been found.
@@ -62,7 +62,7 @@ Model checking completed. No error has been found.
   calculated (optimistic):  val = 5.3E-12
 @!@!@ENDMSG 2193 @!@!@
 @!@!@STARTMSG 2201:0 @!@!@
-The coverage statistics at 2020-01-14 11:46:18
+The coverage statistics at 2020-01-14 11:42:10
 @!@!@ENDMSG 2201 @!@!@
 @!@!@STARTMSG 2773:0 @!@!@
 <Init line 52, col 1 to line 52, col 4 of module CarLights>: 27:27
@@ -140,7 +140,7 @@ The coverage statistics at 2020-01-14 11:46:18
   line 76, col 18 to line 76, col 111 of module CarLights: 2280
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2772:0 @!@!@
-<ChangePitmanArm line 78, col 1 to line 78, col 15 of module CarLights>: 975:13644
+<ChangePitmanArm line 78, col 1 to line 78, col 15 of module CarLights>: 973:13644
 @!@!@ENDMSG 2772 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
   line 78, col 23 to line 78, col 28 of module CarLights: 2274
@@ -185,7 +185,7 @@ The coverage statistics at 2020-01-14 11:46:18
   line 89, col 27 to line 89, col 111 of module CarLights: 4548
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2772:0 @!@!@
-<ChangeKey line 91, col 1 to line 91, col 9 of module CarLights>: 1131:2274
+<ChangeKey line 91, col 1 to line 91, col 9 of module CarLights>: 1133:2274
 @!@!@ENDMSG 2772 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
   line 91, col 17 to line 91, col 22 of module CarLights: 2274
@@ -332,7 +332,7 @@ The coverage statistics at 2020-01-14 11:46:18
 End of statistics.
 @!@!@ENDMSG 2202 @!@!@
 @!@!@STARTMSG 2200:0 @!@!@
-Progress(9) at 2020-01-14 11:46:18: 32,319 states generated (436,644 s/min), 3,402 distinct states found (45,962 ds/min), 0 states left on queue.
+Progress(9) at 2020-01-14 11:42:10: 32,319 states generated (458,533 s/min), 3,402 distinct states found (48,266 ds/min), 0 states left on queue.
 @!@!@ENDMSG 2200 @!@!@
 @!@!@STARTMSG 2199:0 @!@!@
 32319 states generated, 3402 distinct states found, 0 states left on queue.
@@ -344,5 +344,5 @@ The depth of the complete state graph search is 9.
 The average outdegree of the complete state graph is 1 (minimum is 0, the maximum 8 and the 95th percentile is 2).
 @!@!@ENDMSG 2268 @!@!@
 @!@!@STARTMSG 2186:0 @!@!@
-Finished in 4450ms at (2020-01-14 11:46:18)
+Finished in 4239ms at (2020-01-14 11:42:10)
 @!@!@ENDMSG 2186 @!@!@

@@ -123,13 +123,13 @@ TmpLeftBlinking == /\ key = FALSE (* KeyInIgnitionOnPosition *)
                          /\ lights' = [lights EXCEPT !["FrontLeft"] = Blinking, !["MiddleLeft"] = Blinking, !["BackLeft"] = Blinking]
                          /\ UNCHANGED << ambientLight, driver, gear, pitmanArm, lightRotarySwitch, steeringWheel, key >>
 
+
+TmpBlinking == TmpRightBlinking \/ TmpLeftBlinking
+                                         
 TmpRightBlinkWillStop == pitmanArm = "P_Up5" ~> (lights["FrontRight"] # Blinking /\ lights["MiddleRight"] # Blinking /\ lights["BackRight"] # Blinking)
 TmpLeftBlinkWillStop == pitmanArm = "P_Down5" ~> (lights["FrontLeft"] # Blinking /\ lights["MiddleLeft"] # Blinking /\ lights["BackLeft"] # Blinking)
 TmpBlinkWillStop == /\ TmpRightBlinkWillStop
                     /\ TmpLeftBlinkWillStop
-                    
-TmpBlinking == TmpRightBlinking \/ TmpLeftBlinking
-                                         
 
 
 SysNext == TmpBlinking
@@ -144,14 +144,10 @@ EnvNext ==  \/ ChangeAmbientLight
             
 Next ==  SysNext \/  EnvNext   
 
-(*************************************************************************)
-(* Since we can't do "prime prime", we can't make TmpBlinking            *)
-(* stop in the next two state, so we enforce this temporal proprety.     *)
-(*************************************************************************)
 Spec == Init /\ [][Next]_vars /\ []TmpBlinkWillStop
 
 THEOREM Spec => []TypeInvariant
 =============================================================================
 \* Modification History
-\* Last modified Tue Jan 14 11:45:51 WET 2020 by herulume
+\* Last modified Tue Jan 14 11:32:04 WET 2020 by herulume
 \* Created Mon Jan 13 20:57:38 WET 2020 by herulume
