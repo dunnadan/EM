@@ -81,6 +81,7 @@ ChangePitmanArm == /\ driver
 
 
 ChangeLightRotarySwitch == /\ driver
+                           /\ key
                            /\ lightRotarySwitch' \in LightRotarySwitch -- lightRotarySwitch
                            /\ UNCHANGED << ambientLight, driver, lights, gear, pitmanArm, steeringWheel, key >>
 
@@ -127,12 +128,33 @@ TmpRightBlinkWillStop == pitmanArm = "P_Up5" ~> (lights["FrontRight"] # Blinking
 TmpLeftBlinkWillStop == pitmanArm = "P_Down5" ~> (lights["FrontLeft"] # Blinking /\ lights["MiddleLeft"] # Blinking /\ lights["BackLeft"] # Blinking)
 TmpBlinkWillStop == /\ TmpRightBlinkWillStop
                     /\ TmpLeftBlinkWillStop
-                    
 TmpBlinking == TmpRightBlinking \/ TmpLeftBlinking
-                                         
 
 
-SysNext == TmpBlinking
+RightBlinking == /\ key = FALSE (* KeyInIgnitionOnPosition *)
+                 /\ driver
+                 /\ pitmanArm = "P_Up7"
+                 /\ lights["FrontLeft"] # Blinking /\  lights["MiddleLeft"] # Blinking /\ lights["BackLeft"] # Blinking
+                 /\ lights' = [lights EXCEPT !["FrontRight"] = Blinking, !["MiddleRight"] = Blinking, !["BackRight"] = Blinking]
+                 /\ UNCHANGED << ambientLight, driver, gear, pitmanArm, lightRotarySwitch, steeringWheel, key >>
+
+LeftBlinking == /\ key = FALSE (* KeyInIgnitionOnPosition *)
+                /\ driver
+                /\ pitmanArm = "P_Down7"
+                /\ lights["FrontRight"] # Blinking /\ lights["MiddleRight"] # Blinking /\ lights["BackRight"] # Blinking
+                /\ lights' = [lights EXCEPT !["FrontLeft"] = Blinking, !["MiddleLeft"] = Blinking, !["BackLeft"] = Blinking]
+                /\ UNCHANGED << ambientLight, driver, gear, pitmanArm, lightRotarySwitch, steeringWheel, key >>
+
+AlwaysBlinking == RightBlinking \/ LeftBlinking
+
+
+ActivateAmbientLight == /\ key
+                        /\ ambientLight
+                        /\ driver = FALSE
+                        /\ lights' = [l \in (Light -- "Top") |-> TRUE] /\ lights'["Top"] = lights["Top"]
+                        /\ UNCHANGED << ambientLight, driver, gear, pitmanArm, lightRotarySwitch, steeringWheel, key >>
+                        
+SysNext == TmpBlinking \/ AlwaysBlinking \/ ActivateAmbientLight
 
 EnvNext ==  \/ ChangeAmbientLight
             \/ ChangeDriver
@@ -153,5 +175,5 @@ Spec == Init /\ [][Next]_vars /\ []TmpBlinkWillStop
 THEOREM Spec => []TypeInvariant
 =============================================================================
 \* Modification History
-\* Last modified Tue Jan 14 11:45:51 WET 2020 by herulume
+\* Last modified Tue Jan 14 12:00:02 WET 2020 by herulume
 \* Created Mon Jan 13 20:57:38 WET 2020 by herulume
