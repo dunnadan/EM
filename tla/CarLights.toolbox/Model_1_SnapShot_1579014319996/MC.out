@@ -2,7 +2,7 @@
 TLC2 Version 2.14 of 10 July 2019
 @!@!@ENDMSG 2262 @!@!@
 @!@!@STARTMSG 2187:0 @!@!@
-Running breadth-first search Model-Checking with fp 34 and seed 8721243178780516244 with 4 workers on 8 cores with 1163MB heap and 2613MB offheap memory [pid: 17827] (Linux 4.19.88-1-MANJARO amd64, AdoptOpenJDK 11.0.3 x86_64, OffHeapDiskFPSet, DiskStateQueue).
+Running breadth-first search Model-Checking with fp 124 and seed 4290761345597487672 with 4 workers on 8 cores with 1163MB heap and 2613MB offheap memory [pid: 16769] (Linux 4.19.88-1-MANJARO amd64, AdoptOpenJDK 11.0.3 x86_64, OffHeapDiskFPSet, DiskStateQueue).
 @!@!@ENDMSG 2187 @!@!@
 @!@!@STARTMSG 2220:0 @!@!@
 Starting SANY...
@@ -23,7 +23,7 @@ Semantic processing of module MC
 SANY finished.
 @!@!@ENDMSG 2219 @!@!@
 @!@!@STARTMSG 2185:0 @!@!@
-Starting... (2020-01-14 15:21:58)
+Starting... (2020-01-14 15:05:08)
 @!@!@ENDMSG 2185 @!@!@
 @!@!@STARTMSG 2189:0 @!@!@
 Computing initial states...
@@ -37,21 +37,24 @@ Computed 4 initial states...
 @!@!@STARTMSG 2269:0 @!@!@
 Computed 8 initial states...
 @!@!@ENDMSG 2269 @!@!@
+@!@!@STARTMSG 2269:0 @!@!@
+Computed 16 initial states...
+@!@!@ENDMSG 2269 @!@!@
 @!@!@STARTMSG 2190:0 @!@!@
-Finished computing initial states: 9 distinct states generated at 2020-01-14 15:21:59.
+Finished computing initial states: 27 distinct states generated at 2020-01-14 15:05:10.
 @!@!@ENDMSG 2190 @!@!@
 @!@!@STARTMSG 2193:0 @!@!@
 Model checking completed. No error has been found.
   Estimates of the probability that TLC did not check all reachable states
   because two distinct states had the same fingerprint:
   calculated (optimistic):  val = 1.4E-9
-  based on the actual fingerprints:  val = 3.7E-10
+  based on the actual fingerprints:  val = 5.2E-11
 @!@!@ENDMSG 2193 @!@!@
 @!@!@STARTMSG 2201:0 @!@!@
-The coverage statistics at 2020-01-14 15:22:07
+The coverage statistics at 2020-01-14 15:05:19
 @!@!@ENDMSG 2201 @!@!@
 @!@!@STARTMSG 2773:0 @!@!@
-<Init line 51, col 1 to line 51, col 4 of module CarLights>: 9:9
+<Init line 51, col 1 to line 51, col 4 of module CarLights>: 27:27
 @!@!@ENDMSG 2773 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
   line 51, col 12 to line 51, col 31 of module CarLights: 1
@@ -63,19 +66,22 @@ The coverage statistics at 2020-01-14 15:22:07
   line 53, col 12 to line 53, col 44 of module CarLights: 1
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 56, col 12 to line 56, col 21 of module CarLights: 1
+  line 54, col 12 to line 54, col 24 of module CarLights: 1
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 57, col 12 to line 57, col 50 of module CarLights: 1
+  line 56, col 12 to line 56, col 21 of module CarLights: 3
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 58, col 12 to line 58, col 42 of module CarLights: 9
+  line 57, col 12 to line 57, col 50 of module CarLights: 3
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 58, col 30 to line 58, col 42 of module CarLights: 3
+  line 58, col 12 to line 58, col 42 of module CarLights: 27
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 58, col 30 to line 58, col 42 of module CarLights: 9
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2772:0 @!@!@
-<ChangeAmbientLight line 64, col 1 to line 64, col 18 of module CarLights>: 31:37044
+<ChangeAmbientLight line 64, col 1 to line 64, col 18 of module CarLights>: 105:37044
 @!@!@ENDMSG 2772 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
   line 64, col 26 to line 64, col 31 of module CarLights: 37044
@@ -87,7 +93,7 @@ The coverage statistics at 2020-01-14 15:22:07
   line 66, col 26 to line 66, col 111 of module CarLights: 37044
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2772:0 @!@!@
-<ChangeDriver line 68, col 1 to line 68, col 12 of module CarLights>: 18344:37044
+<ChangeDriver line 68, col 1 to line 68, col 12 of module CarLights>: 18370:37044
 @!@!@ENDMSG 2772 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
   line 68, col 20 to line 68, col 22 of module CarLights: 37044
@@ -99,7 +105,7 @@ The coverage statistics at 2020-01-14 15:22:07
   line 70, col 20 to line 70, col 111 of module CarLights: 37044
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2772:0 @!@!@
-<ChangeGear line 72, col 1 to line 72, col 10 of module CarLights>: 2258:37044
+<ChangeGear line 72, col 1 to line 72, col 10 of module CarLights>: 0:37044
 @!@!@ENDMSG 2772 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
   line 72, col 18 to line 72, col 23 of module CarLights: 18522
@@ -123,7 +129,7 @@ The coverage statistics at 2020-01-14 15:22:07
   line 75, col 18 to line 75, col 111 of module CarLights: 37044
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2772:0 @!@!@
-<ChangePitmanArm line 77, col 1 to line 77, col 15 of module CarLights>: 9181:222264
+<ChangePitmanArm line 77, col 1 to line 77, col 15 of module CarLights>: 9855:222264
 @!@!@ENDMSG 2772 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
   line 77, col 23 to line 77, col 28 of module CarLights: 37044
@@ -138,7 +144,7 @@ The coverage statistics at 2020-01-14 15:22:07
   line 79, col 23 to line 79, col 111 of module CarLights: 222264
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2772:0 @!@!@
-<ChangeLightRotarySwitch line 82, col 1 to line 82, col 23 of module CarLights>: 5298:37044
+<ChangeLightRotarySwitch line 82, col 1 to line 82, col 23 of module CarLights>: 5402:37044
 @!@!@ENDMSG 2772 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
   line 82, col 31 to line 82, col 36 of module CarLights: 18522
@@ -171,7 +177,7 @@ The coverage statistics at 2020-01-14 15:22:07
   line 89, col 27 to line 89, col 111 of module CarLights: 74088
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2772:0 @!@!@
-<ChangeKey line 91, col 1 to line 91, col 9 of module CarLights>: 16921:37044
+<ChangeKey line 91, col 1 to line 91, col 9 of module CarLights>: 17234:37044
 @!@!@ENDMSG 2772 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
   line 91, col 17 to line 91, col 22 of module CarLights: 37044
@@ -183,7 +189,7 @@ The coverage statistics at 2020-01-14 15:22:07
   line 93, col 17 to line 93, col 111 of module CarLights: 37044
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2772:0 @!@!@
-<TmpRightBlinking line 99, col 1 to line 99, col 16 of module CarLights>: 506:4482
+<TmpRightBlinking line 99, col 1 to line 99, col 16 of module CarLights>: 814:4482
 @!@!@ENDMSG 2772 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
   line 99, col 24 to line 99, col 34 of module CarLights: 58212
@@ -237,7 +243,7 @@ The coverage statistics at 2020-01-14 15:22:07
   line 110, col 30 to line 110, col 121 of module CarLights: 1836
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2772:0 @!@!@
-<TmpLeftBlinking line 113, col 1 to line 113, col 15 of module CarLights>: 559:4482
+<TmpLeftBlinking line 113, col 1 to line 113, col 15 of module CarLights>: 866:4482
 @!@!@ENDMSG 2772 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
   line 113, col 23 to line 113, col 33 of module CarLights: 58212
@@ -291,7 +297,7 @@ The coverage statistics at 2020-01-14 15:22:07
   line 124, col 29 to line 124, col 120 of module CarLights: 1836
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2772:0 @!@!@
-<RightBlinking line 133, col 1 to line 133, col 13 of module CarLights>: 221:1836
+<RightBlinking line 133, col 1 to line 133, col 13 of module CarLights>: 377:1836
 @!@!@ENDMSG 2772 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
   line 133, col 21 to line 133, col 31 of module CarLights: 57402
@@ -336,7 +342,7 @@ The coverage statistics at 2020-01-14 15:22:07
   line 138, col 21 to line 138, col 112 of module CarLights: 1836
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2772:0 @!@!@
-<LeftBlinking line 140, col 1 to line 140, col 12 of module CarLights>: 213:1836
+<LeftBlinking line 140, col 1 to line 140, col 12 of module CarLights>: 378:1836
 @!@!@ENDMSG 2772 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
   line 140, col 20 to line 140, col 30 of module CarLights: 57402
@@ -405,7 +411,7 @@ The coverage statistics at 2020-01-14 15:22:07
   line 154, col 28 to line 154, col 119 of module CarLights: 9261
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2772:0 @!@!@
-<ActivateLowHeadLights line 157, col 1 to line 157, col 21 of module CarLights>: 1069:6174
+<ActivateLowHeadLights line 157, col 1 to line 157, col 21 of module CarLights>: 1103:6174
 @!@!@ENDMSG 2772 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
   line 157, col 29 to line 157, col 34 of module CarLights: 6174
@@ -429,7 +435,7 @@ The coverage statistics at 2020-01-14 15:22:07
   line 161, col 29 to line 161, col 120 of module CarLights: 6174
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2772:0 @!@!@
-<DeactivateLowHeadLights line 164, col 1 to line 164, col 23 of module CarLights>: 767:1386
+<DeactivateLowHeadLights line 164, col 1 to line 164, col 23 of module CarLights>: 846:1386
 @!@!@ENDMSG 2772 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
   line 164, col 31 to line 164, col 36 of module CarLights: 1386
@@ -486,10 +492,10 @@ The coverage statistics at 2020-01-14 15:22:07
 End of statistics.
 @!@!@ENDMSG 2202 @!@!@
 @!@!@STARTMSG 2200:0 @!@!@
-Progress(20) at 2020-01-14 15:22:07: 511,038 states generated (3,299,857 s/min), 55,566 distinct states found (358,798 ds/min), 0 states left on queue.
+Progress(20) at 2020-01-14 15:05:19: 511,056 states generated (2,784,034 s/min), 55,566 distinct states found (302,702 ds/min), 0 states left on queue.
 @!@!@ENDMSG 2200 @!@!@
 @!@!@STARTMSG 2199:0 @!@!@
-511038 states generated, 55566 distinct states found, 0 states left on queue.
+511056 states generated, 55566 distinct states found, 0 states left on queue.
 @!@!@ENDMSG 2199 @!@!@
 @!@!@STARTMSG 2194:0 @!@!@
 The depth of the complete state graph search is 20.
@@ -498,5 +504,5 @@ The depth of the complete state graph search is 20.
 The average outdegree of the complete state graph is 1 (minimum is 0, the maximum 11 and the 95th percentile is 4).
 @!@!@ENDMSG 2268 @!@!@
 @!@!@STARTMSG 2186:0 @!@!@
-Finished in 9298ms at (2020-01-14 15:22:07)
+Finished in 11021ms at (2020-01-14 15:05:19)
 @!@!@ENDMSG 2186 @!@!@

@@ -22,7 +22,7 @@ Neutral == CHOOSE Neutral : Neutral \notin BOOLEAN
 LightState == {"Off", "Half", "Low", "Blinking"}
 LightRotarySwitch == BOOLEAN ++ Auto
 SteeringWheel == BOOLEAN ++ Neutral
-Gear == {"G_Forward", "G_Reverse", "G_Neutral"}
+Gear == {"G_Forward", "G_Reverse", "G_Neutal"}
 PitmanArm == {"P_Neutral", "P_Up5", "P_Up7", "P_Down5", "P_Down7", "P_Forward", "P_Backward"}
 Light == {"FrontLeft", "FrontRight", "MiddleLeft", "MiddleRight", "BackRight", "BackLeft", "Top"}
 
@@ -51,7 +51,7 @@ TypeInvariant == /\ ambientLight \in BOOLEAN
 Init == /\ ambientLight = FALSE
         /\ driver = FALSE
         /\ lights = [l \in Light |-> "Off" ]
-        /\ gear = "G_Neutral"
+        /\ gear \in Gear
         /\ pitmanArm = "P_Neutral"
         /\ key = TRUE
         /\ lightRotarySwitch \in LightRotarySwitch
@@ -168,13 +168,10 @@ DeactivateLowHeadLights == /\ driver
                            /\ lights' = [lights EXCEPT !["FrontRight"] = "Off", !["FrontLeft"] = "Off", !["BackLeft"] = "Off", !["BackRight"] = "Off"]
                            /\ UNCHANGED << ambientLight, driver, gear, pitmanArm, lightRotarySwitch, steeringWheel, key >>
                               
-LowHeadLights == ActivateLowHeadLights \/ DeactivateLowHeadLights   
+LowHeadLights == ActivateLowHeadLights /\ DeactivateLowHeadLights   
 
                                                           
-SysNext == \/ TmpBlinking
-           \/ AlwaysBlinking
-           \/ ActivateAmbientLight
-           \/ LowHeadLights
+SysNext == TmpBlinking \/ AlwaysBlinking \/ ActivateAmbientLight \/ LowHeadLights
 
 EnvNext ==  \/ ChangeAmbientLight
             \/ ChangeDriver
@@ -195,6 +192,6 @@ Spec == Init /\ [][Next]_vars /\ []TmpBlinkWillStop
 THEOREM Spec => []TypeInvariant
 =============================================================================
 \* Modification History
-\* Last modified Tue Jan 14 15:19:59 WET 2020 by herulume
+\* Last modified Tue Jan 14 15:03:35 WET 2020 by herulume
 \* Last modified Tue Jan 14 14:14:23 WET 2020 by apollo
 \* Created Mon Jan 13 20:57:38 WET 2020 by herulume

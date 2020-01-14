@@ -10,7 +10,6 @@ set -- x == set \ {x}
 (* Signals with 3 states can be represented with the union of BOLEAN     *)
 (* and a VALUE not in BOOLEAN, we need not know what that value is.      *)
 (*************************************************************************)
-Blinking == CHOOSE Blinking : Blinking \notin BOOLEAN
 Auto == CHOOSE Auto : Auto \notin BOOLEAN
 Neutral == CHOOSE Neutral : Neutral \notin BOOLEAN
 
@@ -20,10 +19,10 @@ Neutral == CHOOSE Neutral : Neutral \notin BOOLEAN
 (* to know each value, they can't be passed as modal values sets (to     *)
 (* the best of our knowledge of course).                                 *)
 (*************************************************************************)
-LightState == BOOLEAN ++ Blinking
+LightState == {"Off", "Half", "Low", "Blinking"}
 LightRotarySwitch == BOOLEAN ++ Auto
 SteeringWheel == BOOLEAN ++ Neutral
-Gear == {"G_Forward", "G_Reverse", "G_Neutal"}
+Gear == {"G_Forward", "G_Reverse", "G_Neutral"}
 PitmanArm == {"P_Neutral", "P_Up5", "P_Up7", "P_Down5", "P_Down7", "P_Forward", "P_Backward"}
 Light == {"FrontLeft", "FrontRight", "MiddleLeft", "MiddleRight", "BackRight", "BackLeft", "Top"}
 
@@ -51,8 +50,8 @@ TypeInvariant == /\ ambientLight \in BOOLEAN
 (*************************************************************************)
 Init == /\ ambientLight = FALSE
         /\ driver = FALSE
-        /\ lights = [l \in Light |-> FALSE ]
-        /\ gear \in Gear
+        /\ lights = [l \in Light |-> "Off" ]
+        /\ gear = "G_Neutral"
         /\ pitmanArm = "P_Neutral"
         /\ key = TRUE
         /\ lightRotarySwitch \in LightRotarySwitch
@@ -103,11 +102,11 @@ TmpRightBlinking == /\ key = FALSE (* KeyInIgnitionOnPosition *)
                     /\
                        \/ (* Off *)
                           /\ pitmanArm' = "P_Neutral"
-                          /\ lights' = [lights EXCEPT !["FrontRight"] = FALSE, !["MiddleRight"] = FALSE, !["BackRight"] = FALSE]
+                          /\ lights' = [lights EXCEPT !["FrontRight"] = "Off", !["MiddleRight"] = "Off", !["BackRight"] = "Off"]
                           /\ UNCHANGED << ambientLight, driver, gear, lightRotarySwitch, steeringWheel, key >>
                        \/ (* On *) 
-                          /\ lights["FrontLeft"] # Blinking /\  lights["MiddleLeft"] # Blinking /\ lights["BackLeft"] # Blinking
-                          /\ lights' = [lights EXCEPT !["FrontRight"] = Blinking, !["MiddleRight"] = Blinking, !["BackRight"] = Blinking]
+                          /\ lights["FrontLeft"] # "Blinking" /\  lights["MiddleLeft"] # "Blinking" /\ lights["BackLeft"] # "Blinking"
+                          /\ lights' = [lights EXCEPT !["FrontRight"] = "Blinking", !["MiddleRight"] = "Blinking", !["BackRight"] = "Blinking"]
                           /\ UNCHANGED << ambientLight, driver, gear, pitmanArm, lightRotarySwitch, steeringWheel, key >>
 
 
@@ -117,15 +116,15 @@ TmpLeftBlinking == /\ key = FALSE (* KeyInIgnitionOnPosition *)
                    /\
                       \/ (* Off *) 
                          /\ pitmanArm' = "P_Neutral"
-                         /\ lights' = [lights EXCEPT !["FrontLeft"] = FALSE, !["MiddleLeft"] = FALSE, !["BackLeft"] = FALSE]
+                         /\ lights' = [lights EXCEPT !["FrontLeft"] = "Off", !["MiddleLeft"] = "Off", !["BackLeft"] = "Off"]
                          /\ UNCHANGED << ambientLight, driver, gear, lightRotarySwitch, steeringWheel, key >>
                       \/ (* On *) 
-                         /\ lights["FrontRight"] # Blinking /\ lights["MiddleRight"] # Blinking /\ lights["BackRight"] # Blinking
-                         /\ lights' = [lights EXCEPT !["FrontLeft"] = Blinking, !["MiddleLeft"] = Blinking, !["BackLeft"] = Blinking]
+                         /\ lights["FrontRight"] # "Blinking" /\ lights["MiddleRight"] # "Blinking" /\ lights["BackRight"] # "Blinking"
+                         /\ lights' = [lights EXCEPT !["FrontLeft"] = "Blinking", !["MiddleLeft"] = "Blinking", !["BackLeft"] = "Blinking"]
                          /\ UNCHANGED << ambientLight, driver, gear, pitmanArm, lightRotarySwitch, steeringWheel, key >>
 
-TmpRightBlinkWillStop == pitmanArm = "P_Up5" ~> (lights["FrontRight"] # Blinking /\ lights["MiddleRight"] # Blinking /\ lights["BackRight"] # Blinking)
-TmpLeftBlinkWillStop == pitmanArm = "P_Down5" ~> (lights["FrontLeft"] # Blinking /\ lights["MiddleLeft"] # Blinking /\ lights["BackLeft"] # Blinking)
+TmpRightBlinkWillStop == pitmanArm = "P_Up5" ~> (lights["FrontRight"] # "Blinking" /\ lights["MiddleRight"] # "Blinking" /\ lights["BackRight"] # "Blinking")
+TmpLeftBlinkWillStop == pitmanArm = "P_Down5" ~> (lights["FrontLeft"] # "Blinking" /\ lights["MiddleLeft"] # "Blinking" /\ lights["BackLeft"] # "Blinking")
 TmpBlinkWillStop == /\ TmpRightBlinkWillStop
                     /\ TmpLeftBlinkWillStop
 TmpBlinking == TmpRightBlinking \/ TmpLeftBlinking
@@ -134,15 +133,15 @@ TmpBlinking == TmpRightBlinking \/ TmpLeftBlinking
 RightBlinking == /\ key = FALSE (* KeyInIgnitionOnPosition *)
                  /\ driver
                  /\ pitmanArm = "P_Up7"
-                 /\ lights["FrontLeft"] # Blinking /\  lights["MiddleLeft"] # Blinking /\ lights["BackLeft"] # Blinking
-                 /\ lights' = [lights EXCEPT !["FrontRight"] = Blinking, !["MiddleRight"] = Blinking, !["BackRight"] = Blinking]
+                 /\ lights["FrontLeft"] # "Blinking" /\  lights["MiddleLeft"] # "Blinking" /\ lights["BackLeft"] # "Blinking"
+                 /\ lights' = [lights EXCEPT !["FrontRight"] = "Blinking", !["MiddleRight"] = "Blinking", !["BackRight"] = "Blinking"]
                  /\ UNCHANGED << ambientLight, driver, gear, pitmanArm, lightRotarySwitch, steeringWheel, key >>
 
 LeftBlinking == /\ key = FALSE (* KeyInIgnitionOnPosition *)
                 /\ driver
                 /\ pitmanArm = "P_Down7"
-                /\ lights["FrontRight"] # Blinking /\ lights["MiddleRight"] # Blinking /\ lights["BackRight"] # Blinking
-                /\ lights' = [lights EXCEPT !["FrontLeft"] = Blinking, !["MiddleLeft"] = Blinking, !["BackLeft"] = Blinking]
+                /\ lights["FrontRight"] # "Blinking" /\ lights["MiddleRight"] # "Blinking" /\ lights["BackRight"] # "Blinking"
+                /\ lights' = [lights EXCEPT !["FrontLeft"] = "Blinking", !["MiddleLeft"] = "Blinking", !["BackLeft"] = "Blinking"]
                 /\ UNCHANGED << ambientLight, driver, gear, pitmanArm, lightRotarySwitch, steeringWheel, key >>
 
 AlwaysBlinking == RightBlinking \/ LeftBlinking
@@ -151,17 +150,31 @@ AlwaysBlinking == RightBlinking \/ LeftBlinking
 ActivateAmbientLight == /\ key
                         /\ ambientLight
                         /\ driver = FALSE
-                        /\ lights' = [l \in Light |-> TRUE ]
+                        /\ lights' = [l \in Light |-> "Low" ]
                         /\ UNCHANGED << ambientLight, driver, gear, pitmanArm, lightRotarySwitch, steeringWheel, key >>
   
   
-ActivateHalfLowBeamHeadlights == /\ driver
-                                 /\ key
-                                 /\ lightRotarySwitch = TRUE
-                                 /\ lights' = [lights EXCEPT !["FrontRight"] = TRUE, !["FrontLeft"] = TRUE, !["BackLeft"] = TRUE, !["BackRight"] = TRUE]
-                                 /\ UNCHANGED << ambientLight, driver, gear, pitmanArm, lightRotarySwitch, steeringWheel, key >>
+ActivateLowHeadLights == /\ driver
+                         /\ key
+                         /\ lightRotarySwitch = TRUE
+                         /\ lights' = [lights EXCEPT !["FrontRight"] = "Half", !["FrontLeft"] = "Half", !["BackLeft"] = "Half", !["BackRight"] = "Half"]
+                         /\ UNCHANGED << ambientLight, driver, gear, pitmanArm, lightRotarySwitch, steeringWheel, key >>
+                                 
+
+DeactivateLowHeadLights == /\ driver
+                           /\ key
+                           /\ lightRotarySwitch = FALSE
+                           /\ lights["FrontRight"] = "Half" /\ lights["FrontLeft"] = "Half" /\ lights["BackLeft"] = "Half" /\ lights["BackRight"] = "Half"
+                           /\ lights' = [lights EXCEPT !["FrontRight"] = "Off", !["FrontLeft"] = "Off", !["BackLeft"] = "Off", !["BackRight"] = "Off"]
+                           /\ UNCHANGED << ambientLight, driver, gear, pitmanArm, lightRotarySwitch, steeringWheel, key >>
+                              
+LowHeadLights == ActivateLowHeadLights \/ DeactivateLowHeadLights   
+
                                                           
-SysNext == TmpBlinking \/ AlwaysBlinking \/ ActivateAmbientLight \/ ActivateHalfLowBeamHeadlights
+SysNext == \/ TmpBlinking
+           \/ AlwaysBlinking
+           \/ ActivateAmbientLight
+           \/ LowHeadLights
 
 EnvNext ==  \/ ChangeAmbientLight
             \/ ChangeDriver
@@ -182,6 +195,6 @@ Spec == Init /\ [][Next]_vars /\ []TmpBlinkWillStop
 THEOREM Spec => []TypeInvariant
 =============================================================================
 \* Modification History
-\* Last modified Tue Jan 14 14:12:33 WET 2020 by apollo
-\* Last modified Tue Jan 14 12:00:02 WET 2020 by herulume
+\* Last modified Tue Jan 14 15:19:59 WET 2020 by herulume
+\* Last modified Tue Jan 14 14:14:23 WET 2020 by apollo
 \* Created Mon Jan 13 20:57:38 WET 2020 by herulume
