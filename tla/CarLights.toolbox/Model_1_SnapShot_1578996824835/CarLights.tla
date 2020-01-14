@@ -70,9 +70,8 @@ TmpRightBlinking == /\ key = FALSE (* KeyInIgnitionOnPosition *)
                     /\ driver
                     /\ pitmanArm = "P_Up5"
                     /\ lights' = [lights EXCEPT !["FrontRight"] = Blinking, !["MiddleRight"] = Blinking, !["BackRight"] = Blinking]
-                    /\ UNCHANGED << ambientLight, driver, gear, pitmanArm, lightRotarySwitch, steeringWheel, key >>
-                                      
-TmpBlinkWIllStop == pitmanArm = "P_Up5" ~> (lights["FrontRight"] # Blinking /\ lights["MiddleRight"] # Blinking /\ lights["BackRight"] # Blinking)
+                    /\ UNCHANGED << ambientLight, driver, lights, gear , lightRotarySwitch, steeringWheel, key >>                    
+TmpRightBlinkWIllStop == pitmanArm = "P_Up5" ~> (lights["FrontRight"] # Blinking /\ lights["MiddleRight"] # Blinking /\ lights["BackRight"] # Blinking)
 
 
 
@@ -93,5 +92,5 @@ Spec == Init /\ [][Next]_vars
 THEOREM Spec => []TypeInvariant
 =============================================================================
 \* Modification History
-\* Last modified Tue Jan 14 10:14:53 WET 2020 by herulume
+\* Last modified Tue Jan 14 10:13:14 WET 2020 by herulume
 \* Created Mon Jan 13 20:57:38 WET 2020 by herulume

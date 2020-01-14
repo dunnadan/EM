@@ -66,17 +66,9 @@ ChangeKey == /\ driver
              /\ key' \in BOOLEAN -- key
              /\ UNCHANGED << ambientLight, driver, lights, gear, pitmanArm, lightRotarySwitch, steeringWheel >>
 
-TmpRightBlinking == /\ key = FALSE (* KeyInIgnitionOnPosition *)
-                    /\ driver
-                    /\ pitmanArm = "P_Up5"
-                    /\ lights' = [lights EXCEPT !["FrontRight"] = Blinking, !["MiddleRight"] = Blinking, !["BackRight"] = Blinking]
-                    /\ UNCHANGED << ambientLight, driver, gear, pitmanArm, lightRotarySwitch, steeringWheel, key >>
-                                      
-TmpBlinkWIllStop == pitmanArm = "P_Up5" ~> (lights["FrontRight"] # Blinking /\ lights["MiddleRight"] # Blinking /\ lights["BackRight"] # Blinking)
-
-
-
-SysNext == TmpRightBlinking
+(*
+SysNext == key' = "NoKey" 
+*)
 
 EnvNext ==  \/ ChangeAmbientLight
             \/ ChangeDriver
@@ -86,12 +78,12 @@ EnvNext ==  \/ ChangeAmbientLight
             \/ ChangeSteeringWheel
             \/ ChangeKey
             
-Next ==  SysNext \/  EnvNext   
+Next == (* SysNext \/ *) EnvNext   
 
 Spec == Init /\ [][Next]_vars
 
 THEOREM Spec => []TypeInvariant
 =============================================================================
 \* Modification History
-\* Last modified Tue Jan 14 10:14:53 WET 2020 by herulume
+\* Last modified Tue Jan 14 01:46:48 WET 2020 by herulume
 \* Created Mon Jan 13 20:57:38 WET 2020 by herulume
