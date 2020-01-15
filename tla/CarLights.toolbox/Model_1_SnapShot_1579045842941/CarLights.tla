@@ -269,10 +269,10 @@ Next ==  SysNext \/ EnvNext
 (* Since we can't do "prime prime", we can't make TmpBlinking            *)
 (* stop in the next two state, so we enforce this temporal proprety.     *)
 (*************************************************************************)
-Spec == Init /\ [][Next]_vars  /\ SF_vars(Next)
+Spec == Init /\ [][Next]_vars  /\ WF_vars(Next)
 
-OutWithLights == [](driver = FALSE /\ ambientLight = TRUE =>  <>(lights["FrontRight"] = "Low"))
-TmpBlinkWillStop == (blinker # "B_Off" /\ (pitmanArm \in {"P_Up5", "P_Down5"})) ~> blinker = "B_Off" \/ pitmanArm \in {"P_Up7", "P_Down7"}
+Cona == <>(blinker \in {"B_Left", "B_Right"})
+TmpBlinkWillStop == (blinker # "B_Off"/\ (pitmanArm \in {"P_Up5", "P_Down5"})) ~> blinker = "B_Off" \/ pitmanArm \in {"P_Up7", "P_Down7"}
 
 
 THEOREM Spec => []TypeInvariant

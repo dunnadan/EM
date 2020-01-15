@@ -2,7 +2,7 @@
 TLC2 Version 2.14 of 10 July 2019
 @!@!@ENDMSG 2262 @!@!@
 @!@!@STARTMSG 2187:0 @!@!@
-Running breadth-first search Model-Checking with fp 39 and seed 8094676228329204475 with 4 workers on 8 cores with 1163MB heap and 2613MB offheap memory [pid: 14389] (Linux 4.19.88-1-MANJARO amd64, AdoptOpenJDK 11.0.3 x86_64, OffHeapDiskFPSet, DiskStateQueue).
+Running breadth-first search Model-Checking with fp 127 and seed 4028939792603385094 with 4 workers on 8 cores with 1163MB heap and 2613MB offheap memory [pid: 17932] (Linux 4.19.88-1-MANJARO amd64, AdoptOpenJDK 11.0.3 x86_64, OffHeapDiskFPSet, DiskStateQueue).
 @!@!@ENDMSG 2187 @!@!@
 @!@!@STARTMSG 2220:0 @!@!@
 Starting SANY...
@@ -23,7 +23,7 @@ Semantic processing of module MC
 SANY finished.
 @!@!@ENDMSG 2219 @!@!@
 @!@!@STARTMSG 2185:0 @!@!@
-Starting... (2020-01-14 23:25:41)
+Starting... (2020-01-15 00:04:53)
 @!@!@ENDMSG 2185 @!@!@
 @!@!@STARTMSG 2212:0 @!@!@
 Implied-temporal checking--satisfiability problem has 1 branches.
@@ -32,10 +32,10 @@ Implied-temporal checking--satisfiability problem has 1 branches.
 Computing initial states...
 @!@!@ENDMSG 2189 @!@!@
 @!@!@STARTMSG 2190:0 @!@!@
-Finished computing initial states: 1 distinct state generated at 2020-01-14 23:25:42.
+Finished computing initial states: 1 distinct state generated at 2020-01-15 00:04:54.
 @!@!@ENDMSG 2190 @!@!@
 @!@!@STARTMSG 2192:0 @!@!@
-Checking temporal properties for the current state space with 17535 total distinct states at (2020-01-14 23:25:45)
+Checking temporal properties for the current state space with 9345 total distinct states at (2020-01-15 00:04:57)
 @!@!@ENDMSG 2192 @!@!@
 @!@!@STARTMSG 2116:1 @!@!@
 Temporal properties were violated.
@@ -65,7 +65,7 @@ The following behavior constitutes a counter-example:
 
 @!@!@ENDMSG 2217 @!@!@
 @!@!@STARTMSG 2217:4 @!@!@
-2: <ChangeDriver line 203, col 17 to line 205, col 139 of module CarLights>
+2: <ChangeDriver line 205, col 17 to line 207, col 139 of module CarLights>
 /\ blinker = "B_Off"
 /\ lightRotarySwitch = FALSE
 /\ lights = [ FrontLeft |-> "Off",
@@ -84,7 +84,7 @@ The following behavior constitutes a counter-example:
 
 @!@!@ENDMSG 2217 @!@!@
 @!@!@STARTMSG 2217:4 @!@!@
-3: <ChangeKey line 234, col 14 to line 238, col 139 of module CarLights>
+3: <ChangePitmanArm line 214, col 20 to line 224, col 139 of module CarLights>
 /\ blinker = "B_Off"
 /\ lightRotarySwitch = FALSE
 /\ lights = [ FrontLeft |-> "Off",
@@ -97,13 +97,13 @@ The following behavior constitutes a counter-example:
 /\ steeringWheel = "S_Neutral"
 /\ brake = FALSE
 /\ gear = "G_Neutral"
-/\ pitmanArm = "P_Neutral"
-/\ key = "KeyInserted"
+/\ pitmanArm = "P_Down5"
+/\ key = "KeyNotInserted"
 /\ cornering = "C_Neutral"
 
 @!@!@ENDMSG 2217 @!@!@
 @!@!@STARTMSG 2217:4 @!@!@
-4: <ChangePitmanArm line 212, col 20 to line 222, col 139 of module CarLights>
+4: <ChangeKey line 236, col 14 to line 240, col 139 of module CarLights>
 /\ blinker = "B_Off"
 /\ lightRotarySwitch = FALSE
 /\ lights = [ FrontLeft |-> "Off",
@@ -116,152 +116,191 @@ The following behavior constitutes a counter-example:
 /\ steeringWheel = "S_Neutral"
 /\ brake = FALSE
 /\ gear = "G_Neutral"
-/\ pitmanArm = "P_Up5"
+/\ pitmanArm = "P_Down5"
 /\ key = "KeyInserted"
 /\ cornering = "C_Neutral"
 
 @!@!@ENDMSG 2217 @!@!@
 @!@!@STARTMSG 2217:4 @!@!@
-5: <ChangeLightRotarySwitch line 225, col 28 to line 228, col 139 of module CarLights>
+5: <ChangeAmbientLight line 201, col 23 to line 203, col 139 of module CarLights>
+/\ blinker = "B_Off"
+/\ lightRotarySwitch = FALSE
+/\ lights = [ FrontLeft |-> "Off",
+  FrontRight |-> "Off",
+  BackRight |-> "Off",
+  BackLeft |-> "Off",
+  Top |-> "Off" ]
+/\ driver = TRUE
+/\ ambientLight = TRUE
+/\ steeringWheel = "S_Neutral"
+/\ brake = FALSE
+/\ gear = "G_Neutral"
+/\ pitmanArm = "P_Down5"
+/\ key = "KeyInserted"
+/\ cornering = "C_Neutral"
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+6: <ChangeLightRotarySwitch line 227, col 28 to line 230, col 139 of module CarLights>
 /\ blinker = "B_Off"
 /\ lightRotarySwitch = TRUE
 /\ lights = [ FrontLeft |-> "Off",
   FrontRight |-> "Off",
   BackRight |-> "Off",
   BackLeft |-> "Off",
+  Top |-> "Off" ]
+/\ driver = TRUE
+/\ ambientLight = TRUE
+/\ steeringWheel = "S_Neutral"
+/\ brake = FALSE
+/\ gear = "G_Neutral"
+/\ pitmanArm = "P_Down5"
+/\ key = "KeyInserted"
+/\ cornering = "C_Neutral"
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+7: <ChangeDriver line 205, col 17 to line 207, col 139 of module CarLights>
+/\ blinker = "B_Off"
+/\ lightRotarySwitch = TRUE
+/\ lights = [ FrontLeft |-> "Off",
+  FrontRight |-> "Off",
+  BackRight |-> "Off",
+  BackLeft |-> "Off",
+  Top |-> "Off" ]
+/\ driver = FALSE
+/\ ambientLight = TRUE
+/\ steeringWheel = "S_Neutral"
+/\ brake = FALSE
+/\ gear = "G_Neutral"
+/\ pitmanArm = "P_Down5"
+/\ key = "KeyInserted"
+/\ cornering = "C_Neutral"
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+8: <ChangeDriver line 205, col 17 to line 207, col 139 of module CarLights>
+/\ blinker = "B_Off"
+/\ lightRotarySwitch = TRUE
+/\ lights = [ FrontLeft |-> "Off",
+  FrontRight |-> "Off",
+  BackRight |-> "Off",
+  BackLeft |-> "Off",
+  Top |-> "Off" ]
+/\ driver = TRUE
+/\ ambientLight = TRUE
+/\ steeringWheel = "S_Neutral"
+/\ brake = FALSE
+/\ gear = "G_Neutral"
+/\ pitmanArm = "P_Down5"
+/\ key = "KeyInserted"
+/\ cornering = "C_Neutral"
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+9: <ActivateLowHeadLights line 131, col 26 to line 135, col 148 of module CarLights>
+/\ blinker = "B_Off"
+/\ lightRotarySwitch = TRUE
+/\ lights = [ FrontLeft |-> "Half",
+  FrontRight |-> "Half",
+  BackRight |-> "Half",
+  BackLeft |-> "Half",
+  Top |-> "Off" ]
+/\ driver = TRUE
+/\ ambientLight = TRUE
+/\ steeringWheel = "S_Neutral"
+/\ brake = FALSE
+/\ gear = "G_Neutral"
+/\ pitmanArm = "P_Down5"
+/\ key = "KeyInserted"
+/\ cornering = "C_Neutral"
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+10: <ChangeKey line 236, col 14 to line 240, col 139 of module CarLights>
+/\ blinker = "B_Off"
+/\ lightRotarySwitch = TRUE
+/\ lights = [ FrontLeft |-> "Half",
+  FrontRight |-> "Half",
+  BackRight |-> "Half",
+  BackLeft |-> "Half",
+  Top |-> "Off" ]
+/\ driver = TRUE
+/\ ambientLight = TRUE
+/\ steeringWheel = "S_Neutral"
+/\ brake = FALSE
+/\ gear = "G_Neutral"
+/\ pitmanArm = "P_Down5"
+/\ key = "KeyInIgnitionOnPosition"
+/\ cornering = "C_Neutral"
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+11: <ChangeAmbientLight line 201, col 23 to line 203, col 139 of module CarLights>
+/\ blinker = "B_Off"
+/\ lightRotarySwitch = TRUE
+/\ lights = [ FrontLeft |-> "Half",
+  FrontRight |-> "Half",
+  BackRight |-> "Half",
+  BackLeft |-> "Half",
   Top |-> "Off" ]
 /\ driver = TRUE
 /\ ambientLight = FALSE
 /\ steeringWheel = "S_Neutral"
 /\ brake = FALSE
 /\ gear = "G_Neutral"
-/\ pitmanArm = "P_Up5"
-/\ key = "KeyInserted"
-/\ cornering = "C_Neutral"
-
-@!@!@ENDMSG 2217 @!@!@
-@!@!@STARTMSG 2217:4 @!@!@
-6: <ChangeAmbientLight line 199, col 23 to line 201, col 139 of module CarLights>
-/\ blinker = "B_Off"
-/\ lightRotarySwitch = TRUE
-/\ lights = [ FrontLeft |-> "Off",
-  FrontRight |-> "Off",
-  BackRight |-> "Off",
-  BackLeft |-> "Off",
-  Top |-> "Off" ]
-/\ driver = TRUE
-/\ ambientLight = TRUE
-/\ steeringWheel = "S_Neutral"
-/\ brake = FALSE
-/\ gear = "G_Neutral"
-/\ pitmanArm = "P_Up5"
-/\ key = "KeyInserted"
-/\ cornering = "C_Neutral"
-
-@!@!@ENDMSG 2217 @!@!@
-@!@!@STARTMSG 2217:4 @!@!@
-7: <ChangeKey line 234, col 14 to line 238, col 139 of module CarLights>
-/\ blinker = "B_Off"
-/\ lightRotarySwitch = TRUE
-/\ lights = [ FrontLeft |-> "Off",
-  FrontRight |-> "Off",
-  BackRight |-> "Off",
-  BackLeft |-> "Off",
-  Top |-> "Off" ]
-/\ driver = TRUE
-/\ ambientLight = TRUE
-/\ steeringWheel = "S_Neutral"
-/\ brake = FALSE
-/\ gear = "G_Neutral"
-/\ pitmanArm = "P_Up5"
+/\ pitmanArm = "P_Down5"
 /\ key = "KeyInIgnitionOnPosition"
 /\ cornering = "C_Neutral"
 
 @!@!@ENDMSG 2217 @!@!@
 @!@!@STARTMSG 2217:4 @!@!@
-8: <TmpRightBlinking line 73, col 21 to line 83, col 148 of module CarLights>
-/\ blinker = "B_Right"
+12: <TmpLeftBlinkingOn line 85, col 22 to line 89, col 143 of module CarLights>
+/\ blinker = "B_Left"
 /\ lightRotarySwitch = TRUE
-/\ lights = [ FrontLeft |-> "Off",
-  FrontRight |-> "Off",
-  BackRight |-> "Off",
-  BackLeft |-> "Off",
+/\ lights = [ FrontLeft |-> "Half",
+  FrontRight |-> "Half",
+  BackRight |-> "Half",
+  BackLeft |-> "Half",
   Top |-> "Off" ]
 /\ driver = TRUE
-/\ ambientLight = TRUE
+/\ ambientLight = FALSE
 /\ steeringWheel = "S_Neutral"
 /\ brake = FALSE
 /\ gear = "G_Neutral"
-/\ pitmanArm = "P_Up5"
+/\ pitmanArm = "P_Down5"
 /\ key = "KeyInIgnitionOnPosition"
 /\ cornering = "C_Neutral"
 
 @!@!@ENDMSG 2217 @!@!@
 @!@!@STARTMSG 2217:4 @!@!@
-9: <ChangeKey line 234, col 14 to line 238, col 139 of module CarLights>
-/\ blinker = "B_Right"
+13: <ChangeGear line 209, col 15 to line 212, col 139 of module CarLights>
+/\ blinker = "B_Left"
 /\ lightRotarySwitch = TRUE
-/\ lights = [ FrontLeft |-> "Off",
-  FrontRight |-> "Off",
-  BackRight |-> "Off",
-  BackLeft |-> "Off",
+/\ lights = [ FrontLeft |-> "Half",
+  FrontRight |-> "Half",
+  BackRight |-> "Half",
+  BackLeft |-> "Half",
   Top |-> "Off" ]
 /\ driver = TRUE
-/\ ambientLight = TRUE
+/\ ambientLight = FALSE
 /\ steeringWheel = "S_Neutral"
 /\ brake = FALSE
-/\ gear = "G_Neutral"
-/\ pitmanArm = "P_Up5"
-/\ key = "KeyInserted"
+/\ gear = "G_Forward"
+/\ pitmanArm = "P_Down5"
+/\ key = "KeyInIgnitionOnPosition"
 /\ cornering = "C_Neutral"
 
 @!@!@ENDMSG 2217 @!@!@
-@!@!@STARTMSG 2217:4 @!@!@
-10: <ChangeDriver line 203, col 17 to line 205, col 139 of module CarLights>
-/\ blinker = "B_Right"
-/\ lightRotarySwitch = TRUE
-/\ lights = [ FrontLeft |-> "Off",
-  FrontRight |-> "Off",
-  BackRight |-> "Off",
-  BackLeft |-> "Off",
-  Top |-> "Off" ]
-/\ driver = FALSE
-/\ ambientLight = TRUE
-/\ steeringWheel = "S_Neutral"
-/\ brake = FALSE
-/\ gear = "G_Neutral"
-/\ pitmanArm = "P_Up5"
-/\ key = "KeyInserted"
-/\ cornering = "C_Neutral"
+@!@!@STARTMSG 2122:4 @!@!@
+12: Back to state: <ChangeGear line 209, col 15 to line 212, col 139 of module CarLights>
 
-@!@!@ENDMSG 2217 @!@!@
-@!@!@STARTMSG 2217:4 @!@!@
-11: <ActivateAmbientLight line 123, col 25 to line 127, col 147 of module CarLights>
-/\ blinker = "B_Right"
-/\ lightRotarySwitch = TRUE
-/\ lights = [ FrontLeft |-> "Low",
-  FrontRight |-> "Low",
-  BackRight |-> "Low",
-  BackLeft |-> "Low",
-  Top |-> "Low" ]
-/\ driver = FALSE
-/\ ambientLight = TRUE
-/\ steeringWheel = "S_Neutral"
-/\ brake = FALSE
-/\ gear = "G_Neutral"
-/\ pitmanArm = "P_Up5"
-/\ key = "KeyInserted"
-/\ cornering = "C_Neutral"
-
-@!@!@ENDMSG 2217 @!@!@
-@!@!@STARTMSG 2218:4 @!@!@
-12: Stuttering
-@!@!@ENDMSG 2218 @!@!@
+@!@!@ENDMSG 2122 @!@!@
 @!@!@STARTMSG 2267:0 @!@!@
-Finished checking temporal properties in 00s at 2020-01-14 23:25:45
+Finished checking temporal properties in 00s at 2020-01-15 00:04:57
 @!@!@ENDMSG 2267 @!@!@
 @!@!@STARTMSG 2201:0 @!@!@
-The coverage statistics at 2020-01-14 23:25:45
+The coverage statistics at 2020-01-15 00:04:57
 @!@!@ENDMSG 2201 @!@!@
 @!@!@STARTMSG 2773:0 @!@!@
 <Init line 57, col 1 to line 57, col 4 of module CarLights>: 2:2
@@ -270,626 +309,629 @@ The coverage statistics at 2020-01-14 23:25:45
   line 57, col 9 to line 67, col 28 of module CarLights: 2
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2772:0 @!@!@
-<TmpRightBlinking line 73, col 1 to line 73, col 16 of module CarLights>: 111:2195
+<TmpRightBlinkingOn line 73, col 1 to line 73, col 18 of module CarLights>: 38:311
 @!@!@ENDMSG 2772 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 73, col 24 to line 73, col 29 of module CarLights: 1512
+  line 73, col 26 to line 73, col 31 of module CarLights: 311
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 74, col 24 to line 74, col 42 of module CarLights: 9390
+  line 74, col 26 to line 74, col 44 of module CarLights: 4306
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 74, col 24 to line 74, col 32 of module CarLights: 7878
+  |line 74, col 26 to line 74, col 34 of module CarLights: 3995
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 77, col 30 to line 77, col 53 of module CarLights: 1512
+  line 75, col 26 to line 75, col 56 of module CarLights: 957
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 78, col 30 to line 78, col 47 of module CarLights: 1512
+  |line 75, col 26 to line 75, col 28 of module CarLights: 646
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 79, col 30 to line 79, col 137 of module CarLights: 1512
+  line 76, col 26 to line 76, col 45 of module CarLights: 311
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 81, col 30 to line 81, col 60 of module CarLights: 2195
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  |line 81, col 30 to line 81, col 32 of module CarLights: 1512
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  line 82, col 30 to line 82, col 49 of module CarLights: 683
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  line 83, col 30 to line 83, col 148 of module CarLights: 683
+  line 77, col 26 to line 77, col 144 of module CarLights: 311
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2772:0 @!@!@
-<TmpLeftBlinking line 86, col 1 to line 86, col 15 of module CarLights>: 82:1663
+<TmpRightBlinkingOff line 79, col 1 to line 79, col 19 of module CarLights>: 4:646
 @!@!@ENDMSG 2772 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 86, col 23 to line 86, col 28 of module CarLights: 1138
+  line 79, col 27 to line 79, col 32 of module CarLights: 646
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 87, col 23 to line 87, col 43 of module CarLights: 9015
+  line 80, col 27 to line 80, col 45 of module CarLights: 4641
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 87, col 23 to line 87, col 31 of module CarLights: 7877
+  |line 80, col 27 to line 80, col 35 of module CarLights: 3995
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 90, col 29 to line 90, col 52 of module CarLights: 1138
+  line 81, col 27 to line 81, col 50 of module CarLights: 646
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 91, col 29 to line 91, col 46 of module CarLights: 1138
+  line 82, col 27 to line 82, col 44 of module CarLights: 646
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 92, col 29 to line 92, col 136 of module CarLights: 1138
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  line 94, col 29 to line 94, col 59 of module CarLights: 1663
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  |line 94, col 29 to line 94, col 31 of module CarLights: 1138
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  line 95, col 29 to line 95, col 47 of module CarLights: 525
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  line 96, col 29 to line 96, col 147 of module CarLights: 525
+  line 83, col 27 to line 83, col 134 of module CarLights: 646
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2772:0 @!@!@
-<RightBlinking line 102, col 1 to line 102, col 13 of module CarLights>: 75:669
+<TmpLeftBlinkingOn line 85, col 1 to line 85, col 17 of module CarLights>: 40:623
 @!@!@ENDMSG 2772 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 102, col 21 to line 102, col 51 of module CarLights: 11127
+  line 85, col 25 to line 85, col 30 of module CarLights: 623
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 102, col 21 to line 102, col 23 of module CarLights: 10458
+  line 86, col 25 to line 86, col 45 of module CarLights: 8612
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 103, col 21 to line 103, col 26 of module CarLights: 669
+  |line 86, col 25 to line 86, col 33 of module CarLights: 7989
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 104, col 21 to line 104, col 39 of module CarLights: 4107
+  line 87, col 25 to line 87, col 55 of module CarLights: 1898
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 104, col 21 to line 104, col 29 of module CarLights: 3438
+  |line 87, col 25 to line 87, col 27 of module CarLights: 1275
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 105, col 21 to line 105, col 40 of module CarLights: 669
+  line 88, col 25 to line 88, col 43 of module CarLights: 623
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 106, col 21 to line 106, col 139 of module CarLights: 669
+  line 89, col 25 to line 89, col 143 of module CarLights: 623
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2772:0 @!@!@
-<LeftBlinking line 108, col 1 to line 108, col 12 of module CarLights>: 59:519
+<RightBlinking line 104, col 1 to line 104, col 13 of module CarLights>: 43:308
 @!@!@ENDMSG 2772 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 108, col 20 to line 108, col 50 of module CarLights: 10977
+  line 104, col 21 to line 104, col 51 of module CarLights: 5558
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 108, col 20 to line 108, col 22 of module CarLights: 10458
+  |line 104, col 21 to line 104, col 23 of module CarLights: 5250
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 109, col 20 to line 109, col 25 of module CarLights: 519
+  line 105, col 21 to line 105, col 26 of module CarLights: 308
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 110, col 20 to line 110, col 40 of module CarLights: 3957
+  line 106, col 21 to line 106, col 39 of module CarLights: 2120
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 110, col 20 to line 110, col 28 of module CarLights: 3438
+  |line 106, col 21 to line 106, col 29 of module CarLights: 1812
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 111, col 20 to line 111, col 38 of module CarLights: 519
+  line 107, col 21 to line 107, col 40 of module CarLights: 308
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 112, col 20 to line 112, col 138 of module CarLights: 519
+  line 108, col 21 to line 108, col 139 of module CarLights: 308
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2772:0 @!@!@
-<DeactivateAllLights line 117, col 1 to line 117, col 19 of module CarLights>: 21:2935
+<LeftBlinking line 110, col 1 to line 110, col 12 of module CarLights>: 39:308
 @!@!@ENDMSG 2772 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 117, col 27 to line 117, col 32 of module CarLights: 2935
+  line 110, col 20 to line 110, col 50 of module CarLights: 5558
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 118, col 27 to line 118, col 51 of module CarLights: 10812
+  |line 110, col 20 to line 110, col 22 of module CarLights: 5250
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 118, col 27 to line 118, col 43 of module CarLights: 7877
+  line 111, col 20 to line 111, col 25 of module CarLights: 308
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 118, col 47 to line 118, col 51 of module CarLights: 7877
+  line 112, col 20 to line 112, col 40 of module CarLights: 2120
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 119, col 27 to line 119, col 59 of module CarLights: 2935
+  |line 112, col 20 to line 112, col 28 of module CarLights: 1812
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 120, col 27 to line 120, col 44 of module CarLights: 2935
+  line 113, col 20 to line 113, col 38 of module CarLights: 308
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 121, col 27 to line 121, col 137 of module CarLights: 2935
+  line 114, col 20 to line 114, col 138 of module CarLights: 308
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2772:0 @!@!@
-<ActivateAmbientLight line 123, col 1 to line 123, col 20 of module CarLights>: 431:922
+<DeactivateAllLights line 119, col 1 to line 119, col 19 of module CarLights>: 9:1580
 @!@!@ENDMSG 2772 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 123, col 28 to line 123, col 46 of module CarLights: 11380
+  line 119, col 27 to line 119, col 32 of module CarLights: 1580
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 123, col 28 to line 123, col 30 of module CarLights: 10458
+  line 120, col 27 to line 120, col 51 of module CarLights: 5573
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 124, col 28 to line 124, col 39 of module CarLights: 922
+  |line 120, col 27 to line 120, col 43 of module CarLights: 3993
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 125, col 28 to line 125, col 41 of module CarLights: 3232
+  |line 120, col 47 to line 120, col 51 of module CarLights: 3993
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 125, col 28 to line 125, col 33 of module CarLights: 2310
+  line 121, col 27 to line 121, col 59 of module CarLights: 1580
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 125, col 37 to line 125, col 41 of module CarLights: 2310
+  line 122, col 27 to line 122, col 44 of module CarLights: 1580
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 126, col 28 to line 126, col 61 of module CarLights: 922
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  line 127, col 28 to line 127, col 147 of module CarLights: 922
+  line 123, col 27 to line 123, col 137 of module CarLights: 1580
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2772:0 @!@!@
-<ActivateLowHeadLights line 129, col 1 to line 129, col 21 of module CarLights>: 86:2206
+<ActivateAmbientLight line 125, col 1 to line 125, col 20 of module CarLights>: 219:442
 @!@!@ENDMSG 2772 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 129, col 29 to line 129, col 34 of module CarLights: 2206
+  line 125, col 28 to line 125, col 46 of module CarLights: 5692
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 130, col 29 to line 130, col 50 of module CarLights: 10083
+  |line 125, col 28 to line 125, col 30 of module CarLights: 5250
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 130, col 29 to line 130, col 31 of module CarLights: 7877
+  line 126, col 28 to line 126, col 39 of module CarLights: 442
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 131, col 29 to line 131, col 52 of module CarLights: 8478
+  line 127, col 28 to line 127, col 41 of module CarLights: 1523
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 131, col 29 to line 131, col 45 of module CarLights: 6272
+  |line 127, col 28 to line 127, col 33 of module CarLights: 1081
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 131, col 49 to line 131, col 52 of module CarLights: 6272
+  |line 127, col 37 to line 127, col 41 of module CarLights: 1081
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 132, col 29 to line 132, col 152 of module CarLights: 2206
+  line 128, col 28 to line 128, col 61 of module CarLights: 442
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 133, col 29 to line 133, col 148 of module CarLights: 2206
+  line 129, col 28 to line 129, col 147 of module CarLights: 442
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2772:0 @!@!@
-<DeactivateLowHeadLights line 135, col 1 to line 135, col 23 of module CarLights>: 25:643
+<ActivateLowHeadLights line 131, col 1 to line 131, col 21 of module CarLights>: 57:1090
 @!@!@ENDMSG 2772 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 135, col 31 to line 135, col 36 of module CarLights: 643
+  line 131, col 29 to line 131, col 34 of module CarLights: 1090
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 136, col 31 to line 136, col 52 of module CarLights: 8520
+  line 132, col 29 to line 132, col 50 of module CarLights: 5084
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 136, col 31 to line 136, col 33 of module CarLights: 7877
+  |line 132, col 29 to line 132, col 31 of module CarLights: 3994
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 137, col 31 to line 137, col 55 of module CarLights: 6915
+  line 133, col 29 to line 133, col 52 of module CarLights: 4339
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 137, col 31 to line 137, col 47 of module CarLights: 6272
+  |line 133, col 29 to line 133, col 45 of module CarLights: 3249
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 137, col 51 to line 137, col 55 of module CarLights: 6272
+  |line 133, col 49 to line 133, col 52 of module CarLights: 3249
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 138, col 58 to line 138, col 81 of module CarLights: 5159
+  line 134, col 29 to line 134, col 152 of module CarLights: 1090
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 138, col 58 to line 138, col 77 of module CarLights: 4516
+  line 135, col 29 to line 135, col 148 of module CarLights: 1090
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2772:0 @!@!@
+<DeactivateLowHeadLights line 137, col 1 to line 137, col 23 of module CarLights>: 22:219
+@!@!@ENDMSG 2772 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 137, col 31 to line 137, col 36 of module CarLights: 219
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 138, col 81 to line 138, col 81 of module CarLights: 4516
+  line 138, col 31 to line 138, col 52 of module CarLights: 4212
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 138, col 86 to line 138, col 108 of module CarLights: 1286
+  |line 138, col 31 to line 138, col 33 of module CarLights: 3993
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 138, col 86 to line 138, col 104 of module CarLights: 643
+  line 139, col 31 to line 139, col 55 of module CarLights: 3467
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 138, col 108 to line 138, col 108 of module CarLights: 643
+  |line 139, col 31 to line 139, col 47 of module CarLights: 3248
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 138, col 113 to line 138, col 134 of module CarLights: 1286
+  |line 139, col 51 to line 139, col 55 of module CarLights: 3248
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 138, col 113 to line 138, col 130 of module CarLights: 643
+  line 140, col 58 to line 140, col 81 of module CarLights: 2781
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 138, col 134 to line 138, col 134 of module CarLights: 643
+  |line 140, col 58 to line 140, col 77 of module CarLights: 2562
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 138, col 139 to line 138, col 161 of module CarLights: 1286
+  |line 140, col 81 to line 140, col 81 of module CarLights: 2562
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 138, col 139 to line 138, col 157 of module CarLights: 643
+  line 140, col 86 to line 140, col 108 of module CarLights: 438
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 138, col 161 to line 138, col 161 of module CarLights: 643
+  |line 140, col 86 to line 140, col 104 of module CarLights: 219
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 140, col 108 to line 140, col 108 of module CarLights: 219
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 140, col 113 to line 140, col 134 of module CarLights: 438
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 140, col 113 to line 140, col 130 of module CarLights: 219
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 140, col 134 to line 140, col 134 of module CarLights: 219
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 140, col 139 to line 140, col 161 of module CarLights: 438
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 140, col 139 to line 140, col 157 of module CarLights: 219
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 140, col 161 to line 140, col 161 of module CarLights: 219
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2775:0 @!@!@
-  line 138, col 40 to line 138, col 54 of module CarLights: 2258:6774
+  line 140, col 40 to line 140, col 54 of module CarLights: 1281:3843
 @!@!@ENDMSG 2775 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 139, col 31 to line 139, col 150 of module CarLights: 643
+  line 141, col 31 to line 141, col 150 of module CarLights: 219
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 140, col 31 to line 140, col 149 of module CarLights: 643
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2772:0 @!@!@
-<DeactivateLowHeadLightsNoKeyAuto line 142, col 1 to line 142, col 32 of module CarLights>: 0:439
-@!@!@ENDMSG 2772 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  line 142, col 40 to line 142, col 45 of module CarLights: 439
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  line 143, col 40 to line 143, col 63 of module CarLights: 8316
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  |line 143, col 40 to line 143, col 56 of module CarLights: 7877
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  |line 143, col 60 to line 143, col 63 of module CarLights: 7877
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  line 144, col 40 to line 144, col 61 of module CarLights: 2686
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  |line 144, col 40 to line 144, col 42 of module CarLights: 2247
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  line 145, col 40 to line 145, col 159 of module CarLights: 439
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  line 146, col 40 to line 146, col 159 of module CarLights: 439
+  line 142, col 31 to line 142, col 149 of module CarLights: 219
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2772:0 @!@!@
-<ActivateLeftCornering line 155, col 1 to line 155, col 21 of module CarLights>: 31:270
+<DeactivateLowHeadLightsNoKeyAuto line 144, col 1 to line 144, col 32 of module CarLights>: 0:194
 @!@!@ENDMSG 2772 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 155, col 29 to line 155, col 46 of module CarLights: 10727
+  line 144, col 40 to line 144, col 45 of module CarLights: 194
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 155, col 29 to line 155, col 35 of module CarLights: 10457
+  line 145, col 40 to line 145, col 63 of module CarLights: 4187
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 156, col 29 to line 156, col 52 of module CarLights: 1174
+  |line 145, col 40 to line 145, col 56 of module CarLights: 3993
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 156, col 29 to line 156, col 41 of module CarLights: 904
+  |line 145, col 60 to line 145, col 63 of module CarLights: 3993
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 157, col 29 to line 157, col 49 of module CarLights: 270
+  line 146, col 40 to line 146, col 61 of module CarLights: 1266
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 158, col 29 to line 158, col 145 of module CarLights: 270
+  |line 146, col 40 to line 146, col 42 of module CarLights: 1072
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 147, col 40 to line 147, col 159 of module CarLights: 194
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 148, col 40 to line 148, col 159 of module CarLights: 194
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2772:0 @!@!@
-<ActivateRightCornering line 160, col 1 to line 160, col 22 of module CarLights>: 55:396
+<ActivateLeftCornering line 157, col 1 to line 157, col 21 of module CarLights>: 18:92
 @!@!@ENDMSG 2772 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 160, col 30 to line 160, col 48 of module CarLights: 10853
+  line 157, col 29 to line 157, col 46 of module CarLights: 5341
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 160, col 30 to line 160, col 36 of module CarLights: 10457
+  |line 157, col 29 to line 157, col 35 of module CarLights: 5249
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 161, col 30 to line 161, col 54 of module CarLights: 1648
+  line 158, col 29 to line 158, col 52 of module CarLights: 460
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 161, col 30 to line 161, col 42 of module CarLights: 1252
+  |line 158, col 29 to line 158, col 41 of module CarLights: 368
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 162, col 30 to line 162, col 51 of module CarLights: 396
+  line 159, col 29 to line 159, col 49 of module CarLights: 92
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 163, col 30 to line 163, col 146 of module CarLights: 396
+  line 160, col 29 to line 160, col 145 of module CarLights: 92
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2772:0 @!@!@
-<DeactivateCornering line 165, col 1 to line 165, col 19 of module CarLights>: 0:59
+<ActivateRightCornering line 162, col 1 to line 162, col 22 of module CarLights>: 21:92
 @!@!@ENDMSG 2772 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 165, col 27 to line 165, col 49 of module CarLights: 10516
+  line 162, col 30 to line 162, col 48 of module CarLights: 5341
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 165, col 27 to line 165, col 35 of module CarLights: 10457
+  |line 162, col 30 to line 162, col 36 of module CarLights: 5249
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 166, col 27 to line 166, col 53 of module CarLights: 442
+  line 163, col 30 to line 163, col 54 of module CarLights: 458
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 166, col 27 to line 166, col 39 of module CarLights: 383
+  |line 163, col 30 to line 163, col 42 of module CarLights: 366
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 167, col 27 to line 167, col 50 of module CarLights: 59
+  line 164, col 30 to line 164, col 51 of module CarLights: 92
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 168, col 27 to line 168, col 143 of module CarLights: 59
+  line 165, col 30 to line 165, col 146 of module CarLights: 92
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2772:0 @!@!@
-<ActivateHighBeam line 177, col 1 to line 177, col 16 of module CarLights>: 29:496
+<DeactivateCornering line 167, col 1 to line 167, col 19 of module CarLights>: 0:4
 @!@!@ENDMSG 2772 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 177, col 24 to line 177, col 45 of module CarLights: 10953
+  line 167, col 27 to line 167, col 49 of module CarLights: 5253
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 177, col 24 to line 177, col 26 of module CarLights: 10457
+  |line 167, col 27 to line 167, col 35 of module CarLights: 5249
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 178, col 24 to line 178, col 29 of module CarLights: 496
+  line 168, col 27 to line 168, col 53 of module CarLights: 53
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 179, col 24 to line 179, col 46 of module CarLights: 6768
+  |line 168, col 27 to line 168, col 39 of module CarLights: 49
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 179, col 24 to line 179, col 32 of module CarLights: 6272
+  line 169, col 27 to line 169, col 50 of module CarLights: 4
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 180, col 24 to line 180, col 48 of module CarLights: 1219
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  |line 180, col 24 to line 180, col 40 of module CarLights: 723
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  |line 180, col 44 to line 180, col 48 of module CarLights: 723
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  line 181, col 24 to line 181, col 99 of module CarLights: 496
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  line 182, col 24 to line 182, col 143 of module CarLights: 496
+  line 170, col 27 to line 170, col 143 of module CarLights: 4
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2772:0 @!@!@
-<DeactivateHighBeam line 184, col 1 to line 184, col 18 of module CarLights>: 10:5489
+<ActivateHighBeam line 179, col 1 to line 179, col 16 of module CarLights>: 20:244
 @!@!@ENDMSG 2772 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 184, col 26 to line 184, col 47 of module CarLights: 14581
+  line 179, col 24 to line 179, col 45 of module CarLights: 5493
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 184, col 26 to line 184, col 28 of module CarLights: 10457
+  |line 179, col 24 to line 179, col 26 of module CarLights: 5249
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 185, col 26 to line 185, col 31 of module CarLights: 4124
+  line 180, col 24 to line 180, col 29 of module CarLights: 244
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 186, col 26 to line 186, col 42 of module CarLights: 10396
+  line 181, col 24 to line 181, col 46 of module CarLights: 3492
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 186, col 26 to line 186, col 32 of module CarLights: 6272
+  |line 181, col 24 to line 181, col 32 of module CarLights: 3248
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 188, col 29 to line 188, col 51 of module CarLights: 8517
+  line 182, col 24 to line 182, col 48 of module CarLights: 615
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 188, col 29 to line 188, col 37 of module CarLights: 4620
+  |line 182, col 24 to line 182, col 40 of module CarLights: 371
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 189, col 29 to line 189, col 53 of module CarLights: 6212
+  |line 182, col 44 to line 182, col 48 of module CarLights: 371
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 189, col 29 to line 189, col 45 of module CarLights: 4620
+  line 183, col 24 to line 183, col 99 of module CarLights: 244
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 189, col 49 to line 189, col 53 of module CarLights: 4620
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  line 190, col 25 to line 190, col 144 of module CarLights: 5489
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  line 191, col 25 to line 191, col 143 of module CarLights: 5489
+  line 184, col 24 to line 184, col 143 of module CarLights: 244
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2772:0 @!@!@
-<ChangeAmbientLight line 199, col 1 to line 199, col 18 of module CarLights>: 72:7877
+<DeactivateHighBeam line 186, col 1 to line 186, col 18 of module CarLights>: 4:3180
 @!@!@ENDMSG 2772 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 199, col 26 to line 199, col 31 of module CarLights: 7877
+  line 186, col 26 to line 186, col 47 of module CarLights: 7603
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 200, col 26 to line 200, col 66 of module CarLights: 7877
+  |line 186, col 26 to line 186, col 28 of module CarLights: 5249
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 201, col 26 to line 201, col 139 of module CarLights: 7877
+  line 187, col 26 to line 187, col 31 of module CarLights: 2354
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 188, col 26 to line 188, col 42 of module CarLights: 5602
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 188, col 26 to line 188, col 32 of module CarLights: 3248
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 190, col 29 to line 190, col 51 of module CarLights: 4825
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 190, col 29 to line 190, col 37 of module CarLights: 2598
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 191, col 29 to line 191, col 53 of module CarLights: 3551
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 191, col 29 to line 191, col 45 of module CarLights: 2598
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 191, col 49 to line 191, col 53 of module CarLights: 2598
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 192, col 25 to line 192, col 144 of module CarLights: 3180
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 193, col 25 to line 193, col 143 of module CarLights: 3180
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2772:0 @!@!@
-<ChangeDriver line 203, col 1 to line 203, col 12 of module CarLights>: 4297:7018
+<ChangeAmbientLight line 201, col 1 to line 201, col 18 of module CarLights>: 34:3993
 @!@!@ENDMSG 2772 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 203, col 20 to line 203, col 50 of module CarLights: 17474
+  line 201, col 26 to line 201, col 31 of module CarLights: 3993
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 203, col 20 to line 203, col 22 of module CarLights: 10456
+  line 202, col 26 to line 202, col 66 of module CarLights: 3993
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 204, col 20 to line 204, col 48 of module CarLights: 7018
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  line 205, col 20 to line 205, col 139 of module CarLights: 7018
+  line 203, col 26 to line 203, col 139 of module CarLights: 3993
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2772:0 @!@!@
-<ChangeGear line 207, col 1 to line 207, col 10 of module CarLights>: 1382:6876
+<ChangeDriver line 205, col 1 to line 205, col 12 of module CarLights>: 2120:3436
 @!@!@ENDMSG 2772 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 207, col 18 to line 207, col 23 of module CarLights: 3438
+  line 205, col 20 to line 205, col 50 of module CarLights: 8683
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 208, col 18 to line 208, col 48 of module CarLights: 11313
+  |line 205, col 20 to line 205, col 22 of module CarLights: 5247
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 208, col 18 to line 208, col 20 of module CarLights: 7875
+  line 206, col 20 to line 206, col 48 of module CarLights: 3436
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 209, col 18 to line 209, col 39 of module CarLights: 6876
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  |line 209, col 28 to line 209, col 39 of module CarLights: 3438
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  line 210, col 18 to line 210, col 139 of module CarLights: 6876
+  line 207, col 20 to line 207, col 139 of module CarLights: 3436
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2772:0 @!@!@
-<ChangePitmanArm line 212, col 1 to line 212, col 15 of module CarLights>: 274:13200
+<ChangeGear line 209, col 1 to line 209, col 10 of module CarLights>: 809:3622
 @!@!@ENDMSG 2772 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 212, col 23 to line 212, col 28 of module CarLights: 7875
+  line 209, col 18 to line 209, col 23 of module CarLights: 1811
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 214, col 23 to line 216, col 49 of module CarLights: 2935
+  line 210, col 18 to line 210, col 48 of module CarLights: 5801
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 214, col 23 to line 215, col 42 of module CarLights: 7875
+  |line 210, col 18 to line 210, col 20 of module CarLights: 3990
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  ||line 214, col 26 to line 214, col 48 of module CarLights: 7875
+  line 211, col 18 to line 211, col 39 of module CarLights: 3622
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  ||line 215, col 26 to line 215, col 42 of module CarLights: 6810
+  |line 211, col 28 to line 211, col 39 of module CarLights: 1811
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 216, col 26 to line 216, col 49 of module CarLights: 4940
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  line 218, col 23 to line 220, col 64 of module CarLights: 6810
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  |line 218, col 23 to line 219, col 42 of module CarLights: 7875
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  ||line 218, col 26 to line 218, col 48 of module CarLights: 7875
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  ||line 219, col 26 to line 219, col 42 of module CarLights: 1065
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  |line 220, col 26 to line 220, col 64 of module CarLights: 6390
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  ||line 220, col 41 to line 220, col 64 of module CarLights: 1065
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  line 221, col 23 to line 221, col 65 of module CarLights: 11330
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  |line 221, col 23 to line 221, col 39 of module CarLights: 13200
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  |line 221, col 44 to line 221, col 65 of module CarLights: 1870
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  line 222, col 23 to line 222, col 139 of module CarLights: 13200
+  line 212, col 18 to line 212, col 139 of module CarLights: 3622
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2772:0 @!@!@
-<ChangeLightRotarySwitch line 225, col 1 to line 225, col 23 of module CarLights>: 506:5662
+<ChangePitmanArm line 214, col 1 to line 214, col 15 of module CarLights>: 121:7138
 @!@!@ENDMSG 2772 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 225, col 31 to line 225, col 36 of module CarLights: 2831
+  line 214, col 23 to line 214, col 28 of module CarLights: 3988
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 226, col 31 to line 226, col 49 of module CarLights: 10705
+  line 216, col 23 to line 218, col 49 of module CarLights: 1318
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 226, col 31 to line 226, col 33 of module CarLights: 7874
+  |line 216, col 23 to line 217, col 42 of module CarLights: 3988
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 227, col 31 to line 227, col 91 of module CarLights: 5662
+  ||line 216, col 26 to line 216, col 48 of module CarLights: 3988
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 227, col 54 to line 227, col 91 of module CarLights: 2831
+  ||line 217, col 26 to line 217, col 42 of module CarLights: 3358
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 228, col 31 to line 228, col 139 of module CarLights: 5662
+  |line 218, col 26 to line 218, col 49 of module CarLights: 2670
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 220, col 23 to line 222, col 64 of module CarLights: 3358
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 220, col 23 to line 221, col 42 of module CarLights: 3988
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||line 220, col 26 to line 220, col 48 of module CarLights: 3988
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||line 221, col 26 to line 221, col 42 of module CarLights: 630
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 222, col 26 to line 222, col 64 of module CarLights: 3780
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||line 222, col 41 to line 222, col 64 of module CarLights: 630
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 223, col 23 to line 223, col 65 of module CarLights: 6450
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 223, col 23 to line 223, col 39 of module CarLights: 7138
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 223, col 44 to line 223, col 65 of module CarLights: 688
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 224, col 23 to line 224, col 139 of module CarLights: 7138
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2772:0 @!@!@
-<ChangeSteeringWheel line 230, col 1 to line 230, col 19 of module CarLights>: 314:15746
+<ChangeLightRotarySwitch line 227, col 1 to line 227, col 23 of module CarLights>: 342:2868
 @!@!@ENDMSG 2772 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 230, col 27 to line 230, col 32 of module CarLights: 7873
+  line 227, col 31 to line 227, col 36 of module CarLights: 1434
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 231, col 27 to line 231, col 75 of module CarLights: 15746
+  line 228, col 31 to line 228, col 49 of module CarLights: 5421
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 231, col 46 to line 231, col 75 of module CarLights: 7873
+  |line 228, col 31 to line 228, col 33 of module CarLights: 3987
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 232, col 27 to line 232, col 139 of module CarLights: 15746
+  line 229, col 31 to line 229, col 91 of module CarLights: 2868
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 229, col 54 to line 229, col 91 of module CarLights: 1434
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 230, col 31 to line 230, col 139 of module CarLights: 2868
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2772:0 @!@!@
-<ChangeKey line 234, col 1 to line 234, col 9 of module CarLights>: 3422:10703
+<ChangeSteeringWheel line 232, col 1 to line 232, col 19 of module CarLights>: 91:7972
 @!@!@ENDMSG 2772 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 234, col 17 to line 234, col 22 of module CarLights: 7873
+  line 232, col 27 to line 232, col 32 of module CarLights: 3986
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 235, col 17 to line 235, col 62 of module CarLights: 6268
+  line 233, col 27 to line 233, col 75 of module CarLights: 7972
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 235, col 17 to line 235, col 38 of module CarLights: 7873
+  |line 233, col 46 to line 233, col 75 of module CarLights: 3986
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 235, col 43 to line 235, col 62 of module CarLights: 1605
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  line 236, col 17 to line 236, col 97 of module CarLights: 5043
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  |line 236, col 17 to line 236, col 35 of module CarLights: 7873
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  |line 236, col 40 to line 236, col 97 of module CarLights: 2830
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  line 237, col 17 to line 237, col 71 of module CarLights: 7265
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  |line 237, col 17 to line 237, col 47 of module CarLights: 10703
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  |line 237, col 52 to line 237, col 71 of module CarLights: 3438
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  line 238, col 17 to line 238, col 139 of module CarLights: 10703
+  line 234, col 27 to line 234, col 139 of module CarLights: 7972
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2772:0 @!@!@
-<ChangeBrake line 240, col 1 to line 240, col 11 of module CarLights>: 6252:15740
+<ChangeKey line 236, col 1 to line 236, col 9 of module CarLights>: 1764:5419
 @!@!@ENDMSG 2772 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 240, col 19 to line 240, col 24 of module CarLights: 7870
+  line 236, col 17 to line 236, col 22 of module CarLights: 3986
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 241, col 19 to line 241, col 43 of module CarLights: 15740
+  line 237, col 17 to line 237, col 62 of module CarLights: 3242
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 241, col 30 to line 241, col 43 of module CarLights: 7870
+  |line 237, col 17 to line 237, col 38 of module CarLights: 3986
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 242, col 19 to line 242, col 138 of module CarLights: 15740
+  |line 237, col 43 to line 237, col 62 of module CarLights: 744
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 238, col 17 to line 238, col 97 of module CarLights: 2553
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 238, col 17 to line 238, col 35 of module CarLights: 3986
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 238, col 40 to line 238, col 97 of module CarLights: 1433
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 239, col 17 to line 239, col 71 of module CarLights: 3610
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 239, col 17 to line 239, col 47 of module CarLights: 5419
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 239, col 52 to line 239, col 71 of module CarLights: 1809
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 240, col 17 to line 240, col 139 of module CarLights: 5419
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2772:0 @!@!@
+<ChangeBrake line 242, col 1 to line 242, col 11 of module CarLights>: 3529:7968
+@!@!@ENDMSG 2772 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 242, col 19 to line 242, col 24 of module CarLights: 3984
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 243, col 19 to line 243, col 43 of module CarLights: 7968
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 243, col 30 to line 243, col 43 of module CarLights: 3984
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 244, col 19 to line 244, col 138 of module CarLights: 7968
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2774:0 @!@!@
 <TypeInvariant line 42, col 1 to line 42, col 13 of module CarLights>
 @!@!@ENDMSG 2774 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 42, col 18 to line 52, col 39 of module CarLights: 17535
+  line 42, col 18 to line 52, col 39 of module CarLights: 9345
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2202:0 @!@!@
 End of statistics.
 @!@!@ENDMSG 2202 @!@!@
 @!@!@STARTMSG 2200:0 @!@!@
-Progress(12) at 2020-01-14 23:25:45: 101,472 states generated (1,197,309 s/min), 17,535 distinct states found (206,902 ds/min), 7,102 states left on queue.
+Progress(11) at 2020-01-15 00:04:57: 51,454 states generated (580,090 s/min), 9,345 distinct states found (105,355 ds/min), 4,129 states left on queue.
 @!@!@ENDMSG 2200 @!@!@
 @!@!@STARTMSG 2199:0 @!@!@
-101472 states generated, 17535 distinct states found, 7102 states left on queue.
+51454 states generated, 9345 distinct states found, 4129 states left on queue.
 @!@!@ENDMSG 2199 @!@!@
 @!@!@STARTMSG 2186:0 @!@!@
-Finished in 5091ms at (2020-01-14 23:25:45)
+Finished in 5326ms at (2020-01-15 00:04:57)
 @!@!@ENDMSG 2186 @!@!@

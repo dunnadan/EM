@@ -70,33 +70,35 @@ Init == /\ ambientLight = FALSE
 (*************************************************************************)
 (* System changes.                                                       *)
 (*************************************************************************)
-TmpRightBlinking == /\ driver
-                    /\ pitmanArm = "P_Up5"
-                    /\
-                       \/ (* Off *)
-                          /\ pitmanArm' = "P_Neutral"
-                          /\ blinker' = "B_Off"
-                          /\ UNCHANGED << ambientLight, driver, gear, lightRotarySwitch, steeringWheel, key, cornering, brake, lights  >>
-                       \/ (* On *) 
-                          /\ key = "KeyInIgnitionOnPosition" 
-                          /\ blinker' = "B_Right"
-                          /\ UNCHANGED << ambientLight, driver, gear, pitmanArm, lightRotarySwitch, steeringWheel, key, cornering, brake, lights  >>
+TmpRightBlinkingOn == /\ driver
+                      /\ pitmanArm = "P_Up5"
+                      /\ key = "KeyInIgnitionOnPosition" 
+                      /\ blinker' = "B_Right"
+                      /\ UNCHANGED << ambientLight, driver, gear, pitmanArm, lightRotarySwitch, steeringWheel, key, cornering, brake, lights  >>
+
+TmpRightBlinkingOff == /\ driver
+                       /\ pitmanArm = "P_Up5"
+                       /\ pitmanArm' = "P_Neutral"   
+                       /\ blinker' = "B_Off"
+                       /\ UNCHANGED << ambientLight, driver, gear, lightRotarySwitch, steeringWheel, key, cornering, brake, lights  >>
+
+TmpLeftBlinkingOn == /\ driver
+                     /\ pitmanArm = "P_Down5"
+                     /\ key = "KeyInIgnitionOnPosition" 
+                     /\ blinker' = "B_Left"
+                     /\ UNCHANGED << ambientLight, driver, gear, pitmanArm, lightRotarySwitch, steeringWheel, key, cornering, brake, lights  >>
+
+TmpLeftBlinkingOff == /\ driver
+                      /\ pitmanArm = "P_Down5"
+                      /\ pitmanArm' = "P_Neutral"   
+                      /\ blinker' = "B_Off"
+                      /\ UNCHANGED << ambientLight, driver, gear, lightRotarySwitch, steeringWheel, key, cornering, brake, lights  >>
 
 
-TmpLeftBlinking == /\ driver
-                   /\ pitmanArm = "P_Down5"
-                   /\
-                      \/ (* Off *) 
-                         /\ pitmanArm' = "P_Neutral"
-                         /\ blinker' = "B_Off"
-                         /\ UNCHANGED << ambientLight, driver, gear, lightRotarySwitch, steeringWheel, key, cornering, brake, lights  >>
-                      \/ (* On *) 
-                         /\ key = "KeyInIgnitionOnPosition"
-                         /\ blinker' = "B_Left"
-                         /\ UNCHANGED << ambientLight, driver, gear, pitmanArm, lightRotarySwitch, steeringWheel, key, cornering, brake, lights  >>
-
-
-TmpBlinking == TmpRightBlinking \/ TmpLeftBlinking
+TmpBlinking == \/ TmpRightBlinkingOn
+               \/ TmpRightBlinkingOff
+               \/ TmpLeftBlinkingOn 
+               \/ TmpLeftBlinkingOn
 
 
 RightBlinking == /\ key = "KeyInIgnitionOnPosition" (* KeyInIgnitionOnPosition *)
@@ -250,7 +252,7 @@ SysNext == \/ TmpBlinking
            \/ HighBeam
 
 
-EnvNext ==  \/ ChangeAmbientLight
+EnvNext ==  \/ ChangeAmbientLight 
             \/ ChangeDriver
             \/ ChangeGear
             \/ ChangePitmanArm
@@ -267,10 +269,10 @@ Next ==  SysNext \/ EnvNext
 (* Since we can't do "prime prime", we can't make TmpBlinking            *)
 (* stop in the next two state, so we enforce this temporal proprety.     *)
 (*************************************************************************)
-Spec == Init /\ [][Next]_vars  /\ WF_lights(SysNext)
+Spec == Init /\ [][Next]_vars  /\ SF_vars(Next)
 
-
-TmpBlinkWillStop == blinker # "B_Off"/\ (pitmanArm \in {"P_Up5", "P_Down5"}) ~> blinker = "B_Off" \/ pitmanArm \in {"P_Up7", "P_Down7"}
+OutWithLights == [](driver = FALSE /\ ambientLight = TRUE =>  <>(lights["FrontRight"] = "Low"))
+TmpBlinkWillStop == (blinker # "B_Off" /\ (pitmanArm \in {"P_Up5", "P_Down5"})) ~> blinker = "B_Off" \/ pitmanArm \in {"P_Up7", "P_Down7"}
 
 
 THEOREM Spec => []TypeInvariant

@@ -271,7 +271,7 @@ Next ==  SysNext \/ EnvNext
 (*************************************************************************)
 Spec == Init /\ [][Next]_vars  /\ SF_vars(Next)
 
-OutWithLights == [](driver = FALSE /\ ambientLight = TRUE =>  <>(lights["FrontRight"] = "Low"))
+Cona == <>driver
 TmpBlinkWillStop == (blinker # "B_Off" /\ (pitmanArm \in {"P_Up5", "P_Down5"})) ~> blinker = "B_Off" \/ pitmanArm \in {"P_Up7", "P_Down7"}
 
 
