@@ -151,7 +151,7 @@ ActivateHighBeam == /\ key # "KeyNotInserted"
                     /\ driver
                     /\ pitmanArm = "P_Forward"
                     /\ lightRotarySwitch # FALSE
-                    /\ lights' = [lights EXCEPT  !["FrontRight"] = "High", !["FrontLeft"] = "High"]
+                    /\ lights' = [lights EXCEPT  !["FrontRight"] = "High", !["FrontLeft"] = "High", !["BackRight"] = "Half", !["BackLeft"] = "Half"]
                     /\ UNCHANGED << ambientLight, driver, gear, pitmanArm, lightRotarySwitch, steeringWheel, key, cornering, brake, blinker  >>
 
 HighBeam == ActivateHighBeam
@@ -177,8 +177,8 @@ ChangePitmanArm == /\ driver
                    /\ pitmanArm # "P_Neutral" => /\ pitmanArm' = "P_Neutral"
                                                  /\ blinker' = "B_Off"
                                                  /\ IF lights["FrontLeft"] = "Half"
-                                                        THEN lights' = [lights EXCEPT !["FrontRight"] = "Half", !["FrontLeft"] = "Half"]
-                                                        ELSE lights' = [lights EXCEPT !["FrontRight"] = "Off", !["FrontLeft"] = "Off"]
+                                                        THEN lights' = [lights EXCEPT !["FrontRight"] = "Half", !["FrontLeft"] = "Half", !["BackRight"] = "Half", !["BackLeft"] = "Half"]
+                                                        ELSE lights' = [lights EXCEPT !["FrontRight"] = "Off", !["FrontLeft"] = "Off", !["BackRight"] = "Off", !["BackLeft"] = "Off"]
                                                  /\ UNCHANGED << ambientLight, driver, gear, lightRotarySwitch, steeringWheel, key, cornering, brake >>
                    /\ pitmanArm = "P_Neutral" => /\ pitmanArm' \in PitmanArm -- pitmanArm
                                                  /\ 
@@ -209,7 +209,9 @@ ChangeBrake == /\ driver
                /\ brake' \in Brake -- brake
                /\ UNCHANGED << ambientLight, driver, lights, gear, pitmanArm, lightRotarySwitch, steeringWheel, key, cornering, blinker >>
                
-                                                         
+(*************************************************************************)
+(* Spec                                                                  *)
+(*************************************************************************)                                                        
 SysNext == \/ TmpBlinking
            \/ AlwaysBlinking
            \/ ActivateAmbientLight
@@ -233,6 +235,7 @@ Next ==  SysNext \/ EnvNext
 
 
 Spec == Init /\ [][Next]_vars  /\ WF_vars(Next)
+
 
 (*************************************************************************)
 (* Liveness                                                              *)
@@ -284,7 +287,24 @@ TypeInvariant == /\ ambientLight \in BOOLEAN
 (*************************************************************************)
 (* Top light is always off or part of ambient light.                     *)
 (*************************************************************************)
-TopOffOrAmbient == lights["Top"] = "Off" \/ lights["Top"] = "Low"
+TopOffOrAmbient == lights["Top"] \in {"Off", "Low"}
+
+(*************************************************************************)
+(* KeyOn means driver MUST be inside.                                    *)
+(*************************************************************************)
+KeyOnDriverIn == key = "KeyInIgnitionOnPosition" => driver
+
+(*************************************************************************)
+(* If the front is on, so is the back.                                   *)
+(*************************************************************************)
+FrontAndBackOn == lights["FrontRight"] # "Off" => lights["BackRight"] # "Off"
+
+(*************************************************************************)
+(* Mirror behaviour.                                                     *)
+(*************************************************************************)
+MirrorSides == /\ lights["FrontRight"] = lights["FrontLeft"]
+               /\ lights["BackRight"] = lights["BackLeft"]
+               
 
 THEOREM Spec => []TypeInvariant
 =============================================================================
